@@ -1,67 +1,52 @@
-<div id="myalert"> 
-  <?php echo $this->session->flashdata('alert', true)?>
-</div> 
-<div class="row">
-  <div class="col-md-12">
-    <div class="card mb-4">
-      <div class="card-body">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#backDropModal">
-          <span class="tf-icons bx bx-message-add"></span>&nbsp; Tambah Kategori Produk
-        </button>
-      </div>
-      <hr class="my-0">
-      <div class="card-body">
-        <table id="example" class="table table-striped" style="width:100%">
-          <thead>
-          <tr>
-            <th>No</th>
-            <th>Kategori Produk</th>
-            <th style="text-align: center;">Aksi</th>
-          </tr>
-          </thead>
-          <tbody>
-            <?php 
-            $no = 1;
-            foreach ($data2 as $user) {?>
-            <tr>
-              <td><?php echo $no; ?></td>
-              <td><?php echo $user['kategori']; ?></td>
-              <td align="center">
-                <a href="<?php echo site_url('admin/kategori/delete_data/'.$user['id_kategori']);?>" class="btn btn-sm btn-danger" onClick="return confirm('Apakah anda yakin menghapus data ini?')"><span class="tf-icons bx bx-trash-alt"></span></a>
-                <a href="<?php echo site_url('admin/kategori/editdata/'.$user['id_kategori']);?>" class="btn btn-sm btn-warning" ><span class="tf-icons bx bx-edit-alt"></span></a>         
-              </td>
-            </tr>
-            <?php $no++; } ?>
-          </tbody>
-        </table>
-      </div>
-      <!-- /Account -->
-    </div>
-  </div>
+<div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+	<h2 class="text-lg font-medium mr-auto">
+		JENIS ASSET
+	</h2>
+	<div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+		<button class="button text-white bg-theme-1 shadow-md mr-2">Tambah Jenis Asset</button>
+	</div>
 </div>
-<div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
-<div class="modal-dialog modal-sm">
-  <form class="modal-content" method="post" action="<?php echo site_url('admin/kategori/simpan');?>">
-    <div class="modal-header">
-      <h5 class="modal-title" id="backDropModalTitle">
-        <span class="tf-icons bx bx-message-add"></span>&nbsp; Tambah Kategori Produk
-      </h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      <div class="row">
-        <div class="col mb-3">
-          <label for="nameBackdrop" class="form-label">Kategori Produk</label>
-          <input type="text"class="form-control" placeholder="Kategori Produk" name="kategori" required>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-        Close
-      </button>
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-  </form>
-</div>
+<!-- BEGIN: Datatable -->
+<div class="intro-y datatable-wrapper box p-5 mt-5">
+	<table class="table table-report table-report--bordered display datatable w-full">
+		<thead>
+			<tr>
+				<th class="border-b-2 whitespace-no-wrap">NAMA JENIS ASSET</th>
+				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php  $no = 1; foreach ($data2 as $user) {?>
+			<tr>
+				<td class="text-left border-b"><?php echo $user['kategori']; ?></td>
+				<td class="border-b w-5">
+					<div class="flex sm:justify-center items-center">
+						<a class="flex items-center mr-3"
+							href="<?php echo site_url('admin/kategori/editdata/'.$user['id_kategori']);?>"> <i
+								data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit
+						</a>
+						<a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal"
+							data-target="#delete-confirmation-modal<?=$user['id_kategori'];?>"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
+							Delete </a>
+					</div>
+					<!-- BEGIN: Delete Confirmation Modal -->
+					<div class="modal" id="delete-confirmation-modal<?=$user['id_kategori'];?>">
+						<div class="modal__content">
+							<div class="p-5 text-center">
+								<i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
+								<div class="text-3xl mt-5">Apakah kamu yakin?</div>
+								<div class="text-gray-600 mt-2">Apakah Anda benar-benar ingin menghapus data ini? Proses ini tidak bisa dibatalkan.</div>
+							</div>
+							<div class="px-5 pb-8 text-center">
+								<button type="button" data-dismiss="modal" class="button w-24 border text-gray-700 mr-1">Batal</button>
+								<a href="<?php echo site_url('admin/kategori/delete_data/'.$user['id_kategori']);?>"" class="button w-24 bg-theme-6 text-white">Hapus</a>
+							</div>
+						</div>
+					</div>
+					<!-- END: Delete Confirmation Modal -->
+				</td>
+			</tr>
+			<?php $no++; } ?>
+		</tbody>
+	</table>
 </div>

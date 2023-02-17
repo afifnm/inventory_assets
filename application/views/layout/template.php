@@ -17,9 +17,7 @@
 		<!-- BEGIN: Content -->
 		<div class="content">
 			<?php require_once('_nav.php') ?>
-			<div class="grid grid-cols-12 gap-6">
-				<?php echo $contents ;?>
-			</div>
+			<?php echo $contents ;?>
 		</div>
 		<!-- END: Content -->
 	</div>
