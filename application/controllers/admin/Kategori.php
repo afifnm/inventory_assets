@@ -38,10 +38,9 @@ class Kategori extends MY_Controller
          );  
         $this->CRUD_model->Insert('kategori', $data);
         $this->session->set_flashdata('alert', '
-            <div class="alert alert-primary alert-dismissible" role="alert">
-            Kategori produk berhasil ditambahkan.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>Jenis asset '.$this->input->post('kategori').' berhasil ditambahkan. 
+        </div>
                 ');
         redirect('admin/kategori');       
     }
@@ -52,10 +51,9 @@ class Kategori extends MY_Controller
         );
         $data = $this->CRUD_model->Delete('kategori',$where);
         $this->session->set_flashdata('alert', '
-            <div class="alert alert-primary alert-dismissible" role="alert">
-            Kategori produk berhasil dihapus.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Jenis asset berhasil dihapus. 
+        </div>
                 ');
         redirect('admin/kategori/');
     }
@@ -85,10 +83,9 @@ class Kategori extends MY_Controller
         );
         $data = $this->CRUD_model->Update('kategori', $data, $where);
         $this->session->set_flashdata('alert', '
-            <div class="alert alert-primary alert-dismissible" role="alert">
-            Kategori produk berhasil diperbarui.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Jenis asset berhasil diperbarui. 
+        </div>
                 ');
         redirect('admin/kategori');
     }
@@ -96,9 +93,8 @@ class Kategori extends MY_Controller
         $id = array('id_kategori' => $id);
         $this->CRUD_model->Delete('kategori', $id);
         $this->session->set_flashdata('alert', '
-        <div class="alert alert-primary alert-dismissible" role="alert">
-        Kategori produk berhasil dihapus.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Jenis asset berhasil dihapus. 
         </div>
             ');
         redirect('admin/kategori/');
