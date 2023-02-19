@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Kategori extends MY_Controller
+class Jenis extends MY_Controller
 {
     public function __construct(){
         parent::__construct();
@@ -17,86 +17,86 @@ class Kategori extends MY_Controller
     public function index(){
         $site = $this->Konfigurasi_model->listing();
         $data = array(
-            'title'                 => 'Kategori Produk | '.$site['nama_website'],
+            'title'                 => 'Jenis Produk | '.$site['nama_website'],
             'site'                  => $site,
             'nav'                   => '
                     <a class="navigasi-link">Daftar Produk</a>
-                    &nbsp; / &nbsp; <b> <i>Kategori Produk</i></b>
+                    &nbsp; / &nbsp; <b> <i>Jenis Produk</i></b>
             '
         );
         $this->db->select('*');
-        $this->db->from('kategori');
-        $this->db->order_by('kategori','ASC');
+        $this->db->from('jenis');
+        $this->db->order_by('jenis','ASC');
         $data2 = $this->db->get()->result_array();
         $data2 = array('data2' => $data2);
-        $this->template->load('layout/template', 'admin/kategori_index', array_merge($data,$data2));
+        $this->template->load('layout/template', 'admin/jenis_index', array_merge($data,$data2));
     }
 
     public function simpan(){
         $data = array(
-            'kategori' => $this->input->post('kategori')
+            'jenis' => $this->input->post('jenis')
          );  
-        $this->CRUD_model->Insert('kategori', $data);
+        $this->CRUD_model->Insert('jenis', $data);
         $this->session->set_flashdata('alert', '
         <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
-            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>Jenis asset '.$this->input->post('kategori').' berhasil ditambahkan. 
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i>Jenis asset '.$this->input->post('jenis').' berhasil ditambahkan. 
         </div>
                 ');
-        redirect('admin/kategori');       
+        redirect('admin/jenis');       
     }
 
     public function hapus($id){
         $where = array(
-            'id_kategori' => $id
+            'id_jenis' => $id
         );
-        $data = $this->CRUD_model->Delete('kategori',$where);
+        $data = $this->CRUD_model->Delete('jenis',$where);
         $this->session->set_flashdata('alert', '
         <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
             <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Jenis asset berhasil dihapus. 
         </div>
                 ');
-        redirect('admin/kategori/');
+        redirect('admin/jenis/');
     }
     public function editdata($id){
         $site = $this->Konfigurasi_model->listing();
         $data = array(
-            'title'                 => 'Edit Kategori Produk | '.$site['nama_website'],
+            'title'                 => 'Edit Jenis Produk | '.$site['nama_website'],
             'site'                  => $site,
             'nav'                   => '
                     <a class="navigasi-link">Daftar Produk</a>
-                    &nbsp; / &nbsp; <a class="navigasi-link" href="../"> <b> <i>Kategori Produk</i></b></a>
-                    &nbsp; / &nbsp; <b> <i>Edit Kategori Produk</i></b>
+                    &nbsp; / &nbsp; <a class="navigasi-link" href="../"> <b> <i>Jenis Produk</i></b></a>
+                    &nbsp; / &nbsp; <b> <i>Edit Jenis Produk</i></b>
             '
         );
         $where = array(
-            'id_kategori' => $id
+            'id_jenis' => $id
          );
-        $data2['kategori'] = $this->CRUD_model->edit_data($where,'kategori')->result();
-        $this->template->load('layout/template', 'admin/kategori_edit', array_merge($data, $data2));
+        $data2['jenis'] = $this->CRUD_model->edit_data($where,'jenis')->result();
+        $this->template->load('layout/template', 'admin/jenis_edit', array_merge($data, $data2));
     }
     public function updatedata(){   
         $data = array(
-            'kategori' => $this->input->post('kategori')
+            'jenis' => $this->input->post('jenis')
          ); 
         $where = array(
-            'id_kategori' => $this->input->post('id'),
+            'id_jenis' => $this->input->post('id'),
         );
-        $data = $this->CRUD_model->Update('kategori', $data, $where);
+        $data = $this->CRUD_model->Update('jenis', $data, $where);
         $this->session->set_flashdata('alert', '
         <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
             <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Jenis asset berhasil diperbarui. 
         </div>
                 ');
-        redirect('admin/kategori');
+        redirect('admin/jenis');
     }
     public function delete_data($id){
-        $id = array('id_kategori' => $id);
-        $this->CRUD_model->Delete('kategori', $id);
+        $id = array('id_jenis' => $id);
+        $this->CRUD_model->Delete('jenis', $id);
         $this->session->set_flashdata('alert', '
         <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
             <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Jenis asset berhasil dihapus. 
         </div>
             ');
-        redirect('admin/kategori/');
+        redirect('admin/jenis/');
     }
 }

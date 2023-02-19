@@ -1,7 +1,7 @@
 <?php 
-$this->db->select('*')->from('kategori');
-$this->db->order_by('kategori','ASC');
-$kategori_produk = $this->db->get()->result_array();
+$this->db->select('*')->from('jenis');
+$this->db->order_by('jenis','ASC');
+$jenis_produk = $this->db->get()->result_array();
 ?>
 <!-- BEGIN: Side Menu -->
 <nav class="side-nav">
@@ -19,7 +19,8 @@ $kategori_produk = $this->db->get()->result_array();
 			</a>
 		</li>
 		<li>
-			<a href="<?php echo site_url('admin/pengguna');?>" class="side-menu <?php echo activate_menu('pengguna');  ?>">
+			<a href="<?php echo site_url('admin/pengguna');?>"
+				class="side-menu <?php echo activate_menu('pengguna');  ?>">
 				<div class="side-menu__icon"> <i data-feather="user"></i> </div>
 				<div class="side-menu__title"> Pengguna </div>
 			</a>
@@ -27,23 +28,24 @@ $kategori_produk = $this->db->get()->result_array();
 		<li>
 			<a href="javascript:;" class="side-menu <?php echo activate_menu('produk');  ?>">
 				<div class="side-menu__icon"> <i data-feather="box"></i> </div>
-				<div class="side-menu__title"> Daftar Asset <i data-feather="chevron-down" class="side-menu__sub-icon"></i>
+				<div class="side-menu__title"> Daftar Asset <i data-feather="chevron-down"
+						class="side-menu__sub-icon"></i>
 				</div>
 			</a>
 			<ul class="<?php if($this->uri->segment('2')=='produk'){ echo "side-menu__sub-open"; } ?>">
-				<?php foreach ($kategori_produk as $key) { ?>
+				<?php foreach ($jenis_produk as $key) { ?>
 				<li>
-					<a href="<?php echo site_url('admin/produk/kategori/'.$key['id_kategori']);?>"
-						class="side-menu <?php if($this->uri->segment('4')==$key['id_kategori']){ echo "side-menu--active"; } ?>">
+					<a href="<?php echo site_url('admin/produk/jenis/'.$key['id_jenis']);?>"
+						class="side-menu <?php if($this->uri->segment('4')==$key['id_jenis']){ echo "side-menu--active"; } ?>">
 						<div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-						<div class="side-menu__title"> <?php echo $key['kategori']; ?> </div>
+						<div class="side-menu__title"> <?php echo $key['jenis']; ?> </div>
 					</a>
 				</li>
 				<?php } ?>
 			</ul>
 		</li>
-    <li>
-			<a href="<?php echo site_url('admin/kategori');?>" class="side-menu <?php echo activate_menu('kategori');  ?>">
+		<li>
+			<a href="<?php echo site_url('admin/jenis');?>" class="side-menu <?php echo activate_menu('jenis');  ?>">
 				<div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
 				<div class="side-menu__title"> Jenis Asset </div>
 			</a>
