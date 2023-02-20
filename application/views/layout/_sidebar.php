@@ -26,16 +26,16 @@ $jenis_produk = $this->db->get()->result_array();
 			</a>
 		</li>
 		<li>
-			<a href="javascript:;" class="side-menu <?php echo activate_menu('produk');  ?>">
-				<div class="side-menu__icon"> <i data-feather="box"></i> </div>
+			<a href="javascript:;" class="side-menu <?php echo activate_menu('aset');  ?>">
+				<div class="side-menu__icon"> <i data-feather="layers"></i> </div>
 				<div class="side-menu__title"> Daftar Asset <i data-feather="chevron-down"
 						class="side-menu__sub-icon"></i>
 				</div>
 			</a>
-			<ul class="<?php if($this->uri->segment('2')=='produk'){ echo "side-menu__sub-open"; } ?>">
+			<ul class="<?php if($this->uri->segment('2')=='aset'){ echo "side-menu__sub-open"; } ?>">
 				<?php foreach ($jenis_produk as $key) { ?>
 				<li>
-					<a href="<?php echo site_url('admin/produk/jenis/'.$key['id_jenis']);?>"
+					<a href="<?php echo site_url('admin/aset/jenis/'.$key['id_jenis']);?>"
 						class="side-menu <?php if($this->uri->segment('4')==$key['id_jenis']){ echo "side-menu--active"; } ?>">
 						<div class="side-menu__icon"> <i data-feather="activity"></i> </div>
 						<div class="side-menu__title"> <?php echo $key['jenis']; ?> </div>
@@ -45,8 +45,14 @@ $jenis_produk = $this->db->get()->result_array();
 			</ul>
 		</li>
 		<li>
+			<a href="<?php echo site_url('admin/ruang');?>" class="side-menu <?php echo activate_menu('ruang');  ?>">
+				<div class="side-menu__icon"> <i data-feather="columns"></i> </div>
+				<div class="side-menu__title"> Ruang </div>
+			</a>
+		</li>
+				<li>
 			<a href="<?php echo site_url('admin/jenis');?>" class="side-menu <?php echo activate_menu('jenis');  ?>">
-				<div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
+				<div class="side-menu__icon"> <i data-feather="box"></i> </div>
 				<div class="side-menu__title"> Jenis Asset </div>
 			</a>
 		</li>

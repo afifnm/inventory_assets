@@ -25,11 +25,6 @@ class CRUD_model extends CI_Model{
         $res = $this->db->delete($table, $where); // Kode ini digunakan untuk menghapus record yang sudah ada
         return $res;
     }
-    public function get_kategori($id){
-        $this->db->select('kategori')->from('kategori');
-        $this->db->where('id_kategori',$id);
-        return $this->db->get()->row()->kategori;
-    }
     public function get_wa($id){
         $this->db->select('no_hp')->from('user');
         $this->db->where('username',$id);

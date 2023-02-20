@@ -1,7 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Affiliate_model extends CI_Model{
+class Aset_model extends CI_Model{
+    public function jenis(){
+        $this->db->select('*')->from('jenis');
+        $this->db->order_by('jenis','ASC');
+        return $this->db->get()->result_array();
+    }
+    public function get_jenis($id){
+        $this->db->select('jenis')->from('jenis');
+        $this->db->where('id_jenis',$id);
+        return $this->db->get()->row()->jenis;
+    }
     public function ambil_produk($username,$num, $offset){
         $this->db->order_by('a.tanggal', 'DESC');
         $this->db->where('a.active',1);

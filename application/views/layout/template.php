@@ -16,7 +16,6 @@
 		<?php require_once('_sidebar.php') ?>
 		<!-- BEGIN: Content -->
 		<div class="content">
-			<?php require_once('_nav.php') ?>
 			<?php echo $contents ;?>
 		</div>
 		<!-- END: Content -->
