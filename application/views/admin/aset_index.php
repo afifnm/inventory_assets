@@ -16,9 +16,9 @@
 				<th class="border-b-2 text-center whitespace-no-wrap">NO</th>
 				<th class="border-b-2 whitespace-no-wrap">NAMA ASET </th>
 				<th class="border-b-2 whitespace-no-wrap">NOMOR INVENTARIS </th>
-				<th class="border-b-2 whitespace-no-wrap">ASET TIDAK/TETAP </th>
+				<th class="border-b-2 whitespace-no-wrap">STOK </th>
 				<th class="border-b-2 whitespace-no-wrap">TEMPAT </th>
-				<th class="border-b-2 text-center whitespace-no-wrap">TGL. MASUK</th>
+				<th class="border-b-2 whitespace-no-wrap">TGL. MASUK</th>
 				<th class="border-b-2 text-center whitespace-no-wrap">STATUS</th>
 				<th class="border-b-2 text-center whitespace-no-wrap">KONDISI</th>
 				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
@@ -27,27 +27,33 @@
 		<tbody>
 			<?php  $no = 1; foreach ($data2 as $user) {?>
 			<tr>
-				<td class="text-center border-b"><?php echo $no; ?></td>
-				<td class="text-left border-b"><?php echo $user['nama']; ?></td>
-				<td class="text-left border-b"><?php echo $user['nomor_inventaris']; ?></td>
-				<td class="text-left border-b"><?php echo $user['aset']; ?></td>
-				<td class="text-left border-b"><?php echo $user['tempat']; ?></td>
-				<td class="text-left border-b"><?php echo $user['tanggal_masuk']; ?></td>
-				<td class="text-left border-b"><?php echo $user['status']; ?></td>
-				<td class="text-left border-b"><?php echo $user['kondisi']; ?></td>
+				<td class="text-center border-b"><?= $no; ?></td>
+				<td class="text-left border-b"><?= $user['nama']; ?></td>
+				<td class="text-left border-b"><?= $user['nomor_inventaris']; ?></td>
+				<td class="text-left border-b">
+					<?php if($user['aset']=="Tetap"){ echo "Aset Tetap"; } else { echo $user['stok']; } ?> </td>
+				<td class="text-left border-b"><?= $user['ruang']; ?></td>
+				<td class="text-left border-b"><?= mediumdate_indo($user['tanggal_masuk']); ?></td>
+				<td class="text-left border-b text-center ">
+					<label class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white"><?= $user['status']; ?></label>
+				</td>
+				<td class="text-left border-b text-center ">
+					<label class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white"><?= $user['kondisi']; ?></label>
+				</td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
-						<a href="javascript:;" class="flex items-center text-theme-1 mr-3">
-							<i data-feather="search" class="w-4 h-4 mr-1"></i>
-							Lihat Aset </a>
-						<a href="javascript:;" onclick="edit(
-                                <?php echo $user['id_ruang'] ?>,
-                                '<?php echo $user['ruang'] ?>',
-                                '<?php echo $user['keterangan'] ?>'
-                                )" class="flex items-center mr-3" data-toggle="modal" data-target="#edit-data">
-							<i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit
-						</a>
-						<a href="javascript:;" onclick="hapus(<?php echo $user['id_ruang'] ?>)"
+						<a href="javascript:;"
+							onclick="hapus(<?= $user['id_jenis'] ?>,'<?= $user['nomor_inventaris'] ?>')"
+							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
+							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
+							Foto </a>
+						<a href="javascript:;"
+							onclick="hapus(<?= $user['id_jenis'] ?>,'<?= $user['nomor_inventaris'] ?>')"
+							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
+							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
+							Edit </a>
+						<a href="javascript:;"
+							onclick="hapus(<?= $user['id_jenis'] ?>,'<?= $user['nomor_inventaris'] ?>')"
 							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
 							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
 							Delete </a>
@@ -65,63 +71,69 @@
 		</div>
 		<form action="<?php echo site_url('admin/aset/simpan');?>" method="POST">
 			<div class="intro-y box p-5">
-        <div class="mt-1">
+				<div class="mt-1">
 					<label> Nama Aset</label>
-					<div class="relative mt-2">
-						<input type="text" class="input pr-12 w-full border col-span-4" placeholder="Nama aset..." name="nama" required>
-					</div>
-        </div>
-				<div class="mt-3">
-					<label>Quantity</label>
-					<div class="relative mt-2">
-						<input type="text" class="input pr-12 w-full border col-span-4" placeholder="Price">
-						<div
-							class="absolute top-0 right-0 rounded-r w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600">
-							pcs</div>
-					</div>
-				</div>
-				<div class="mt-3">
-					<label>Weight</label>
-					<div class="relative mt-2">
-						<input type="text" class="input pr-16 w-full border col-span-4" placeholder="Price">
-						<div
-							class="absolute top-0 right-0 rounded-r w-16 h-full flex items-center justify-center bg-gray-100 border text-gray-600">
-							grams</div>
-					</div>
-				</div>
-				<div class="mt-3">
-					<label>Price</label>
-					<div class="sm:grid grid-cols-3 gap-2">
+					<div class="sm:grid grid-cols-2 gap-2">
 						<div class="relative mt-2">
-							<div
-								class="absolute top-0 left-0 rounded-l w-12 h-full flex items-center justify-center bg-gray-100 border text-gray-600">
-								Unit</div>
-							<div class="pl-3">
-								<input type="text" class="input pl-12 w-full border col-span-4" placeholder="Price">
-							</div>
+							<input type="text" class="input pl-4 w-full border col-span-4" placeholder="nama aset.."
+								name="nama" required>
 						</div>
 						<div class="relative mt-2">
-							<div
-								class="absolute top-0 left-0 rounded-l w-20 h-full flex items-center justify-center bg-gray-100 border text-gray-600">
-								Wholesale</div>
-							<div class="pl-3">
-								<input type="text" class="input pl-20 w-full border col-span-4" placeholder="Price">
-							</div>
-						</div>
-						<div class="relative mt-2">
-							<div
-								class="absolute top-0 left-0 rounded-l w-12 h-full flex items-center justify-center bg-gray-100 border text-gray-600">
-								Bulk</div>
-							<div class="pl-3">
-								<input type="text" class="input pl-12 w-full border col-span-4" placeholder="Price">
-							</div>
+							<select name="aset" id="select_aset" class="input pl-4 w-full border col-span-4">
+								<option value="Tetap">Tetap</option>
+								<option value="Tidak Tetap">Tidak Tetap</option>
+							</select>
 						</div>
 					</div>
 				</div>
+				<div class="mt-3" id="stok" hidden>
+					<label>Jumlah Stok (Qty)</label>
+					<div class="relative mt-2">
+						<input type="number" class="input pr-4 w-full border col-span-4" placeholder="jumlah stok aset"
+							name="stok">
+					</div>
+				</div>
 				<div class="mt-3">
-					<label>Active Status</label>
-					<div class="mt-2">
-						<input type="checkbox" class="input input--switch border">
+					<label>Nomor Inventaris</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="nomor inventaris"
+							name="nomor_inventaris" required>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Merk</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="merk aset"
+							name="merk" required>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Jenis Aset</label>
+					<div class="relative mt-2">
+						<select name="id_jenis" class="input pr-4 w-full border col-span-4">
+							<?php foreach ($this->Aset_model->jenis() as $jenis){ ?>
+							<option value="<?= $jenis['id_jenis']; ?>"
+								<?php if($id_jenis==$jenis['id_jenis']){ echo"selected"; } ?>>
+								<?= $jenis['jenis']; ?>
+							</option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Ruang/Tempat</label>
+					<div class="relative mt-2">
+						<select name="id_ruang" class="input pr-4 w-full border col-span-4">
+							<?php foreach ($this->Aset_model->ruang() as $ruang){ ?>
+							<option value="<?= $ruang['id_ruang']; ?>"><?= $ruang['ruang']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Tanggal Masuk</label>
+					<div class="relative mt-2">
+						<input type="date" class="input w-full pl-4 border" name="tanggal_masuk" required>
 					</div>
 				</div>
 			</div>
@@ -176,9 +188,20 @@
 		document.getElementById('keterangan').value = keterangan;
 	};
 
-	function hapus(id) {
+	function hapus(id_jenis, id) {
 		var link = document.getElementById('link_hapus');
-		link.href = "<?php echo site_url('admin/ruang/delete_data/');?>" + id;
+		link.href = "<?php echo site_url('admin/aset/delete_data/');?>" + id_jenis + '/' + id;
 	};
+
+	const select = document.getElementById('select_aset');
+	select.addEventListener('change', function () {
+		console.log(select.value);
+		if (select.value == "Tidak Tetap") {
+			document.getElementById('stok').style.display = "block";
+		} else {
+			document.getElementById('stok').style.display = "none";
+		}
+		console.log(select.value);
+	})
 
 </script>

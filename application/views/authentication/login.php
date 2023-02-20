@@ -1,114 +1,74 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  class="light-style customizer-hide"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="<?php echo base_url('assets');?>/vendor/sneat/assets/"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-    <title>Login | <?php echo $site['nama_website']?></title>
-    <meta name="description" content="" />
-    <link rel="icon" type="image/x-icon" href="<?php echo base_url('assets');?>/vendor/sneat/assets/img/favicon/favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/fonts/boxicons.css" />
-    <link rel="stylesheet" href="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="<?php echo base_url('assets');?>/vendor/sneat/assets/css/demo.css" />
-    <link rel="stylesheet" href="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/css/pages/page-auth.css" />
-    <script src="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/js/helpers.js"></script>
-    <script src="<?php echo base_url('assets');?>/vendor/sneat/assets/js/config.js"></script>
-  </head>
+<html lang="en">
+<!-- BEGIN: Head -->
 
-  <body>
-    <!-- Content -->
+<head>
+	<meta charset="utf-8">
+	<link href="dist/images/logo.svg" rel="shortcut icon">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login - Inventaris Aset</title>
+	<!-- BEGIN: CSS Assets-->
+	<link rel="stylesheet" href="<?php echo base_url('assets');?>/vendor/midone/dist/css/app.css" />
+	<!-- END: CSS Assets-->
+</head>
+<!-- END: Head -->
 
-    <div class="container-xxl">
-      <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-          <!-- Register -->
-          <div class="card">
-            <div class="card-body">
-              <h4 class="mb-2"><?php echo $site['nama_website']?> 👋</h4>
-              <p class="mb-4">Masuk Dengan Username/NIS & Password Anda</p>
-
-              <form method="post" action="<?php echo base_url('auth/login'); ?>" role="login">
-                <div class="mb-3">
-                  <label for="email" class="form-label">Username/NIS</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="username"
-                    placeholder="Enter your username"
-                    autofocus
-                  />
-                </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit" name="submit" value="login">Masuk</button>
-                </div>
-              </form>
-
-              <p class="text-center">
-                <span>Belum punya akun?</span><br>
-                <a href="register">
-                  <span>Klik disini untuk membuat akun</span>
-                </a>
-              </p>
-              <div id="myalert">
-					<?php echo $this->session->flashdata('alert', true)?>
+<body class="login">
+	<div class="container sm:px-10">
+		<div class="block xl:grid grid-cols-2 gap-4">
+			<!-- BEGIN: Login Info -->
+			<div class="hidden xl:flex flex-col min-h-screen">
+				<div class="my-auto">
+					<div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+						INVENTARIS ASET
+					</div>
 				</div>
-            </div>
-          </div>
-          <!-- /Register -->
-        </div>
-      </div>
-    </div>
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/libs/popper/popper.js"></script>
-    <script src="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/js/bootstrap.js"></script>
-    <script src="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="<?php echo base_url('assets');?>/vendor/sneat/assets/vendor/js/menu.js"></script>
-    <script src="<?php echo base_url('assets');?>/vendor/sneat/assets/js/main.js"></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script>
-	$(function() {
-		$('input').iCheck({
-			checkboxClass: 'icheckbox_square-blue',
-			radioClass: 'iradio_square-blue',
-			increaseArea: '20%' // optional
-		});
-	});
-	$('#myalert').delay('slow').slideDown('slow').delay(6500).slideUp(600);
+			</div>
+			<!-- END: Login Info -->
+			<!-- BEGIN: Login Form -->
+			<div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+				<div
+					class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+					<h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">Login</h2>
+					<form method="post" action="<?php echo base_url('auth/login'); ?>" role="login">
+						<div class="intro-x mt-8">
+							<input type="text" class="intro-x login__input input input--lg border border-gray-300 block"
+								placeholder="Username" name="username" required>
+							<input type="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4"
+								placeholder="Password" name="password" required>
+						</div>
+						<div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+							<button type="submit" name="submit" value="login"
+								class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">Login</button>
+						</div>
+					</form>
+					<div class="intro-x mt-10 xl:mt-24 text-gray-700 text-center xl:text-left">
+						<div id="myalert">
+							<?php echo $this->session->flashdata('alert', true)?>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END: Login Form -->
+		</div>
+	</div>
+	<!-- BEGIN: JS Assets-->
+	<!-- BEGIN: JS Assets-->
+	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 	</script>
-  </body>
+	<script src="https://maps.googleapis.com/maps/api/js?key=[" your-google-map-api"]&libraries=places"></script>
+	<script src="<?php echo base_url('assets');?>/vendor/midone/dist/js/app.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<!-- END: JS Assets-->
+	<script>
+		setTimeout(function () {
+			$('#myalert').fadeOut('slow');
+		}, 2500); // <-- time in milliseconds
+
+	</script>
+
+
+	<!-- END: JS Assets-->
+</body>
+
 </html>

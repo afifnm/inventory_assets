@@ -9,6 +9,6 @@
 	<script>
 	setTimeout(function() {
 		$('#myalert').fadeOut('slow');
-	}, 2500); // <-- time in milliseconds
+	}, 4500); // <-- time in milliseconds
 	</script>
 

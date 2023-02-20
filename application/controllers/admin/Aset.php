@@ -19,36 +19,69 @@ class Aset extends MY_Controller{
         $data = array(
             'title'                 => $namajenis.' | '.$site['nama_website'],
             'site'                  => $site,
-            'namajenis'             => $namajenis
+            'namajenis'             => $namajenis,
+            'id_jenis'                    => $id
         );
-        $this->db->select('a.*,b.jenis')->from('aset a');
-        $this->db->join('jenis b', 'b.id_jenis = a.id_jenis','left');
+        $this->db->select('a.*,b.ruang')->from('aset a');
+        $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
         $this->db->order_by('a.tanggal_masuk','DESC');
         $this->db->where('a.id_jenis',$id);
         $data2 = $this->db->get()->result_array();
         $data2 = array('data2' => $data2);
         $this->template->load('layout/template', 'admin/aset_index', array_merge($data,$data2));
     }
-    public function simpan(){
-        $data = array(
-            'nama' => $this->input->post('nama'),
-            'id_jenis' => $this->input->post('jenis'),
-            'harga' => $this->input->post('harga'),
-            'deskripsi' => $this->input->post('deskripsi'),
-            'tanggal'=> date('Y-m-d H:i:s'),
-            'active' => 0,
-            'stok' => $this->input->post('stok'),
-            'kode_produk' => date('YmdHis').$this->session->userdata('id'),
-            'username' => $this->session->userdata('username')
-         );  
-        $this->CRUD_model->Insert('aset', $data);
-        $this->session->set_flashdata('alert', '
-            <div class="alert alert-primary alert-dismissible" role="alert">
-            Produk berhasil ditambahkan, upload gambar aset sebelum menampilkan aset ke publik.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    public function simpan(){      
+        if($this->input->post('aset')=='Tetap'){
+            $stok = 1;
+        } else {
+            $stok = $this->input->post('stok');
+        }
+        $nomor_inventaris = $this->input->post('nomor_inventaris');
+        $ceknomor = $this->db->where('nomor_inventaris', $nomor_inventaris)->count_all_results('aset');
+        if ($ceknomor > 0) {
+            $this->session->set_flashdata('alert', '
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+                <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Nomor inventaris '.$nomor_inventaris.' telah digunakan.
             </div>
-                ');
-        redirect('admin/aset/jenis/'.$this->input->post('jenis'));       
+                    ');
+             redirect('admin/aset/jenis/'.$this->input->post('id_jenis')); 
+        } 
+        else {
+            $data = array(
+                'nama'              => $this->input->post('nama'),
+                'aset'              => $this->input->post('aset'),
+                'stok'              => $stok,
+                'nomor_inventaris'  => $nomor_inventaris,
+                'merk'              => $this->input->post('merk'),
+                'id_jenis'          => $this->input->post('id_jenis'),
+                'tanggal_masuk'     => $this->input->post('tanggal_masuk'),
+                'id_ruang'          => $this->input->post('id_ruang'),
+                'status'            => 'Ada',
+                'kondisi'           => 'Baik',
+                'active'            => 1
+             );  
+            $this->CRUD_model->Insert('aset', $data);
+            $data = array(
+                'keterangan' => 'Ditambahkan',
+                'nomor_inventaris' => $nomor_inventaris,
+                'username' => $this->session->userdata('username'),
+                'IP' => $this->input->ip_address()
+             );  
+            $this->CRUD_model->Insert('logs_aset', $data);
+            $this->load->library('zend');  
+            $this->zend->load('Zend/Barcode'); 
+            $imageResource = Zend_Barcode::factory('code128', 'image', array('text'=>$nomor_inventaris), array())->draw();
+            $imageName = $nomor_inventaris.'.jpg';
+            $imagePath = 'assets/upload/barcode/'; // penyimpanan file barcode
+            imagejpeg($imageResource, $imagePath.$imageName); 
+            $pathBarcode = $imagePath.$imageName; //Menyimpan path image bardcode kedatabase
+            $this->session->set_flashdata('alert', '
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+                <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Aset '.$this->input->post('nama').' telah berhasil ditambahkan. Klik icon foto untuk menambahkan foto aset. 
+            </div>
+                    ');
+            redirect('admin/aset/jenis/'.$this->input->post('id_jenis'));     
+        }
     }
     public function uploadfoto(){
         date_default_timezone_set("Asia/Jakarta");
@@ -87,22 +120,25 @@ class Aset extends MY_Controller{
         redirect('admin/aset/foto/'.$this->input->post('id_jenis').'/'.$this->input->post('kode_produk'));       
     }
 
-    public function delete_data($id_jenis,$kode_produk){
-        foreach($this->CRUD_model->foto_produk($kode_produk) as $foto) {
+    public function delete_data($id_jenis,$nomor_inventaris){
+        foreach($this->Aset_model->foto_produk($nomor_inventaris) as $foto) {
             $filename=FCPATH.'/assets/upload/images/aset/'.$foto['namafile'];
             if (file_exists($filename)){
                 unlink("./assets/upload/images/aset/".$foto['namafile']);
             }
         }
+        $filename=FCPATH.'/assets/upload/barcode/'.$nomor_inventaris.'.jpg';
+        if (file_exists($filename)){
+            unlink("./assets/upload/barcode/".$nomor_inventaris.".jpg");
+        }
         $where = array(
-            'kode_produk' => $kode_produk
+            'nomor_inventaris' => $nomor_inventaris
         );
         $data = $this->CRUD_model->Delete('aset',$where);
         $this->session->set_flashdata('alert', '
-            <div class="alert alert-primary alert-dismissible" role="alert">
-            Produk berhasil dihapus.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Aset telah berhasil dihapus. 
+        </div>
                 ');
         redirect('admin/aset/jenis/'.$id_jenis);
     }

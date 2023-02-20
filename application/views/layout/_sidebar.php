@@ -37,7 +37,7 @@ $jenis_produk = $this->db->get()->result_array();
 				<li>
 					<a href="<?php echo site_url('admin/aset/jenis/'.$key['id_jenis']);?>"
 						class="side-menu <?php if($this->uri->segment('4')==$key['id_jenis']){ echo "side-menu--active"; } ?>">
-						<div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+						<div class="side-menu__icon"> <i data-feather="corner-down-right"></i> </div>
 						<div class="side-menu__title"> <?php echo $key['jenis']; ?> </div>
 					</a>
 				</li>
@@ -50,10 +50,16 @@ $jenis_produk = $this->db->get()->result_array();
 				<div class="side-menu__title"> Ruang </div>
 			</a>
 		</li>
-				<li>
+		<li>
 			<a href="<?php echo site_url('admin/jenis');?>" class="side-menu <?php echo activate_menu('jenis');  ?>">
 				<div class="side-menu__icon"> <i data-feather="box"></i> </div>
 				<div class="side-menu__title"> Jenis Asset </div>
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo site_url('auth/logout');?>" class="side-menu">
+				<div class="side-menu__icon"> <i data-feather="log-out"></i> </div>
+				<div class="side-menu__title"> Logout</div>
 			</a>
 		</li>
 	</ul>
