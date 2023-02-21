@@ -210,15 +210,15 @@
 			<h3 class="font-medium text-base ml-3" id="belum_ada">Foto aset belum dimasukan. Klik edit untuk memasukan foto aset. </h3>
 			<div class="slider mx-6 fade-mode" id="ada">
 				<div class="h-64 px-2">
-					<div class="h-full image-fit rounded-md overflow-hidden"> <img
+					<div class="h-full image-fit rounded-md overflow-hidden"> <img id="foto1" alt="Foto belum diupload"
 							src="<?php echo base_url('assets');?>/midone/dist/images/preview-8.jpg" /> </div>
 				</div>
 				<div class="h-64 px-2">
-					<div class="h-full image-fit rounded-md overflow-hidden"> <img
+					<div class="h-full image-fit rounded-md overflow-hidden"> <img id="foto2" alt="Foto belum diupload"
 							src="<?php echo base_url('assets');?>/midone/dist/images/preview-13.jpg" /> </div>
 				</div>
 				<div class="h-64 px-2">
-					<div class="h-full image-fit rounded-md overflow-hidden"> <img
+					<div class="h-full image-fit rounded-md overflow-hidden"> <img id="foto3" alt="Foto belum diupload"
 							src="<?php echo base_url('assets');?>/midone/dist/images/preview-12.jpg" /> </div>
 				</div>
 			</div>
@@ -239,6 +239,9 @@
 		if (count_foto > 0) {
 			document.getElementById('ada').style.display = "block";
 			document.getElementById('belum_ada').style.display = "none";
+			document.getElementById('foto1').src = '<?php echo site_url('assets/upload/aset/');?>'+nomor_inventaris+'1.jpg';
+			document.getElementById('foto2').src = '<?php echo site_url('assets/upload/aset/');?>'+nomor_inventaris+'2.jpg';
+			document.getElementById('foto3').src = '<?php echo site_url('assets/upload/aset/');?>'+nomor_inventaris+'3.jpg';
 		} else {
 			document.getElementById('ada').style.display = "none";
 			document.getElementById('belum_ada').style.display = "block";

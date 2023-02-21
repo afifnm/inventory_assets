@@ -86,8 +86,8 @@ class Aset extends MY_Controller{
     }
     public function uploadfoto(){
         date_default_timezone_set("Asia/Jakarta");
-        $time = date('YmdHis').'.jpg';
-        $config['upload_path']          = 'assets/upload/images/aset/';
+        $time = $this->input->post('nomor_inventaris').'1.jpg';
+        $config['upload_path']          = 'assets/upload/aset/';
         $config['max_size'] = 500 * 1024; //3 * 1024 * 1024; //3Mb; 0=unlimited
         $config['allowed_types']        = '*';
         $config['overwrite']            = TRUE;
@@ -95,12 +95,11 @@ class Aset extends MY_Controller{
         $this->load->library('upload', $config);
         if($_FILES['foto']['size'] >= 500 * 1024){
             $this->session->set_flashdata('alert', '
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                Ukuran foto terlalu besar, upload ulang foto dengan ukuran yang kurang dari 500 KB.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white mt-5">
+                <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Foto yang diupload melebihi batas maksimal. Maksimal 500 KB. 
+            </div>
                     ');
-            redirect('admin/aset/foto/'.$this->input->post('kode_produk'));  
+            redirect('admin/aset/foto/'.$this->input->post('id_jenis').'/'.$this->input->post('nomor_inventaris'));
         }  elseif( ! $this->upload->do_upload('foto')){
             $error = array('error' => $this->upload->display_errors());
         }else{
@@ -108,24 +107,23 @@ class Aset extends MY_Controller{
         }   
 
         $data = array(
-            'kode_produk' => $this->input->post('kode_produk'),
+            'nomor_inventaris' => $this->input->post('nomor_inventaris'),
             'namafile' => $time
          );  
         $this->CRUD_model->Insert('foto', $data);
         $this->session->set_flashdata('alert', '
-            <div class="alert alert-primary alert-dismissible" role="alert">
-            Foto aset berhasil ditambahkan.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white mt-5">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Foto berhasil diupload. 
+        </div>
                 ');
-        redirect('admin/aset/foto/'.$this->input->post('id_jenis').'/'.$this->input->post('kode_produk'));       
+        redirect('admin/aset/foto/'.$this->input->post('id_jenis').'/'.$this->input->post('nomor_inventaris'));    
     }
 
     public function delete_data($id_jenis,$nomor_inventaris){
         foreach($this->Aset_model->foto_produk($nomor_inventaris) as $foto) {
-            $filename=FCPATH.'/assets/upload/images/aset/'.$foto['namafile'];
+            $filename=FCPATH.'/assets/upload/aset/'.$foto['namafile'];
             if (file_exists($filename)){
-                unlink("./assets/upload/images/aset/".$foto['namafile']);
+                unlink("./assets/upload/aset/".$foto['namafile']);
             }
         }
         $filename=FCPATH.'/assets/upload/barcode/'.$nomor_inventaris.'.jpg';
@@ -144,9 +142,9 @@ class Aset extends MY_Controller{
         redirect('admin/aset/jenis/'.$id_jenis);
     }
     public function delete_foto($id_jenis,$namafile,$kode_produk){
-        $filename=FCPATH.'/assets/upload/images/aset/'.$namafile;
+        $filename=FCPATH.'/assets/upload/aset/'.$namafile;
         if (file_exists($filename)){
-            unlink("./assets/upload/images/aset/".$namafile);
+            unlink("./assets/upload/aset/".$namafile);
         }
         $where = array(
             'namafile' => $namafile
@@ -160,31 +158,13 @@ class Aset extends MY_Controller{
                 ');
         redirect('admin/aset/foto/'.$id_jenis.'/'.$kode_produk);
     }
-    public function editdata($id_jenis,$id){
-        $nama = $this->CRUD_model->get_jenis($id_jenis);
-        $site = $this->Konfigurasi_model->listing();
-        $data = array(
-            'title'                 => 'Perbarui Produk | '.$site['nama_website'],
-            'site'                  => $site,
-            'nav'                   => '
-                <a class="navigasi-link"> Produk</a>
-                &nbsp; / &nbsp; <a class="navigasi-link" href="'.site_url('admin/aset/jenis/'.$id_jenis).'">'.$nama.'</a>
-                &nbsp; / &nbsp; '.$id.'
-            '
-        );
-        $this->db->select('*')->from('jenis');
-        $this->db->order_by('jenis','ASC');
-        $data2['jenis'] = $this->db->get()->result_array();
-        $where = array('kode_produk' => $id);
-        $data2['aset'] = $this->CRUD_model->edit_data($where,'aset')->result();
-        $this->template->load('layout/template', 'admin/produk_edit', array_merge($data, $data2));
-    }
     public function foto($id_jenis,$nomor_inventaris){
         $nama = $this->Aset_model->get_jenis($id_jenis);
         $site = $this->Konfigurasi_model->listing();
         $data = array(
             'title'                 => 'Foto Aset | '.$site['nama_website'],
             'site'                  => $site,
+            'nomor_inventaris'      => $nomor_inventaris
         );
         $this->db->select('*')->from('jenis');
         $this->db->order_by('jenis','ASC');
@@ -194,23 +174,30 @@ class Aset extends MY_Controller{
         $this->template->load('layout/template', 'admin/aset_foto', array_merge($data, $data2));
     }
     public function updatedata(){   
+        if($this->input->post('aset')=="Tetap"){
+            $stok = 1;
+        } else {
+            $stok = $this->input->post('stok');
+        }
         $data = array(
-            'nama' => $this->input->post('nama'),
-            'id_jenis' => $this->input->post('jenis'),
-            'harga' => $this->input->post('harga'),
-            'deskripsi' => $this->input->post('deskripsi'),
-         ); 
+            'nama'              => $this->input->post('nama'),
+            'stok'              => $stok,
+            'merk'              => $this->input->post('merk'),
+            'id_jenis'          => $this->input->post('id_jenis'),
+            'tanggal_masuk'     => $this->input->post('tanggal_masuk'),
+            'id_ruang'          => $this->input->post('id_ruang'),
+            'kondisi'           => $this->input->post('kondisi')
+         );  
         $where = array(
-            'id_produk' => $this->input->post('id'),
+            'nomor_inventaris' => $this->input->post('nomor_inventaris'),
         );
         $data = $this->CRUD_model->Update('aset', $data, $where);
         $this->session->set_flashdata('alert', '
-            <div class="alert alert-primary alert-dismissible" role="alert">
-            Produk berhasil diperbarui.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white mt-5">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Aset '.$this->input->post('nama').' telah berhasil diperbarui. 
+        </div>
                 ');
-        redirect('admin/aset/jenis/'.$this->input->post('jenis'));
+        redirect('admin/aset/foto/'.$this->input->post('id_jenis').'/'.$this->input->post('nomor_inventaris'));
     }
     public function active($id_jenis,$kode_produk){
         $data = array('active' => 1); 

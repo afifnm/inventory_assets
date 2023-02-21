@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login - Inventaris Aset</title>
 	<!-- BEGIN: CSS Assets-->
-	<link rel="stylesheet" href="<?php echo base_url('assets');?>/vendor/midone/dist/css/app.css" />
+	<link rel="stylesheet" href="<?php echo base_url('assets');?>/midone/dist/css/app.css" />
 	<!-- END: CSS Assets-->
 </head>
 <!-- END: Head -->
@@ -57,7 +57,7 @@
 	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 	</script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=[" your-google-map-api"]&libraries=places"></script>
-	<script src="<?php echo base_url('assets');?>/vendor/midone/dist/js/app.js"></script>
+	<script src="<?php echo base_url('assets');?>/midone/dist/js/app.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<!-- END: JS Assets-->
 	<script>
