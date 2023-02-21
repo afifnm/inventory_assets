@@ -1,0 +1,1 @@
+- stok ditambah lewat edit (validasi nambah stok pakai password)

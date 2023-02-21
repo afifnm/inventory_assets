@@ -3,7 +3,7 @@
 <!-- BEGIN: Head -->
 <head>
 	<meta charset="utf-8">
-	<link href="<?php echo base_url('assets');?>/vendor/midone/dist/images/logo.svg" rel="shortcut icon">
+	<link href="<?php echo base_url('assets');?>/midone/dist/images/logo.svg" rel="shortcut icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
 		<?php echo $title ?>

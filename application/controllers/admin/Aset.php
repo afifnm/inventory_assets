@@ -22,8 +22,9 @@ class Aset extends MY_Controller{
             'namajenis'             => $namajenis,
             'id_jenis'                    => $id
         );
-        $this->db->select('a.*,b.ruang')->from('aset a');
+        $this->db->select('a.*,b.ruang,c.jenis')->from('aset a');
         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
+        $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','left');
         $this->db->order_by('a.tanggal_masuk','DESC');
         $this->db->where('a.id_jenis',$id);
         $data2 = $this->db->get()->result_array();
@@ -178,24 +179,19 @@ class Aset extends MY_Controller{
         $data2['aset'] = $this->CRUD_model->edit_data($where,'aset')->result();
         $this->template->load('layout/template', 'admin/produk_edit', array_merge($data, $data2));
     }
-    public function foto($id_jenis,$id){
-        $nama = $this->CRUD_model->get_jenis($id_jenis);
+    public function foto($id_jenis,$nomor_inventaris){
+        $nama = $this->Aset_model->get_jenis($id_jenis);
         $site = $this->Konfigurasi_model->listing();
         $data = array(
-            'title'                 => 'Foto Produk | '.$site['nama_website'],
+            'title'                 => 'Foto Aset | '.$site['nama_website'],
             'site'                  => $site,
-            'nav'                   => '
-                <a class="navigasi-link"> Produk</a>
-                &nbsp; / &nbsp; <a class="navigasi-link" href="'.site_url('admin/aset/jenis/'.$id_jenis).'">'.$nama.'</a>
-                &nbsp; / &nbsp; '.$id.'
-            '
         );
         $this->db->select('*')->from('jenis');
         $this->db->order_by('jenis','ASC');
         $data2['jenis'] = $this->db->get()->result_array();
-        $where = array('kode_produk' => $id);
+        $where = array('nomor_inventaris' => $nomor_inventaris);
         $data2['aset'] = $this->CRUD_model->edit_data($where,'aset')->result();
-        $this->template->load('layout/template', 'admin/produk_foto', array_merge($data, $data2));
+        $this->template->load('layout/template', 'admin/aset_foto', array_merge($data, $data2));
     }
     public function updatedata(){   
         $data = array(

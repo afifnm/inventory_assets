@@ -10,7 +10,7 @@
 </div>
 <!-- BEGIN: Datatable -->
 <div class="intro-y datatable-wrapper box p-5 mt-5">
-	<table class="table table-report table-report--bordered display datatable w-full">
+	<table class="table table-report table-report--bordered display datatable w-full" style="font-size: 12px;">
 		<thead>
 			<tr>
 				<th class="border-b-2 text-center whitespace-no-wrap">NO</th>
@@ -18,9 +18,7 @@
 				<th class="border-b-2 whitespace-no-wrap">NOMOR INVENTARIS </th>
 				<th class="border-b-2 whitespace-no-wrap">STOK </th>
 				<th class="border-b-2 whitespace-no-wrap">TEMPAT </th>
-				<th class="border-b-2 whitespace-no-wrap">TGL. MASUK</th>
 				<th class="border-b-2 text-center whitespace-no-wrap">STATUS</th>
-				<th class="border-b-2 text-center whitespace-no-wrap">KONDISI</th>
 				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
 			</tr>
 		</thead>
@@ -31,27 +29,35 @@
 				<td class="text-left border-b"><?= $user['nama']; ?></td>
 				<td class="text-left border-b"><?= $user['nomor_inventaris']; ?></td>
 				<td class="text-left border-b">
-					<?php if($user['aset']=="Tetap"){ echo "Aset Tetap"; } else { echo $user['stok']; } ?> </td>
+					<?php if($user['aset']=="Tetap"){ echo "Tetap"; } else { echo $user['stok']; } ?> </td>
 				<td class="text-left border-b"><?= $user['ruang']; ?></td>
-				<td class="text-left border-b"><?= mediumdate_indo($user['tanggal_masuk']); ?></td>
 				<td class="text-left border-b text-center ">
-					<label class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white"><?= $user['status']; ?></label>
-				</td>
-				<td class="text-left border-b text-center ">
-					<label class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white"><?= $user['kondisi']; ?></label>
+					<label
+						class="button w-24 rounded-full mr-1 mb-2 bg-theme-9 text-white"><?= $user['status']; ?></label>
 				</td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
-						<a href="javascript:;"
-							onclick="hapus(<?= $user['id_jenis'] ?>,'<?= $user['nomor_inventaris'] ?>')"
-							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
-							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
-							Foto </a>
-						<a href="javascript:;"
-							onclick="hapus(<?= $user['id_jenis'] ?>,'<?= $user['nomor_inventaris'] ?>')"
-							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
-							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
-							Edit </a>
+						<a href="javascript:;" onclick="edit(
+								'<?php echo $user['id_aset'] ?>',
+								'<?php echo $user['nama'] ?>',
+								'<?php echo $user['aset'] ?>',
+								'<?php echo $user['stok'] ?>',
+								'<?php echo $user['nomor_inventaris'] ?>',
+								'<?php echo $user['merk'] ?>',
+								'<?php echo $user['jenis'] ?>',
+								'<?php echo mediumdate_indo($user['tanggal_masuk']) ?>',
+								'<?php echo $user['ruang'] ?>',
+								'<?php echo $user['status'] ?>',
+								'<?php echo $user['kondisi'] ?>',
+								<?php echo $this->Aset_model->count_foto_aset($user['nomor_inventaris']) ?>
+								)" class="flex items-center pr-1" data-toggle="modal" data-target="#edit-data">
+							<i data-feather="search" class="w-4 h-4 mr-1"></i>
+							Detail
+						</a>
+						<a href="<?php echo site_url('admin/aset/foto/'.$user['id_jenis'].'/'.$user['nomor_inventaris']);?>"
+							class="flex items-center text-theme-1 pr-1" >
+							<i data-feather="check-square" class="w-4 h-4 mr-1"></i>
+							Edit  </a>
 						<a href="javascript:;"
 							onclick="hapus(<?= $user['id_jenis'] ?>,'<?= $user['nomor_inventaris'] ?>')"
 							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
@@ -143,27 +149,6 @@
 		</form>
 	</div>
 </div>
-<!-- BEGIN: EDIT Confirmation Modal -->
-<div class="modal" id="edit-data">
-	<div class="modal__content p-10 text-center">
-		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
-			<h2 class="font-medium text-base mr-auto">PERBARUI NAMA RUANG </h2>
-		</div>
-		<form action="<?php echo site_url('admin/ruang/updatedata');?>" method="POST">
-			<input type="hidden" name="id" id="id" class="input w-full border mt-2">
-			<div class="col-span-12 sm:col-span-6">
-				<input type="text" name="ruang" class="input w-full border mt-2" id="ruang">
-			</div>
-			<div class="col-span-12 sm:col-span-6">
-				<input type="text" name="keterangan" class="input w-full border mt-2" id="keterangan">
-			</div>
-			<div class="px-5 py-3 text-right border-t border-gray-200">
-				<button type="submit" class="button bg-theme-1 text-white mt-5">Simpan</button>
-			</div>
-		</form>
-	</div>
-</div>
-<!-- END: EDIT Confirmation Modal -->
 <!-- BEGIN: Delete Confirmation Modal -->
 <div class="modal" id="hapus-data">
 	<div class="modal__content">
@@ -181,11 +166,83 @@
 	</div>
 </div>
 <!-- END: Delete Confirmation Modal -->
+<!-- BEGIN: EDIT Confirmation Modal -->
+<div class="modal" id="edit-data">
+	<div class="modal__content modal__content--lg">
+		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+			<h2 class="font-medium text-base ml-3" id="h2_nama">PERBARUI ASET </h2>
+		</div>
+		<div class="intro-y box p-5">
+			<table class="ml-3 mb-3">
+				<tr>
+					<td>Nomor Inventaris </td>
+					<td id="nomor_inventaris">: </td>
+				</tr>
+				<tr>
+					<td>Jenis Aset </td>
+					<td>: <?= $namajenis; ?></td>
+				</tr>
+				<tr>
+					<td>Jumlah/Stok</td>
+					<td id="qty">: </td>
+				</tr>
+				<tr>
+					<td>Merk</td>
+					<td id="merk">: </td>
+				</tr>
+				<tr>
+					<td>Tanggal Masuk</td>
+					<td id="tanggal_masuk">: </td>
+				</tr>
+				<tr>
+					<td>Ruang </td>
+					<td id="ruang">: </td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td id="status">: </td>
+				</tr>
+				<tr>
+					<td>Kondisi</td>
+					<td id="kondisi">: </td>
+				</tr>
+			</table>
+			<h3 class="font-medium text-base ml-3" id="belum_ada">Foto aset belum dimasukan. Klik edit untuk memasukan foto aset. </h3>
+			<div class="slider mx-6 fade-mode" id="ada">
+				<div class="h-64 px-2">
+					<div class="h-full image-fit rounded-md overflow-hidden"> <img
+							src="<?php echo base_url('assets');?>/midone/dist/images/preview-8.jpg" /> </div>
+				</div>
+				<div class="h-64 px-2">
+					<div class="h-full image-fit rounded-md overflow-hidden"> <img
+							src="<?php echo base_url('assets');?>/midone/dist/images/preview-13.jpg" /> </div>
+				</div>
+				<div class="h-64 px-2">
+					<div class="h-full image-fit rounded-md overflow-hidden"> <img
+							src="<?php echo base_url('assets');?>/midone/dist/images/preview-12.jpg" /> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: EDIT Confirmation Modal -->
 <script>
-	function edit(id, ruang, keterangan) {
-		document.getElementById('id').value = id;
-		document.getElementById('ruang').value = ruang;
-		document.getElementById('keterangan').value = keterangan;
+	function edit(id_aset, nama, aset, stok, nomor_inventaris, merk, jenis, tanggal_masuk, ruang, status, kondisi,count_foto) {
+		document.getElementById('h2_nama').innerHTML = nama;
+		document.getElementById('nomor_inventaris').innerHTML = ': ' + nomor_inventaris;
+		document.getElementById('qty').innerHTML = ': ' + stok + ' (Aset ' + aset + ')';
+		document.getElementById('merk').innerHTML = ': ' + merk;
+		document.getElementById('tanggal_masuk').innerHTML = ': ' + tanggal_masuk;
+		document.getElementById('ruang').innerHTML = ': ' + ruang;
+		document.getElementById('status').innerHTML = ': ' + status;
+		document.getElementById('kondisi').innerHTML = ': ' + kondisi;
+		if (count_foto > 0) {
+			document.getElementById('ada').style.display = "block";
+			document.getElementById('belum_ada').style.display = "none";
+		} else {
+			document.getElementById('ada').style.display = "none";
+			document.getElementById('belum_ada').style.display = "block";
+		}
 	};
 
 	function hapus(id_jenis, id) {

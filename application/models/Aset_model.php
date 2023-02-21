@@ -18,9 +18,14 @@ class Aset_model extends CI_Model{
         $this->db->where('id_jenis',$id);
         return $this->db->get()->row()->jenis;
     }
-    public function foto_produk($nomor_inventaris){ //tampilkan semua foto berdasarkan nomor_inventaris
+    public function foto_aset($nomor_inventaris){ //tampilkan semua foto berdasarkan nomor_inventaris
         $this->db->select('*')->from('foto');
         $this->db->where('nomor_inventaris',$nomor_inventaris);
         return $this->db->get()->result_array();
+    }
+    public function count_foto_aset($nomor_inventaris){ //tampilkan semua foto berdasarkan nomor_inventaris
+        $this->db->select('*')->from('foto');
+        $this->db->where('nomor_inventaris',$nomor_inventaris);
+        return $this->db->count_all_results();
     }
 }
