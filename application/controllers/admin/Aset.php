@@ -85,13 +85,29 @@ class Aset extends MY_Controller{
         }
     }
     public function uploadfoto(){
-        date_default_timezone_set("Asia/Jakarta");
-        $time = $this->input->post('nomor_inventaris').'1.jpg';
+        $foto1 = $this->db->where('namafile', $this->input->post('nomor_inventaris').'1.jpg')->count_all_results('foto');
+        $foto2 = $this->db->where('namafile', $this->input->post('nomor_inventaris').'2.jpg')->count_all_results('foto');
+        $foto3 = $this->db->where('namafile', $this->input->post('nomor_inventaris').'3.jpg')->count_all_results('foto');
+        if ($foto1 == 0) {
+            $namafile = $this->input->post('nomor_inventaris').'1.jpg';
+        } elseif ($foto2 == 0) {
+            $namafile = $this->input->post('nomor_inventaris').'2.jpg';
+        } elseif ($foto3 == 0) {
+            $namafile = $this->input->post('nomor_inventaris').'3.jpg';
+        } else {
+            $this->session->set_flashdata('alert', '
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white mt-5">
+                <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Foto yang diupload hanya bisa 3 foto. 
+            </div>
+                    ');
+            redirect('admin/aset/foto/'.$this->input->post('id_jenis').'/'.$this->input->post('nomor_inventaris'));            
+        }
+
         $config['upload_path']          = 'assets/upload/aset/';
         $config['max_size'] = 500 * 1024; //3 * 1024 * 1024; //3Mb; 0=unlimited
         $config['allowed_types']        = '*';
         $config['overwrite']            = TRUE;
-        $config['file_name']            = $time;
+        $config['file_name']            = $namafile;
         $this->load->library('upload', $config);
         if($_FILES['foto']['size'] >= 500 * 1024){
             $this->session->set_flashdata('alert', '
@@ -108,7 +124,7 @@ class Aset extends MY_Controller{
 
         $data = array(
             'nomor_inventaris' => $this->input->post('nomor_inventaris'),
-            'namafile' => $time
+            'namafile' => $namafile
          );  
         $this->CRUD_model->Insert('foto', $data);
         $this->session->set_flashdata('alert', '
