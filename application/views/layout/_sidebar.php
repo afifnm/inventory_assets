@@ -1,13 +1,7 @@
-<?php 
-$this->db->select('*')->from('jenis');
-$this->db->order_by('jenis','ASC');
-$jenis_produk = $this->db->get()->result_array();
-?>
 <!-- BEGIN: Side Menu -->
 <nav class="side-nav">
 	<a href="" class="intro-x flex items-center pl-5 pt-4">
-		<img alt="Midone Tailwind HTML Admin Template" class="w-6"
-			src="<?php echo base_url('assets');?>/midone/dist/images/logo.svg">
+		<img class="w-6" src="<?php echo base_url('assets');?>/midone/dist/images/logo.svg">
 		<span class="hidden xl:block text-white text-lg ml-3"> Inventory<span class="font-medium"> Asset</span> </span>
 	</a>
 	<div class="side-nav__devider my-6"></div>

@@ -12,6 +12,7 @@
 </head>
 <!-- END: Head -->
 <body class="app">
+<?php require_once('_sidebarMobile.php') ?>
 	<div class="flex">
 		<?php require_once('_sidebar.php') ?>
 		<!-- BEGIN: Content -->

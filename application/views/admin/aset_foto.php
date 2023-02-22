@@ -90,7 +90,7 @@
 		</form>
 	</div>
 	<div class="col-span-2 dropzone border-gray-200 border-dashed">
-		<label>Pilih yang akan diupload</label>
+		<label>Pilih foto yang akan diupload</label>
 		<form method='post' action='<?php echo site_url('admin/aset/uploadfoto');?>' enctype='multipart/form-data'>
 			<input type="hidden" name="nomor_inventaris" value="<?php echo $u->nomor_inventaris; ?>">
 			<input type="hidden" name="id_jenis" value="<?php echo $u->id_jenis; ?>">
@@ -111,8 +111,27 @@
 		<?php } ?>
 	</div>
 </div>
+<div class="intro-y datatable-wrapper box p-5 mt-5">
+	<table class="table table-report table-report--bordered display datatable w-full" style="font-size: 12px;">
+		<thead>
+			<tr>
+				<th class="border-b-2 text-center whitespace-no-wrap">NO</th>
+				<th class="border-b-2 whitespace-no-wrap">Waktu </th>
+				<th class="border-b-2 whitespace-no-wrap">Keterangan </th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php  $no = 1; foreach ($this->Aset_model->logs_aset($u->nomor_inventaris) as $user) {?>
+			<tr>
+				<td class="text-center border-b"><?= $no; ?></td>
+				<td class="text-left whitespace-no-wrap"><?= $user['datetime']; ?></td>
+				<td class="text-left border-b"><?= $user['keterangan']; ?></td>
+			</tr>
+			<?php $no++; } ?>
+		</tbody>
+	</table>
+</div>
 <?php } ?>
-<!-- BEGIN: Delete Confirmation Modal -->
 <div class="modal" id="hapus-data">
 	<div class="modal__content">
 		<div class="p-5 text-center">
@@ -128,9 +147,8 @@
 		</div>
 	</div>
 </div>
-<!-- END: Delete Confirmation Modal -->
 <script>
-	const konfirrmasi = document.getElementById('confirm');
+	var konfirrmasi = document.getElementById('confirm');
 	konfirrmasi.addEventListener('change', function () {
 		console.log(konfirrmasi.checked);
 		if (konfirrmasi.checked == true) {

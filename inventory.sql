@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Feb 2023 pada 18.19
+-- Waktu pembuatan: 22 Feb 2023 pada 17.52
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 7.4.29
 
@@ -48,7 +48,8 @@ CREATE TABLE `aset` (
 --
 
 INSERT INTO `aset` (`id_aset`, `nama`, `aset`, `stok`, `nomor_inventaris`, `merk`, `id_jenis`, `tanggal_masuk`, `id_ruang`, `status`, `kondisi`, `active`, `updated_at`) VALUES
-(5, 'Laptop Core i3 Gen 11', 'Tetap', 1, '123.323.323.001', 'Acer', 6, '2023-02-20', '9', 'Ada', 'Baik', 1, '2023-02-20 16:59:16');
+(11, 'Laptop Core i3 Gen 10', 'Tetap', 1, '123.323.323.001', 'Acer Aspire', 6, '2023-02-01', '6', 'Ada', 'Baik', 1, '2023-02-22 16:42:09'),
+(12, 'Kertas A4 10gram', 'Tidak Tetap', 50, '402.231.001', 'SiDu', 2, '2023-02-01', '9', 'Ada', 'Baik', 1, '2023-02-22 12:54:35');
 
 -- --------------------------------------------------------
 
@@ -61,6 +62,14 @@ CREATE TABLE `foto` (
   `nomor_inventaris` varchar(100) NOT NULL,
   `namafile` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `foto`
+--
+
+INSERT INTO `foto` (`id_foto`, `nomor_inventaris`, `namafile`) VALUES
+(12, '123.323.323.001', '123.323.323.0011.jpg'),
+(13, '123.323.323.001', '123.323.323.0012.jpg');
 
 -- --------------------------------------------------------
 
@@ -100,7 +109,7 @@ INSERT INTO `jenis` (`id_jenis`, `jenis`) VALUES
 (1, 'Peralatan Kantor'),
 (2, 'Perabot Kantor'),
 (4, 'Alat Komunikasi'),
-(5, 'Perabot Kantor Tempelan'),
+(5, 'Perabot Kantor'),
 (6, 'Paket Komputer'),
 (7, 'Mesin-Mesin'),
 (8, 'Perkakas');
@@ -128,12 +137,13 @@ INSERT INTO `konfigurasi` (`id`, `nama_website`, `favicon`, `logo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `logs_aset`
+-- Struktur dari tabel `logs`
 --
 
-CREATE TABLE `logs_aset` (
-  `id_logs_aset` int(11) NOT NULL,
-  `keterangan` varchar(50) NOT NULL,
+CREATE TABLE `logs` (
+  `id_logs` int(11) NOT NULL,
+  `tabel` varchar(25) NOT NULL,
+  `keterangan` text NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `username` varchar(50) NOT NULL,
   `IP` varchar(60) NOT NULL,
@@ -141,14 +151,23 @@ CREATE TABLE `logs_aset` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `logs_aset`
+-- Dumping data untuk tabel `logs`
 --
 
-INSERT INTO `logs_aset` (`id_logs_aset`, `keterangan`, `datetime`, `username`, `IP`, `nomor_inventaris`) VALUES
-(1, 'Ditambahkan', '2023-02-20 16:52:09', 'root', '127.0.0.1', '123..323.323.001'),
-(2, 'Ditambahkan', '2023-02-20 16:52:52', 'root', '127.0.0.1', '123..323.323.001'),
-(3, 'Ditambahkan', '2023-02-20 16:58:32', 'root', '127.0.0.1', '123..323.323.001'),
-(4, 'Ditambahkan', '2023-02-20 16:59:16', 'root', '127.0.0.1', '123.323.323.001');
+INSERT INTO `logs` (`id_logs`, `tabel`, `keterangan`, `datetime`, `username`, `IP`, `nomor_inventaris`) VALUES
+(17, 'aset', 'root telah menambahkan Laptop Core i3 Gen 11 dengan nomor inventaris 123.323.323.001', '2023-02-22 12:06:36', 'root', '127.0.0.1', '123.323.323.001'),
+(24, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 11 dengan nomor inventaris 123.323.323.001', '2023-02-22 12:12:56', 'root', '127.0.0.1', '123.323.323.001'),
+(25, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 11 dengan nomor inventaris 123.323.323.001', '2023-02-22 12:13:00', 'root', '127.0.0.1', '123.323.323.001'),
+(29, 'aset', 'root telah mengubah ruang Gudang Barat menjadi Lab Komputer 1, kondisi Hilang menjadi Baik, dari aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 12:52:30', 'root', '127.0.0.1', '123.323.323.001'),
+(30, 'aset', 'root telah menambahkan Kertas A4 10gram dengan nomor inventaris 402.231.001', '2023-02-22 12:54:19', 'root', '127.0.0.1', '402.231.001'),
+(31, 'aset', 'root telah mengubah stok 40 menjadi 50, dari aset Kertas A4 10gram dengan nomor inventaris 402.231.001', '2023-02-22 12:54:35', 'root', '127.0.0.1', '402.231.001'),
+(32, 'foto', 'root telah menghapus foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:45:42', 'root', '127.0.0.1', '123.323.323.001'),
+(33, 'foto', 'root telah menghapus foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:46:39', 'root', '127.0.0.1', '123.323.323.001'),
+(34, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:46:48', 'root', '127.0.0.1', '123.323.323.001'),
+(35, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:46:58', 'root', '127.0.0.1', '123.323.323.001'),
+(36, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:47:06', 'root', '127.0.0.1', '123.323.323.001'),
+(37, 'foto', 'root telah menghapus foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:47:09', 'root', '127.0.0.1', '123.323.323.001'),
+(38, 'aset', 'root telah mengubah tanggal masuk 2023-02-23 menjadi 2023-02-01, dari aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 16:42:09', 'root', '127.0.0.1', '123.323.323.001');
 
 -- --------------------------------------------------------
 
@@ -280,10 +299,10 @@ ALTER TABLE `konfigurasi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `logs_aset`
+-- Indeks untuk tabel `logs`
 --
-ALTER TABLE `logs_aset`
-  ADD PRIMARY KEY (`id_logs_aset`);
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id_logs`);
 
 --
 -- Indeks untuk tabel `peminjaman`
@@ -317,13 +336,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `aset`
 --
 ALTER TABLE `aset`
-  MODIFY `id_aset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_aset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `foto`
 --
 ALTER TABLE `foto`
-  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `history`
@@ -344,10 +363,10 @@ ALTER TABLE `konfigurasi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `logs_aset`
+-- AUTO_INCREMENT untuk tabel `logs`
 --
-ALTER TABLE `logs_aset`
-  MODIFY `id_logs_aset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `logs`
+  MODIFY `id_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT untuk tabel `ruang`
