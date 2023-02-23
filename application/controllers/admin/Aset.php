@@ -13,6 +13,7 @@ class Aset extends MY_Controller{
             redirect('', 'refresh');
         }
     }
+
     public function jenis($id){
         $namajenis = $this->Aset_model->get_jenis($id);
         $site = $this->Konfigurasi_model->listing();
@@ -107,12 +108,15 @@ class Aset extends MY_Controller{
         }
 
         $config['upload_path']          = 'assets/upload/aset/';
-        $config['max_size'] = 500 * 1024; //3 * 1024 * 1024; //3Mb; 0=unlimited
+        $config['max_size'] = 800 * 1024; //3 * 1024 * 1024; //3Mb; 0=unlimited
         $config['allowed_types']        = '*';
+        $config['quality']= '30%';
         $config['overwrite']            = TRUE;
         $config['file_name']            = $namafile;
+        $location                       = 'assets/upload/aset/'.$namafile;
+        $source                         = 'assets/upload/aset/'.$namafile;
         $this->load->library('upload', $config);
-        if($_FILES['foto']['size'] >= 500 * 1024){
+        if($_FILES['foto']['size'] >= 800 * 1024){
             $this->session->set_flashdata('alert', '
             <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white mt-5">
                 <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Foto yang diupload melebihi batas maksimal. Maksimal 500 KB. 
@@ -123,8 +127,8 @@ class Aset extends MY_Controller{
             $error = array('error' => $this->upload->display_errors());
         }else{
             $data = array('upload_data' => $this->upload->data());
+            $this->Aset_model->compressImage($source,$location,30);
         }   
-
         $data = array(
             'nomor_inventaris' => $this->input->post('nomor_inventaris'),
             'namafile' => $namafile

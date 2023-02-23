@@ -12,15 +12,15 @@
 	<div class="w-full sm:w-auto flex mt-4 ml-5 sm:mt-0">
 		<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
 			class="button mr-1 inline-block bg-theme-1 text-white">Tambah Aset </a>
-        <a href=" javascript:;" data-toggle="modal" data-target="#superlarge-modal-size-preview"
+		<a href=" javascript:;" data-toggle="modal" data-target="#superlarge-modal-size-preview"
 			class="button mr-1 inline-block bg-theme-1 text-white">Logs Aktivitas</a>
 	</div>
 </div>
-<div class="intro-y col-span-12 lg:col-span-10 md:grid-cols-5">
-	<div class="col-span-3">
-		<div class="grid grid-cols-12 gap-5 mt-5">
+<div class="grid grid-cols-3 gap-4">
+	<div class="col-span-3 md:col-span-2">
+		<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-1 gap-2 mt-5">
 			<?php foreach ($this->Aset_model->jenis() as $key) { ?>
-			<div class="col-span-12 sm:col-span-4 xxl:col-span-3 box p-5 cursor-pointer zoom-in">
+			<div class="box p-5 cursor-pointer zoom-in">
 				<a href="<?php echo site_url('admin/aset/jenis/'.$key['id_jenis']);?>">
 					<div class="font-medium text-base"><?php echo $key['jenis']; ?> </div>
 					<div class="text-gray-600"><?= $this->Aset_model->count_jenis_aset($key['id_jenis']); ?> aset</div>
@@ -28,109 +28,58 @@
 			</div>
 			<?php } ?>
 		</div>
+		<hr class="mt-4 mb-2">
+		<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-1 gap-2 mt-5">
+			<?php foreach ($this->Aset_model->ruang() as $key) { ?>
+			<div class="box p-5 cursor-pointer zoom-in">
+				<a href="<?php echo site_url('admin/aset/ruang/'.$key['id_ruang']);?>">
+					<div class="font-medium text-base"><?php echo $key['ruang']; ?> </div>
+					<div class="text-gray-600"><?= $this->Aset_model->count_ruang_aset($key['id_ruang']); ?> aset</div>
+				</a>
+			</div>
+			<?php } ?>
+		</div>
 	</div>
-	<div class="col-span-2">
+	<div class="col-span-3 md:col-span-1">
 		<div class="col-span-12 md:col-span-4 mt-5">
 			<div class="intro-y pr-1">
 				<div class="box p-2">
-					<div class="pos__tabs nav-tabs justify-center flex"> <a data-toggle="tab" data-target="#ticket"
-							href="javascript:;" class="flex-1 py-2 rounded-md text-center active">Pinjam Aset</a> <a
-							data-toggle="tab" data-target="#details" href="javascript:;"
-							class="flex-1 py-2 rounded-md text-center">Ambil Aset</a> </div>
+					<div class="pos__tabs nav-tabs justify-center flex">
+						<a data-toggle="tab" data-target="#ticket" href="javascript:;"
+							class="flex-1 py-2 rounded-md text-center active">Pinjam Aset</a>
+						<a data-toggle="tab" data-target="#details" href="javascript:;"
+							class="flex-1 py-2 rounded-md text-center">Ambil Aset</a>
+					</div>
 				</div>
 			</div>
 			<div class="tab-content">
 				<div class="tab-content__pane active" id="ticket">
-					<div class="box p-5 mt-5">
-						<div class="flex">
-							<div class="mr-auto">Subtotal</div>
-							<div>$250</div>
-						</div>
-						<div class="flex mt-4">
-							<div class="mr-auto">Discount</div>
-							<div class="text-theme-6">-$20</div>
-						</div>
-						<div class="flex mt-4">
-							<div class="mr-auto">Tax</div>
-							<div>15%</div>
-						</div>
-						<div class="flex mt-4 pt-4 border-t border-gray-200">
-							<div class="mr-auto font-medium text-base">Charge</div>
-							<div class="font-medium text-base">$220</div>
-						</div>
+					<div class="pos__ticket box p-2 mt-5">
+						<a href="javascript:;" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+							<div class="pos__ticket__item-name truncate mr-1">Afif </div>
+							<div class="ml-auto">Belum Dikembalikan</div>
+						</a>
+						<a href="javascript:;" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+							<div class="pos__ticket__item-name truncate mr-1">Maisaroh</div>
+							<div class="ml-auto">Sudah Dikembalikan</div>
+						</a>
 					</div>
 				</div>
 				<div class="tab-content__pane" id="details">
-					<div class="box p-5 mt-5">
-						<div class="flex">
-							<div class="mr-auto">Subtotal</div>
-							<div>$250</div>
-						</div>
-						<div class="flex mt-4">
-							<div class="mr-auto">Discount</div>
-							<div class="text-theme-6">-$20</div>
-						</div>
-						<div class="flex mt-4">
-							<div class="mr-auto">Tax</div>
-							<div>15%</div>
-						</div>
-						<div class="flex mt-4 pt-4 border-t border-gray-200">
-							<div class="mr-auto font-medium text-base">Charge</div>
-							<div class="font-medium text-base">$220</div>
-						</div>
+					<div class="pos__ticket box p-2 mt-5">
+						<a href="javascript:;" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+							<div class="pos__ticket__item-name truncate mr-1">Afif</div>
+							<div class="ml-auto">Pending</div>
+						</a>
+						<a href="javascript:;" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+							<div class="pos__ticket__item-name truncate mr-1">Maisa</div>
+							<div class="ml-auto">Pending</div>
+						</a>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="intro-y col-span-12 lg:col-span-6">
-			<!-- BEGIN: Striped Rows -->
-			<div class="intro-y box mt-5">
-				<div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
-					<h2 class="font-medium text-base mr-auto">
-						Striped Rows
-					</h2>
-				</div>
-				<div class="p-5" id="striped-rows-table">
-					<div class="preview">
-						<div class="overflow-x-auto">
-							<table class="table">
-								<thead>
-									<tr>
-										<th class="border-b-2 whitespace-no-wrap">#</th>
-										<th class="border-b-2 whitespace-no-wrap">First Name</th>
-										<th class="border-b-2 whitespace-no-wrap">Last Name</th>
-										<th class="border-b-2 whitespace-no-wrap">Username</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr class="bg-gray-200">
-										<td class="border-b">1</td>
-										<td class="border-b">Angelina</td>
-										<td class="border-b">Jolie</td>
-										<td class="border-b">@angelinajolie</td>
-									</tr>
-									<tr>
-										<td class="border-b">2</td>
-										<td class="border-b">Brad</td>
-										<td class="border-b">Pitt</td>
-										<td class="border-b">@bradpitt</td>
-									</tr>
-									<tr class="bg-gray-200">
-										<td class="border-b">3</td>
-										<td class="border-b">Charlie</td>
-										<td class="border-b">Hunnam</td>
-										<td class="border-b">@charliehunnam</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- END: Striped Rows -->
 	</div>
-</div>
 </div>
 <div class="modal" id="header-footer-modal-preview">
 	<div class="modal__content modal__content--lg">

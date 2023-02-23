@@ -59,4 +59,19 @@ class Aset_model extends CI_Model{
         $this->db->where('id_jenis',$id_jenis);
         return $this->db->count_all_results();
     }
+    public function count_ruang_aset($id_ruang){ //tampilkan semua foto berdasarkan nomor_inventaris
+        $this->db->select('*')->from('aset');
+        $this->db->where('id_ruang',$id_ruang);
+        return $this->db->count_all_results();
+    }
+    public function compressImage($source, $destination, $quality) {
+        $info = getimagesize($source);
+        if ($info['mime'] == 'image/jpeg') 
+            $image = imagecreatefromjpeg($source);
+        elseif ($info['mime'] == 'image/gif') 
+            $image = imagecreatefromgif($source);
+        elseif ($info['mime'] == 'image/png') 
+            $image = imagecreatefrompng($source);
+        imagejpeg($image, $destination, $quality);
+    }
 }
