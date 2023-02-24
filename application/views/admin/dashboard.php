@@ -1,7 +1,7 @@
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
 	<div class="relative text-gray-700 mr-auto">
 		<input type="text" class="input input--lg w-full lg:w-54 box placeholder-theme-13"
-			placeholder="Pencarian aset...">
+			placeholder="Pencarian aset..." id="cari" name="cari">
 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
 			stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
 			class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0">
@@ -32,7 +32,7 @@
 		<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-1 gap-2 mt-5">
 			<?php foreach ($this->Aset_model->ruang() as $key) { ?>
 			<div class="box p-5 cursor-pointer zoom-in">
-				<a href="<?php echo site_url('admin/aset/ruang/'.$key['id_ruang']);?>">
+				<a href="<?php echo site_url('admin/ruang/aset/'.$key['id_ruang']);?>">
 					<div class="font-medium text-base"><?php echo $key['ruang']; ?> </div>
 					<div class="text-gray-600"><?= $this->Aset_model->count_ruang_aset($key['id_ruang']); ?> aset</div>
 				</a>
@@ -55,11 +55,13 @@
 			<div class="tab-content">
 				<div class="tab-content__pane active" id="ticket">
 					<div class="pos__ticket box p-2 mt-5">
-						<a href="javascript:;" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+						<a href="javascript:;"
+							class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
 							<div class="pos__ticket__item-name truncate mr-1">Afif </div>
 							<div class="ml-auto">Belum Dikembalikan</div>
 						</a>
-						<a href="javascript:;" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+						<a href="javascript:;"
+							class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
 							<div class="pos__ticket__item-name truncate mr-1">Maisaroh</div>
 							<div class="ml-auto">Sudah Dikembalikan</div>
 						</a>
@@ -67,11 +69,13 @@
 				</div>
 				<div class="tab-content__pane" id="details">
 					<div class="pos__ticket box p-2 mt-5">
-						<a href="javascript:;" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+						<a href="javascript:;"
+							class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
 							<div class="pos__ticket__item-name truncate mr-1">Afif</div>
 							<div class="ml-auto">Pending</div>
 						</a>
-						<a href="javascript:;" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+						<a href="javascript:;"
+							class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
 							<div class="pos__ticket__item-name truncate mr-1">Maisa</div>
 							<div class="ml-auto">Pending</div>
 						</a>
@@ -184,3 +188,11 @@
 		</div>
 	</div>
 </div>
+<script>
+	var cari = document.getElementById('cari');
+	cari.addEventListener("keydown", function (event) {
+		if (event.keyCode == 13) {
+			window.location.href = '<?php echo site_url('admin/home/pencarian/') ?>' + cari.value;
+		}
+	})
+</script>

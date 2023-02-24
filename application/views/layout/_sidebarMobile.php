@@ -18,12 +18,6 @@ $jenis_produk=$this->db->get()->result_array();
 			</a>
 		</li>
 		<li>
-			<a href="<?php echo site_url('admin/pengguna');?>" class="menu">
-				<div class="menu__icon"><i data-feather="user"></i></div>
-				<div class="menu__title">Pengguna </div>
-			</a>
-		</li>
-		<li>
 			<a href="javascript:;" class="menu <?php echo activate_menu('aset');  ?>">
 				<div class="menu__icon"> <i data-feather="layers"></i> </div>
 				<div class="menu__title"> Daftar Asset <i data-feather="chevron-down" class="menu__sub-icon"></i>
@@ -52,6 +46,36 @@ $jenis_produk=$this->db->get()->result_array();
 				<div class="menu__icon"> <i data-feather="box"></i> </div>
 				<div class="menu__title"> Jenis Asset </div>
 			</a>
+		</li>
+		<li>
+			<a href="javascript:;" class="menu <?php echo activate_menu('pengguna');  ?>">
+				<div class="menu__icon"> <i data-feather="user"></i> </div>
+				<div class="menu__title"> Account <i data-feather="chevron-down" class="menu__sub-icon"></i>
+				</div>
+			</a>
+			<ul class="<?php if($this->uri->segment('2')=='pengguna'){ echo "menu__sub-open"; } ?>">
+				<li>
+					<a href="<?php echo site_url('admin/pengguna/profile');?>"
+						class="menu <?php if($this->uri->segment('3')=='profile'){ echo "menu--active"; } ?>">
+						<div class="menu__icon"> <i data-feather="meh"></i> </div>
+						<div class="menu__title"> My Profile </div>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo site_url('admin/pengguna/reset');?>"
+						class="menu <?php if($this->uri->segment('3')=='reset'){ echo "menu--active"; } ?>">
+						<div class="menu__icon"> <i data-feather="lock"></i> </div>
+						<div class="menu__title"> Reset Password </div>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo site_url('admin/pengguna');?>"
+						class="menu <?php if($this->uri->segment('3')==NULL){ echo "menu--active"; } ?>">
+						<div class="menu__icon"> <i data-feather="user-plus"></i> </div>
+						<div class="menu__title"> Data Pengguna </div>
+					</a>
+				</li>	
+			</ul>
 		</li>
 		<li>
 			<a href="<?php echo site_url('auth/logout');?>" class="menu">

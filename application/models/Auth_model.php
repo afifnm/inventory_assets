@@ -19,14 +19,8 @@ class Auth_model extends CI_Model
         'password' => get_hash($this->input->post('password')),
         'level' => $this->input->post('level'),
         'nama' => $this->input->post('nama'),
-        'tahun_ajaran' => $this->input->post('tahun_ajaran'),
-        'tempat_lahir' => $this->input->post('tempat_lahir'),
-        'tanggal_lahir' => $this->input->post('tanggal_lahir'),
         'alamat' => $this->input->post('alamat'),
-        'email' => $this->input->post('email'),
         'no_hp' => $this->input->post('no_hp'),
-        'kelas' => $this->input->post('kelas'),
-        'tahun_ajaran' => $this->input->post('tahun_ajaran'),
         'active' => 1,
       );
       return $this->db->insert('user', $data);

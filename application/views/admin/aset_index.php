@@ -3,10 +3,31 @@
 </div>
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
 	<h2 class="text-lg font-medium mr-auto"> <?= $namajenis; ?> </h2>
+	<?php if($this->uri->segment('2')=='aset'){ ?>
 	<div class="w-full sm:w-auto flex mt-4 sm:mt-0">
 		<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
 			class="button inline-block bg-theme-1 text-white">Tambah Aset </a>
 	</div>
+	<?php } else { ?>
+	<div class="relative text-gray-700 ml-5">
+		<input type="text" class="input input--lg w-full lg:w-54 box placeholder-theme-13"
+			placeholder="Pencarian aset..." id="cari" name="cari">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+			stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+			class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0">
+			<circle cx="11" cy="11" r="8"></circle>
+			<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+		</svg>
+	</div>
+	<script>
+			var cari = document.getElementById('cari');
+	cari.addEventListener("keydown", function (event) {
+		if (event.keyCode == 13) {
+			window.location.href = '<?php echo site_url('admin/home/pencarian/') ?>' + cari.value;
+		}
+	})
+	</script>
+	<?php } ?>
 </div>
 <!-- BEGIN: Datatable -->
 <div class="intro-y datatable-wrapper box p-5 mt-5">
@@ -55,9 +76,9 @@
 							Detail
 						</a>
 						<a href="<?php echo site_url('admin/aset/foto/'.$user['id_jenis'].'/'.$user['nomor_inventaris']);?>"
-							class="flex items-center text-theme-1 pr-1" >
+							class="flex items-center text-theme-1 pr-1">
 							<i data-feather="check-square" class="w-4 h-4 mr-1"></i>
-							Edit  </a>
+							Edit </a>
 						<a href="javascript:;"
 							onclick="hapus(<?= $user['id_jenis'] ?>,'<?= $user['nomor_inventaris'] ?>')"
 							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
@@ -207,7 +228,8 @@
 					<td id="kondisi">: </td>
 				</tr>
 			</table>
-			<h3 class="font-medium text-base ml-3" id="belum_ada">Foto aset belum dimasukan. Klik edit untuk memasukan foto aset. </h3>
+			<h3 class="font-medium text-base ml-3" id="belum_ada">Foto aset belum dimasukan. Klik edit untuk memasukan
+				foto aset. </h3>
 			<div class="slider mx-6 fade-mode" id="ada">
 				<div class="h-64 px-2">
 					<div class="h-full image-fit rounded-md overflow-hidden"> <img id="foto1" alt="Foto belum diupload"
@@ -227,7 +249,8 @@
 </div>
 <!-- END: EDIT Confirmation Modal -->
 <script>
-	function edit(id_aset, nama, aset, stok, nomor_inventaris, merk, jenis, tanggal_masuk, ruang, status, kondisi,count_foto) {
+	function edit(id_aset, nama, aset, stok, nomor_inventaris, merk, jenis, tanggal_masuk, ruang, status, kondisi,
+		count_foto) {
 		document.getElementById('h2_nama').innerHTML = nama;
 		document.getElementById('nomor_inventaris').innerHTML = ': ' + nomor_inventaris;
 		document.getElementById('qty').innerHTML = ': ' + stok + ' (Aset ' + aset + ')';
@@ -239,9 +262,9 @@
 		if (count_foto > 0) {
 			document.getElementById('ada').style.display = "block";
 			document.getElementById('belum_ada').style.display = "none";
-			document.getElementById('foto1').src = '<?php echo site_url('assets/upload/aset/');?>'+nomor_inventaris+'1.jpg';
-			document.getElementById('foto2').src = '<?php echo site_url('assets/upload/aset/');?>'+nomor_inventaris+'2.jpg';
-			document.getElementById('foto3').src = '<?php echo site_url('assets/upload/aset/');?>'+nomor_inventaris+'3.jpg';
+			document.getElementById('foto1').src = '<?php echo site_url('assets/upload/aset/');?>' + nomor_inventaris + '1.jpg';
+			document.getElementById('foto2').src = '<?php echo site_url('assets/upload/aset/');?>' + nomor_inventaris + '2.jpg';
+			document.getElementById('foto3').src = '<?php echo site_url('assets/upload/aset/');?>' + nomor_inventaris + '3.jpg';
 		} else {
 			document.getElementById('ada').style.display = "none";
 			document.getElementById('belum_ada').style.display = "block";
@@ -253,9 +276,8 @@
 		link.href = "<?php echo site_url('admin/aset/delete_data/');?>" + id_jenis + '/' + id;
 	};
 
-	const select = document.getElementById('select_aset');
+	var select = document.getElementById('select_aset');
 	select.addEventListener('change', function () {
-		console.log(select.value);
 		if (select.value == "Tidak Tetap") {
 			document.getElementById('stok').style.display = "block";
 		} else {

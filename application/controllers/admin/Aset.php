@@ -21,7 +21,7 @@ class Aset extends MY_Controller{
             'title'                 => $namajenis.' | '.$site['nama_website'],
             'site'                  => $site,
             'namajenis'             => $namajenis,
-            'id_jenis'                    => $id
+            'id_jenis'              => $id
         );
         $this->db->select('a.*,b.ruang,c.jenis')->from('aset a');
         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
@@ -72,13 +72,13 @@ class Aset extends MY_Controller{
                 'IP'                => $this->input->ip_address()
              );  
             $this->CRUD_model->Insert('logs', $data);
-            $this->load->library('zend');  
-            $this->zend->load('Zend/Barcode'); 
-            $imageResource = Zend_Barcode::factory('code128', 'image', array('text'=>$nomor_inventaris), array())->draw();
-            $imageName = $nomor_inventaris.'.jpg';
-            $imagePath = 'assets/upload/barcode/'; // penyimpanan file barcode
-            imagejpeg($imageResource, $imagePath.$imageName); 
-            $pathBarcode = $imagePath.$imageName; //Menyimpan path image bardcode kedatabase
+            // $this->load->library('Zend');  
+            // $this->zend->load('Zend/Barcode'); 
+            // $imageResource = Zend_Barcode::factory('code128', 'image', array('text'=>$nomor_inventaris), array())->draw();
+            // $imageName = $nomor_inventaris.'.jpg';
+            // $imagePath = 'assets/upload/barcode/'; // penyimpanan file barcode
+            // imagejpeg($imageResource, $imagePath.$imageName); 
+            // $pathBarcode = $imagePath.$imageName; //Menyimpan path image bardcode kedatabase
             $this->session->set_flashdata('alert', '
             <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
                 <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Aset '.$this->input->post('nama').' telah berhasil ditambahkan. Klik edit untuk menambahkan foto aset. 

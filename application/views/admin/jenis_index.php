@@ -25,6 +25,9 @@
 				<td class="text-left border-b"><?php echo $user['jenis']; ?></td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
+						<a href="<?php echo site_url('admin/aset/jenis/'.$user['id_jenis']);?>" class="flex items-center text-theme-1 mr-3">
+							<i data-feather="search" class="w-4 h-4 mr-1"></i>
+							Lihat Aset </a>
 						<a href="javascript:;"
 							onclick="edit(<?php echo $user['id_jenis'] ?>,'<?php echo $user['jenis'] ?>')"
 							class="flex items-center mr-3" data-toggle="modal" data-target="#edit-data">

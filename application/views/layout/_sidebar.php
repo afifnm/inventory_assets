@@ -13,13 +13,6 @@
 			</a>
 		</li>
 		<li>
-			<a href="<?php echo site_url('admin/pengguna');?>"
-				class="side-menu <?php echo activate_menu('pengguna');  ?>">
-				<div class="side-menu__icon"> <i data-feather="user"></i> </div>
-				<div class="side-menu__title"> Pengguna </div>
-			</a>
-		</li>
-		<li>
 			<a href="javascript:;" class="side-menu <?php echo activate_menu('aset');  ?>">
 				<div class="side-menu__icon"> <i data-feather="layers"></i> </div>
 				<div class="side-menu__title"> Daftar Asset <i data-feather="chevron-down"
@@ -49,6 +42,36 @@
 				<div class="side-menu__icon"> <i data-feather="box"></i> </div>
 				<div class="side-menu__title"> Jenis Asset </div>
 			</a>
+		</li>
+		<li>
+			<a href="javascript:;" class="side-menu <?php echo activate_menu('pengguna');  ?>">
+				<div class="side-menu__icon"> <i data-feather="user"></i> </div>
+				<div class="side-menu__title"> Account <i data-feather="chevron-down" class="side-menu__sub-icon"></i>
+				</div>
+			</a>
+			<ul class="<?php if($this->uri->segment('2')=='pengguna'){ echo "side-menu__sub-open"; } ?>">
+				<li>
+					<a href="<?php echo site_url('admin/pengguna/profile');?>"
+						class="side-menu <?php if($this->uri->segment('3')=='profile'){ echo "side-menu--active"; } ?>">
+						<div class="side-menu__icon"> <i data-feather="meh"></i> </div>
+						<div class="side-menu__title"> My Profile </div>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo site_url('admin/pengguna/reset');?>"
+						class="side-menu <?php if($this->uri->segment('3')=='reset'){ echo "side-menu--active"; } ?>">
+						<div class="side-menu__icon"> <i data-feather="lock"></i> </div>
+						<div class="side-menu__title"> Reset Password </div>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo site_url('admin/pengguna');?>"
+						class="side-menu <?php if($this->uri->segment('3')==NULL){ echo "side-menu--active"; } ?>">
+						<div class="side-menu__icon"> <i data-feather="user-plus"></i> </div>
+						<div class="side-menu__title"> Data Pengguna </div>
+					</a>
+				</li>	
+			</ul>
 		</li>
 		<li>
 			<a href="<?php echo site_url('auth/logout');?>" class="side-menu">
