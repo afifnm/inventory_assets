@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Feb 2023 pada 17.52
--- Versi server: 10.4.24-MariaDB
--- Versi PHP: 7.4.29
+-- Generation Time: Feb 28, 2023 at 09:26 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `aset`
+-- Table structure for table `aset`
 --
 
 CREATE TABLE `aset` (
@@ -44,7 +44,7 @@ CREATE TABLE `aset` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `aset`
+-- Dumping data for table `aset`
 --
 
 INSERT INTO `aset` (`id_aset`, `nama`, `aset`, `stok`, `nomor_inventaris`, `merk`, `id_jenis`, `tanggal_masuk`, `id_ruang`, `status`, `kondisi`, `active`, `updated_at`) VALUES
@@ -54,7 +54,7 @@ INSERT INTO `aset` (`id_aset`, `nama`, `aset`, `stok`, `nomor_inventaris`, `merk
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `foto`
+-- Table structure for table `foto`
 --
 
 CREATE TABLE `foto` (
@@ -64,7 +64,7 @@ CREATE TABLE `foto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `foto`
+-- Dumping data for table `foto`
 --
 
 INSERT INTO `foto` (`id_foto`, `nomor_inventaris`, `namafile`) VALUES
@@ -74,26 +74,7 @@ INSERT INTO `foto` (`id_foto`, `nomor_inventaris`, `namafile`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `history`
---
-
-CREATE TABLE `history` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `nomor_inventaris` varchar(50) NOT NULL,
-  `nup` varchar(50) NOT NULL,
-  `merk` varchar(50) NOT NULL,
-  `id_jenis` varchar(50) NOT NULL,
-  `prodi` varchar(50) NOT NULL,
-  `tanggal_masuk` date NOT NULL,
-  `tanggal_hapus` date NOT NULL,
-  `username` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `jenis`
+-- Table structure for table `jenis`
 --
 
 CREATE TABLE `jenis` (
@@ -102,7 +83,7 @@ CREATE TABLE `jenis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jenis`
+-- Dumping data for table `jenis`
 --
 
 INSERT INTO `jenis` (`id_jenis`, `jenis`) VALUES
@@ -117,7 +98,7 @@ INSERT INTO `jenis` (`id_jenis`, `jenis`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `konfigurasi`
+-- Table structure for table `konfigurasi`
 --
 
 CREATE TABLE `konfigurasi` (
@@ -128,7 +109,7 @@ CREATE TABLE `konfigurasi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `konfigurasi`
+-- Dumping data for table `konfigurasi`
 --
 
 INSERT INTO `konfigurasi` (`id`, `nama_website`, `favicon`, `logo`) VALUES
@@ -137,7 +118,7 @@ INSERT INTO `konfigurasi` (`id`, `nama_website`, `favicon`, `logo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `logs`
+-- Table structure for table `logs`
 --
 
 CREATE TABLE `logs` (
@@ -150,46 +131,26 @@ CREATE TABLE `logs` (
   `nomor_inventaris` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data untuk tabel `logs`
+-- Table structure for table `pinjam`
 --
 
-INSERT INTO `logs` (`id_logs`, `tabel`, `keterangan`, `datetime`, `username`, `IP`, `nomor_inventaris`) VALUES
-(17, 'aset', 'root telah menambahkan Laptop Core i3 Gen 11 dengan nomor inventaris 123.323.323.001', '2023-02-22 12:06:36', 'root', '127.0.0.1', '123.323.323.001'),
-(24, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 11 dengan nomor inventaris 123.323.323.001', '2023-02-22 12:12:56', 'root', '127.0.0.1', '123.323.323.001'),
-(25, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 11 dengan nomor inventaris 123.323.323.001', '2023-02-22 12:13:00', 'root', '127.0.0.1', '123.323.323.001'),
-(29, 'aset', 'root telah mengubah ruang Gudang Barat menjadi Lab Komputer 1, kondisi Hilang menjadi Baik, dari aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 12:52:30', 'root', '127.0.0.1', '123.323.323.001'),
-(30, 'aset', 'root telah menambahkan Kertas A4 10gram dengan nomor inventaris 402.231.001', '2023-02-22 12:54:19', 'root', '127.0.0.1', '402.231.001'),
-(31, 'aset', 'root telah mengubah stok 40 menjadi 50, dari aset Kertas A4 10gram dengan nomor inventaris 402.231.001', '2023-02-22 12:54:35', 'root', '127.0.0.1', '402.231.001'),
-(32, 'foto', 'root telah menghapus foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:45:42', 'root', '127.0.0.1', '123.323.323.001'),
-(33, 'foto', 'root telah menghapus foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:46:39', 'root', '127.0.0.1', '123.323.323.001'),
-(34, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:46:48', 'root', '127.0.0.1', '123.323.323.001'),
-(35, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:46:58', 'root', '127.0.0.1', '123.323.323.001'),
-(36, 'foto', 'root telah menambahkan foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:47:06', 'root', '127.0.0.1', '123.323.323.001'),
-(37, 'foto', 'root telah menghapus foto aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 15:47:09', 'root', '127.0.0.1', '123.323.323.001'),
-(38, 'aset', 'root telah mengubah tanggal masuk 2023-02-23 menjadi 2023-02-01, dari aset Laptop Core i3 Gen 10 dengan nomor inventaris 123.323.323.001', '2023-02-22 16:42:09', 'root', '127.0.0.1', '123.323.323.001');
+CREATE TABLE `pinjam` (
+  `kode_pinjam` varchar(50) NOT NULL,
+  `tanggal_pinjam` date NOT NULL,
+  `tanggal_kembali` date NOT NULL,
+  `peminjam` varchar(50) NOT NULL,
+  `operator` varchar(60) NOT NULL,
+  `keterangan` text NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `peminjaman`
---
-
-CREATE TABLE `peminjaman` (
-  `kode_peminjaman` varchar(20) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `tanggal_pinjam` datetime NOT NULL,
-  `tanggal_pengembalian` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `keperluan` text NOT NULL,
-  `status` int(11) NOT NULL,
-  `prodi` varchar(10) NOT NULL,
-  `catatan` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `ruang`
+-- Table structure for table `ruang`
 --
 
 CREATE TABLE `ruang` (
@@ -199,7 +160,7 @@ CREATE TABLE `ruang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `ruang`
+-- Dumping data for table `ruang`
 --
 
 INSERT INTO `ruang` (`id_ruang`, `ruang`, `keterangan`) VALUES
@@ -215,7 +176,7 @@ INSERT INTO `ruang` (`id_ruang`, `ruang`, `keterangan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `temp`
+-- Table structure for table `temp`
 --
 
 CREATE TABLE `temp` (
@@ -228,21 +189,16 @@ CREATE TABLE `temp` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(60) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `level` enum('Dosen','Mahasiswa','Admin') NOT NULL,
+  `level` enum('Staff','Gudang','Admin') NOT NULL,
   `nama` varchar(70) NOT NULL,
-  `prodi` varchar(50) NOT NULL,
-  `angkatan` varchar(10) NOT NULL,
-  `tempat_lahir` varchar(40) NOT NULL,
-  `tanggal_lahir` date NOT NULL,
   `alamat` text NOT NULL,
-  `email` varchar(50) NOT NULL,
   `no_hp` varchar(50) NOT NULL,
   `foto` varchar(100) NOT NULL,
   `active` int(11) NOT NULL,
@@ -251,140 +207,123 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `level`, `nama`, `prodi`, `angkatan`, `tempat_lahir`, `tanggal_lahir`, `alamat`, `email`, `no_hp`, `foto`, `active`, `last_login`, `pinjam`) VALUES
-(2, 'root', '$2y$05$6DMzgP8rt3VpsoqvY0TMkedK7vY2SriSGE7YXrdkPG7c8LVs3juIm', 'Admin', 'Senen', 'Jurusan', '2012', 'Karanganyar', '1996-09-02', 'Karanganyar RT 02 RW 01, Bejen, Bejen, Karanganyar, 574444', 'agusefendi@staff.uns.ac.id', '6289670000000', 'root.jpg', 1, '2018-10-04 09:40:55', 0),
-(3, 'K3514001', '$2y$05$y5Z3nZS3WBU11f2ZBqZZguK33R75fuPv4Oc2bozbf1E.ZGAE8hywe', 'Mahasiswa', 'Abdur Rahman Yusuf', 'PTIK', '2014', 'Sukoharjo', '2018-09-25', 'Sukoharjo', 'abdur@student.uns.ac.id', '089054634', 'K3514001.jpg', 1, '2018-09-27 15:42:57', 0),
-(4, 'K3514002', '$2y$05$sfWiAxw0hM3fudQt/jNW..ZEfkVG4ne59ooH7ppyvI4oICPxWM3X.', 'Mahasiswa', 'Adi Prakoso', 'PTIK', '2014', 'Jakarta', '0000-00-00', '', '', '', 'K3514002.jpg', 0, '2018-09-27 15:43:02', 0),
-(5, 'K3514003', '$2y$05$E6cvam62HaVPMszZTjWMoe48UBVmQMov05GvIkBg5Cjp2GWT7E9/e', 'Mahasiswa', 'Afif Nuruddin Maisaroh', 'PTIK', '2014', 'Sukoharjo', '1996-06-08', 'Suruh RT 02 RW 01, Kayuapak, Polokarto, Sukoharjo, 57555', 'afifnuruddinmaisaroh@gmail.com', '089673333318', 'K3514003.jpg', 1, '2019-02-19 20:03:34', 4),
-(7, 'K3514000', '$2y$05$UDhsJxOpVloG0nKDCMOtbOATCtq0HZTrGNtKhC9nrOhCie0f17hEC', 'Admin', 'Dwi Maryono, M.Pd', 'PTIK', '2010', 'Colomadu', '1960-09-05', 'Colomadu', 'dwimar@staff.uns.ac.id', '', 'K3514000.jpg', 1, '2018-09-29 17:47:52', 0),
-(10, 'N3514001', '$2y$05$yYDF2/1AuxRhVz125LoHUOLjyP6X5uD23AZGsFkFh3JLt0zuHvYca', 'Mahasiswa', 'Andysti Kusuma', 'PTB', '2014', '', '0000-00-00', '', '', '', 'N35140001.jpg', 1, '2018-10-16 09:37:38', 0),
-(16, 'M3514001', '$2y$05$XggkNBdPcMzXv90n3XVN9uf.hI5pCvpN7p2AQBMMah9zcRKgxxug2', 'Mahasiswa', 'Panji', 'PTM', '', '', '0000-00-00', '', '', '', 'M3514001.jpg', 1, '2018-09-29 00:11:13', 0),
-(17, '1234', '$2y$05$XL4qDO06xE9FVURQL/FA0uk.Rjv.DWbUM2fRMR.CLFDl.1lUDLaI.', 'Dosen', 'Agus Efendi', 'PTIK', '', '', '0000-00-00', '', '', '0896733318', '1234.jpg', 1, '2019-02-19 18:45:02', 0);
+INSERT INTO `user` (`id`, `username`, `password`, `level`, `nama`, `alamat`, `no_hp`, `foto`, `active`, `last_login`, `pinjam`) VALUES
+(2, 'root', '$2y$05$nHq6Sagl3WrRlQNdAmos3.U7o1/08/5OCoISAjXs5jwrznBs2wCYi', 'Admin', 'Arief Kurniawan', 'Karanganyar RT 02 RW 01, Bejen, Bejen, Karanganyar, 574444', '6289670000000', 'root.jpg', 1, '2023-02-24 09:25:19', 0),
+(7, 'K3514000', '$2y$05$UDhsJxOpVloG0nKDCMOtbOATCtq0HZTrGNtKhC9nrOhCie0f17hEC', 'Admin', 'Dwi Maryono, M.Pd', 'Colomadu', '', 'K3514000.jpg', 1, '2018-09-29 17:47:52', 0),
+(20, 'andi', '$2y$05$sLA/2qrx5j8zAV9Rlt0.seU6d.LBnvnEBG/uvqVZQcaL5xRQel6qa', 'Staff', 'Andi Windu', 'jumantono', '090993123', 'andijpg', 1, '2023-02-24 08:57:20', 0);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `aset`
+-- Indexes for table `aset`
 --
 ALTER TABLE `aset`
   ADD PRIMARY KEY (`id_aset`);
 
 --
--- Indeks untuk tabel `foto`
+-- Indexes for table `foto`
 --
 ALTER TABLE `foto`
   ADD PRIMARY KEY (`id_foto`);
 
 --
--- Indeks untuk tabel `history`
---
-ALTER TABLE `history`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `jenis`
+-- Indexes for table `jenis`
 --
 ALTER TABLE `jenis`
   ADD PRIMARY KEY (`id_jenis`);
 
 --
--- Indeks untuk tabel `konfigurasi`
+-- Indexes for table `konfigurasi`
 --
 ALTER TABLE `konfigurasi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `logs`
+-- Indexes for table `logs`
 --
 ALTER TABLE `logs`
   ADD PRIMARY KEY (`id_logs`);
 
 --
--- Indeks untuk tabel `peminjaman`
+-- Indexes for table `pinjam`
 --
-ALTER TABLE `peminjaman`
-  ADD PRIMARY KEY (`kode_peminjaman`);
+ALTER TABLE `pinjam`
+  ADD PRIMARY KEY (`kode_pinjam`);
 
 --
--- Indeks untuk tabel `ruang`
+-- Indexes for table `ruang`
 --
 ALTER TABLE `ruang`
   ADD PRIMARY KEY (`id_ruang`);
 
 --
--- Indeks untuk tabel `temp`
+-- Indexes for table `temp`
 --
 ALTER TABLE `temp`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `aset`
+-- AUTO_INCREMENT for table `aset`
 --
 ALTER TABLE `aset`
   MODIFY `id_aset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `foto`
+-- AUTO_INCREMENT for table `foto`
 --
 ALTER TABLE `foto`
-  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT untuk tabel `history`
---
-ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `jenis`
+-- AUTO_INCREMENT for table `jenis`
 --
 ALTER TABLE `jenis`
   MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `konfigurasi`
+-- AUTO_INCREMENT for table `konfigurasi`
 --
 ALTER TABLE `konfigurasi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `logs`
+-- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_logs` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `ruang`
+-- AUTO_INCREMENT for table `ruang`
 --
 ALTER TABLE `ruang`
   MODIFY `id_ruang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `temp`
+-- AUTO_INCREMENT for table `temp`
 --
 ALTER TABLE `temp`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

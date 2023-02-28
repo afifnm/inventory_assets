@@ -63,7 +63,7 @@ class Aset extends MY_Controller{
                 'active'            => 1
              );  
             $this->CRUD_model->Insert('aset', $data);
-            $keterangan = $this->session->userdata('username').' telah menambahkan '. $this->input->post('nama').' dengan nomor inventaris '.$this->input->post('nomor_inventaris');
+            $keterangan = $this->session->userdata('nama').' telah menambahkan '. $this->input->post('nama').' dengan nomor inventaris '.$this->input->post('nomor_inventaris');
             $data = array(
                 'tabel'             => 'aset',
                 'keterangan'        => $keterangan,
@@ -134,7 +134,7 @@ class Aset extends MY_Controller{
             'namafile' => $namafile
          );  
         $this->CRUD_model->Insert('foto', $data);
-        $keterangan = $this->session->userdata('username').' telah menambahkan foto aset '.$this->Aset_model->get_nama_aset($nomor_inventaris).' dengan nomor inventaris '.$nomor_inventaris;
+        $keterangan = $this->session->userdata('nama').' telah menambahkan foto aset '.$this->Aset_model->get_nama_aset($nomor_inventaris).' dengan nomor inventaris '.$nomor_inventaris;
         $data = array(
             'tabel'             => 'foto',
             'keterangan'        => $keterangan,
@@ -152,7 +152,7 @@ class Aset extends MY_Controller{
     }
 
     public function delete_data($id_jenis,$nomor_inventaris){
-        $keterangan = $this->session->userdata('username').' telah menghapus '.$this->Aset_model->get_nama_aset($nomor_inventaris).' dengan nomor inventaris '.$nomor_inventaris;
+        $keterangan = $this->session->userdata('nama').' telah menghapus '.$this->Aset_model->get_nama_aset($nomor_inventaris).' dengan nomor inventaris '.$nomor_inventaris;
         foreach($this->Aset_model->foto_aset($nomor_inventaris) as $foto) {
             $filename=FCPATH.'/assets/upload/aset/'.$foto['namafile'];
             if (file_exists($filename)){
@@ -185,7 +185,7 @@ class Aset extends MY_Controller{
         redirect('admin/aset/jenis/'.$id_jenis);
     }
     public function delete_foto($id_jenis,$namafile,$nomor_inventaris){
-        $keterangan = $this->session->userdata('username').' telah menghapus foto aset '.$this->Aset_model->get_nama_aset($nomor_inventaris).' dengan nomor inventaris '.$nomor_inventaris;
+        $keterangan = $this->session->userdata('nama').' telah menghapus foto aset '.$this->Aset_model->get_nama_aset($nomor_inventaris).' dengan nomor inventaris '.$nomor_inventaris;
         $filename=FCPATH.'/assets/upload/aset/'.$namafile;
         if (file_exists($filename)){
             unlink("./assets/upload/aset/".$namafile);
@@ -231,7 +231,7 @@ class Aset extends MY_Controller{
         } else {
             $stok = $this->input->post('stok');
         }
-        $keterangan = $this->session->userdata('username').' telah mengubah';
+        $keterangan = $this->session->userdata('nama').' telah mengubah';
         foreach($this->Aset_model->get_aset($nomor_inventaris) as $aset){
             if($aset['nama'] <> $this->input->post('nama')){
                 $keterangan .= " nama ".$aset['nama']." menjadi ".$this->input->post('nama').",";

@@ -1,4 +1,7 @@
-<div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+<h3 class="text-md font-medium mr-auto mt-5">
+	Selamat Datang <?= $this->session->userdata('nama') ?> (<?= $this->session->userdata('level') ?>)
+</h3>
+<div class="intro-y flex flex-col sm:flex-row items-center mt-5">
 	<div class="relative text-gray-700 mr-auto">
 		<input type="text" class="input input--lg w-full lg:w-54 box placeholder-theme-13"
 			placeholder="Pencarian aset..." id="cari" name="cari">
