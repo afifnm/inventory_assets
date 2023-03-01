@@ -25,66 +25,9 @@ class CRUD_model extends CI_Model{
         $res = $this->db->delete($table, $where); // Kode ini digunakan untuk menghapus record yang sudah ada
         return $res;
     }
-    public function get_wa($id){
-        $this->db->select('no_hp')->from('user');
-        $this->db->where('username',$id);
-        return $this->db->get()->row()->no_hp;
-    }
-    public function get_stok($id){
-        $this->db->select('stok')->from('produk');
-        $this->db->where('kode_produk',$id);
-        return $this->db->get()->row()->stok;
-    }
-    public function get_nama($id){
-        $this->db->select('nama')->from('produk');
-        $this->db->where('kode_produk',$id);
-        return $this->db->get()->row()->nama;
-    }
     public function get_nama_user($id){
         $this->db->select('nama')->from('user');
         $this->db->where('username',$id);
         return $this->db->get()->row()->nama;
     }
-    public function foto_produk_1($kode_produk){
-        $this->db->select('*')->from('foto');
-        $this->db->where('kode_produk',$kode_produk);
-        $this->db->limit(1);
-        return $this->db->get()->result_array();
-    }
-    public function ambil_produk($num, $offset){
-        $this->db->order_by('tanggal', 'DESC');
-        $this->db->where('active',1);
-        $data = $this->db->get('produk', $num, $offset);
-        return $data->result();
-     }
-
-    public function ambil_pencarian($num, $offset,$isi){
-        $this->db->order_by('tanggal', 'DESC');
-        $this->db->like('nama', $isi);
-        $data = $this->db->get('produk', $num, $offset);
-        return $data->result();
-     }
-
-    public function ambil_produk_kategori($id_kategori,$num, $offset){
-        $this->db->where('id_kategori',$id_kategori);
-        $this->db->where('active',1);
-        $this->db->order_by('tanggal', 'DESC');
-        $data = $this->db->get('produk', $num, $offset);
-        return $data->result();
-     }
-     public function sum_pesanan($kode_transaksi){
-        $this->db->select('*')->from('cart a');
-        $this->db->join('produk b', 'b.kode_produk = a.kode_produk','left');
-        $this->db->where('kode_transaksi',$kode_transaksi);
-        $carts = $this->db->get()->result_array();
-        if($carts==NULL){
-            return 0;
-        } else {
-            $sum = 0;
-            foreach ($carts as $cart) {
-                $sum = $sum+$cart['jumlah']*$cart['harga'];
-            }
-            return $sum;
-        }
-     }
 }

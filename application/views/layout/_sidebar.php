@@ -32,6 +32,18 @@
 			</ul>
 		</li>
 		<li>
+			<a href="<?php echo site_url('admin/pinjam');?>" class="side-menu <?php echo activate_menu('pinjam');  ?>">
+				<div class="side-menu__icon"> <i data-feather="framer"></i> </div>
+				<div class="side-menu__title"> Peminjaman </div>
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo site_url('admin/ambil');?>" class="side-menu <?php echo activate_menu('ambil');  ?>">
+				<div class="side-menu__icon"> <i data-feather="rewind"></i> </div>
+				<div class="side-menu__title"> Ambil Aset </div>
+			</a>
+		</li>
+		<li>
 			<a href="<?php echo site_url('admin/ruang');?>" class="side-menu <?php echo activate_menu('ruang');  ?>">
 				<div class="side-menu__icon"> <i data-feather="columns"></i> </div>
 				<div class="side-menu__title"> Ruang </div>

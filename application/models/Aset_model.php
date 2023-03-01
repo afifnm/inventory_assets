@@ -74,4 +74,19 @@ class Aset_model extends CI_Model{
             $image = imagecreatefrompng($source);
         imagejpeg($image, $destination, $quality);
     }
+    public function getPinjamAset(){
+		 $this->db->select('*')->from('aset a');
+         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
+         $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','right');
+		 $this->db->where('active', 0); 
+		 $this->db->where('status', 'Ada'); 
+		 return $this->db->get()->result_array();
+	}
+
+    public function getTempAset(){
+		 $this->db->select('*')->from('temp');
+		 $this->db->where('username', $this->session->userdata('username'));
+		 return $this->db->get()->result_array();
+	}
+
 }
