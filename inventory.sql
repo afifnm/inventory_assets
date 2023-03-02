@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2023 at 09:26 AM
+-- Generation Time: Mar 02, 2023 at 09:31 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -48,8 +48,25 @@ CREATE TABLE `aset` (
 --
 
 INSERT INTO `aset` (`id_aset`, `nama`, `aset`, `stok`, `nomor_inventaris`, `merk`, `id_jenis`, `tanggal_masuk`, `id_ruang`, `status`, `kondisi`, `active`, `updated_at`) VALUES
-(11, 'Laptop Core i3 Gen 10', 'Tetap', 1, '123.323.323.001', 'Acer Aspire', 6, '2023-02-01', '6', 'Ada', 'Baik', 1, '2023-02-22 16:42:09'),
-(12, 'Kertas A4 10gram', 'Tidak Tetap', 50, '402.231.001', 'SiDu', 2, '2023-02-01', '9', 'Ada', 'Baik', 1, '2023-02-22 12:54:35');
+(11, 'Laptop Core i3 Gen 10', 'Tetap', 1, '123.323.323.001', 'Acer Aspire', 6, '2023-02-01', '6', 'Ada', 'Baik', 1, '2023-03-02 07:57:01'),
+(12, 'Kertas A4 10gram', 'Tidak Tetap', 50, '402.231.001', 'SiDu', 2, '2023-02-01', '9', 'Ada', 'Baik', 1, '2023-02-22 12:54:35'),
+(13, 'Laptop Core i5', 'Tetap', 1, '000.232.122', 'Dell', 6, '2023-03-02', '9', 'Ada', 'Baik', 1, '2023-03-02 07:57:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_pinjam`
+--
+
+CREATE TABLE `detail_pinjam` (
+  `id_detail_pinjam` int(11) NOT NULL,
+  `kode_pinjam` varchar(20) NOT NULL,
+  `nomor_inventaris` varchar(20) NOT NULL,
+  `peminjam` varchar(20) NOT NULL,
+  `tanggal_pinjam` date NOT NULL,
+  `tanggal_kembali` date NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -131,6 +148,13 @@ CREATE TABLE `logs` (
   `nomor_inventaris` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`id_logs`, `tabel`, `keterangan`, `datetime`, `username`, `IP`, `nomor_inventaris`) VALUES
+(1, 'aset', 'Arief Kurniawan telah menambahkan Laptop Core i5 dengan nomor inventaris 000.232.122', '2023-03-02 06:55:08', 'root', '127.0.0.1', '000.232.122');
+
 -- --------------------------------------------------------
 
 --
@@ -139,10 +163,8 @@ CREATE TABLE `logs` (
 
 CREATE TABLE `pinjam` (
   `kode_pinjam` varchar(50) NOT NULL,
-  `tanggal_pinjam` date NOT NULL,
-  `tanggal_kembali` date NOT NULL,
   `peminjam` varchar(50) NOT NULL,
-  `operator` varchar(60) NOT NULL,
+  `username` varchar(60) NOT NULL,
   `keterangan` text NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -182,8 +204,7 @@ INSERT INTO `ruang` (`id_ruang`, `ruang`, `keterangan`) VALUES
 CREATE TABLE `temp` (
   `id` int(11) NOT NULL,
   `nomor_inventaris` varchar(60) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `nama` varchar(50) NOT NULL
+  `username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -224,6 +245,12 @@ INSERT INTO `user` (`id`, `username`, `password`, `level`, `nama`, `alamat`, `no
 --
 ALTER TABLE `aset`
   ADD PRIMARY KEY (`id_aset`);
+
+--
+-- Indexes for table `detail_pinjam`
+--
+ALTER TABLE `detail_pinjam`
+  ADD PRIMARY KEY (`id_detail_pinjam`);
 
 --
 -- Indexes for table `foto`
@@ -281,7 +308,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `aset`
 --
 ALTER TABLE `aset`
-  MODIFY `id_aset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_aset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `detail_pinjam`
+--
+ALTER TABLE `detail_pinjam`
+  MODIFY `id_detail_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `foto`
@@ -305,7 +338,7 @@ ALTER TABLE `konfigurasi`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id_logs` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ruang`
@@ -317,7 +350,7 @@ ALTER TABLE `ruang`
 -- AUTO_INCREMENT for table `temp`
 --
 ALTER TABLE `temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`

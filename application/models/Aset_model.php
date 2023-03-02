@@ -78,13 +78,17 @@ class Aset_model extends CI_Model{
 		 $this->db->select('*')->from('aset a');
          $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
          $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','right');
-		 $this->db->where('active', 0); 
-		 $this->db->where('status', 'Ada'); 
+		 $this->db->where('a.aset', 'Tetap'); 
+         $this->db->where('a.status', 'Ada'); 
+         $this->db->order_by('a.nama','ASC');
 		 return $this->db->get()->result_array();
 	}
 
     public function getTempAset(){
-		 $this->db->select('*')->from('temp');
+		 $this->db->select('*')->from('temp a');
+         $this->db->join('aset b', 'b.nomor_inventaris = a.nomor_inventaris','left');
+         $this->db->join('jenis c', 'c.id_jenis = b.id_jenis','right');
+         $this->db->join('ruang d', 'd.id_ruang = b.id_ruang','left');
 		 $this->db->where('username', $this->session->userdata('username'));
 		 return $this->db->get()->result_array();
 	}

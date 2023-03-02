@@ -2,7 +2,7 @@
 	<?php echo $this->session->flashdata('alert', true)?>
 </div>
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-	<h2 class="text-lg font-medium mr-auto"> Peminjaman Aset </h2>
+	<h2 class="text-lg font-medium mr-auto"> PEMINJAMAN ASET </h2>
 	<div class="w-full sm:w-auto flex mt-4 sm:mt-0">
 		<a href="<?php echo site_url('admin/pinjam/buat/');?>" class="button inline-block bg-theme-1 text-white">Buat Peminjaman </a>
 	</div>

@@ -21,7 +21,7 @@ class Pinjam extends MY_Controller{
             'site'                  => $site,
         );
         $this->db->select('*')->from('pinjam');
-        $this->db->order_by('tanggal_pinjam','DESC');
+        $this->db->order_by('kode_pinjam','DESC');
         $data2 = $this->db->get()->result_array();
         $data2 = array('pinjam' => $data2);
         $this->template->load('layout/template', 'admin/pinjam_index', array_merge($data,$data2));
@@ -53,132 +53,68 @@ class Pinjam extends MY_Controller{
         $this->template->load('layout/template', 'mahasiswa/detail', array_merge($data, $data2, $data3));
     }
     public function add($id){
-     $this->db->select('*');
-     $this->db->from('barang');
-     $this->db->like('nomor_inventaris', $id); 
-     $data = $this->db->get()->result_array();
-     $data = array('data' => $data);
-     foreach ($data['data'] as $uu) {
-        $nama = $uu['nama'];
-        $status = $uu['active'];
-     }
-     if($status==1){
-        $this->session->set_flashdata('alert', '<p class="box-msg">
-        <div class="info-box alert-success">
-        <div class="info-box-icon">
-        <i class="fa fa-plus"></i>
-        </div>
-        <div class="info-box-content" style="font-size:14">
-        <b style="font-size: 20px">SUCCESS</b><br>Nomor inventaris '.$id.' sudah terlebih dahulu dipinjam oleh mahasiswa lain.</div>
-        </div>
-        </p>
-        ');
-        redirect('mahasiswa/peminjaman');            
-        } else {
-         $barang = array(
-            'nama' => $nama,
-            'nomor_inventaris' => $id,
-            'username' => $this->session->userdata('username')
-            );
-            $this->Barang_model->Insert('temp', $barang);
-            $aktif = array('active' => 1);
-            $where = array('nomor_inventaris' => $id);
-            $this->Barang_model->Update('barang', $aktif, $where);
-            $data = array(
-                'keterangan' => 'ditambahkan kedaftar pinjaman mahasiswa',
-                'id_barang' => $id,
-                'username' => $this->session->userdata('username'),
-                'IP' => $this->input->ip_address()
-             );  
-            $this->Barang_model->Insert('logs_barang', $data);
-            $userdata = array('nomor_inventaris' => $id);
-            $this->session->set_userdata($userdata);
-            $this->session->set_flashdata('alert', '<p class="box-msg">
-            <div class="info-box alert-success">
-            <div class="info-box-icon">
-            <i class="fa fa-plus"></i>
-            </div>
-            <div class="info-box-content" style="font-size:14">
-            <b style="font-size: 20px">SUCCESS</b><br>Nomor inventaris '.$id.' ditambahkan ke daftar barang yang akan dipinjam</div>
-            </div>
-            </p>
-            ');
-            redirect('mahasiswa/peminjaman');
-        }
-    }
-    public function hapus($id){
-        $nomor_inventaris = array('nomor_inventaris' => $id);
-        $aktif = array('active' => 0);
+        $barang = array(
+        'nomor_inventaris' => $id,
+        'username' => $this->session->userdata('username')
+        );
+        $this->CRUD_model->Insert('temp', $barang);
+        $aktif = array('status' => 'Dipinjam');
         $where = array('nomor_inventaris' => $id);
-        $this->Barang_model->Update('barang', $aktif, $where);
-        $this->Barang_model->Delete('temp', $nomor_inventaris);
-            $data = array(
-                'keterangan' => 'dihapus dari daftar pinjaman mahasiswa',
-                'id_barang' => $id,
-                'username' => $this->session->userdata('username'),
-                'IP' => $this->input->ip_address()
-             );  
-            $this->Barang_model->Insert('logs_barang', $data);
-        $this->session->set_flashdata('alert', '<p class="box-msg">
-        <div class="info-box alert-success">
-        <div class="info-box-icon">
-        <i class="fa fa-trash"></i>
+        $this->CRUD_model->Update('aset', $aktif, $where);
+        $this->session->set_flashdata('alert', '
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Nomor inventaris '.$id.' telah ditambahkan kedalam daftar peminjaman.
         </div>
-        <div class="info-box-content" style="font-size:14">
-        <b style="font-size: 20px">SUCCESS</b><br>Nomor inventaris '.$id.' dihapus dari daftar barang yang akan dipinjam.</div>
-        </div>
-        </p>
-        ');
-        redirect('mahasiswa/peminjaman');
+                ');
+        redirect('admin/pinjam/buat'); 
     }
-    public function pinjam(){
-        $count = $this->db->count_all_results('peminjaman');
-        $this->db->select('*');
-        $this->db->from('temp');
+    public function delete($id){
+        $nomor_inventaris = array('nomor_inventaris' => $id);
+        $aktif = array('status' => 'Ada');
+        $where = array('nomor_inventaris' => $id);
+        $this->CRUD_model->Update('aset', $aktif, $where);
+        $this->CRUD_model->Delete('temp', $nomor_inventaris);
+        $this->session->set_flashdata('alert', '
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Nomor inventaris '.$id.' telah dihapus dalam daftar peminjaman.
+        </div>
+                ');
+        redirect('admin/pinjam/buat'); 
+    }
+    public function simpan(){
+        $label = $_POST['peminjam']." telah meminjam ";
+        $kode_pinjam = date('YmdHis');
+        $this->db->select('a.*')->from('temp a');
+        $this->db->join('aset b', 'b.nomor_inventaris = a.nomor_inventaris','left');
         $this->db->where('username', $this->session->userdata('username')); 
-        $data = $this->db->get()->result_array();
-        $data = array('data' => $data);
-        foreach ($data['data'] as $uu) {
+        $temp = $this->db->get()->result_array();
+        foreach ($temp as $uu) {
             $detail = array(
-                'kode_peminjaman' => 'SIIBNRJPTK-'.$count,
+                'kode_pinjam' => date('YmdHis'),
                 'nomor_inventaris' => $uu['nomor_inventaris'],
-                'nama' => $uu['nama']
+                'peminjam' => $_POST['peminjam']
                  );
-            $this->Barang_model->Insert('detail_peminjaman', $detail);
-            $data = array(
-                'keterangan' => 'akan dipinjam mahasiswa',
-                'id_barang' => $uu['nomor_inventaris'],
-                'username' => $this->session->userdata('username'),
-                'IP' => $this->input->ip_address()
-             );  
-            $this->Barang_model->Insert('logs_barang', $data);
+            $this->CRUD_model->Insert('detail_pinjam', $detail);
+            $label .= " ,".$uu['nama'];
          }
+         $label .= " pada tanggal ".date('d-M-Y');
         $peminjaman = array(
-            'kode_peminjaman' => 'SIIBNRJPTK-'.$count,
-            'username' => $this->session->userdata('username'),
+            'kode_pinjam' => $kode_pinjam,
             'tanggal_pinjam' => date('Y-m-d H:i:s'),
-            'keperluan' => $this->input->post('keperluan'),
-            'prodi' => $this->session->userdata('prodi'),
+            'peminjam' => $_POST['peminjam'],
+            'username' => $this->session->userdata('username'),
+            'keterangan' => $this->input->post('keterangan'),
             'status' => 0
              );
-        $this->Barang_model->Insert('peminjaman', $peminjaman);
+        $this->CRUD_model->Insert('pinjam', $peminjaman);
         $hapustemp = array('username' => $this->session->userdata('username'));
-        $this->Barang_model->Delete('temp', $hapustemp);
+        $this->CRUD_model->Delete('temp', $hapustemp);
 
-        $data = array('pinjam' => '1'); //1 belum diverifikasi
-        $where = array('username' => $this->session->userdata('username'));
-        $this->Barang_model->Update('user', $data, $where);
-
-        $this->session->set_flashdata('alert', '<p class="box-msg">
-        <div class="info-box alert-success">
-        <div class="info-box-icon">
-        <i class="fa fa-check"></i>
+        $this->session->set_flashdata('alert', '
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> '.$label.'
         </div>
-        <div class="info-box-content" style="font-size:14">
-        <b style="font-size: 20px">PROSES</b><br> Segera menuju bagian Admin untuk meminta persetujuan peminjaman.</div>
-        </div>
-        </p>
-        ');
-        redirect('mahasiswa/home');        
+                ');
+        redirect('admin/pinjam');      
     }
 } 
