@@ -13,9 +13,9 @@
 		<thead>
 			<tr>
 				<th class="border-b-2 whitespace-no-wrap"># </th>
-                <th class="border-b-2 whitespace-no-wrap">TANGGAL PEMINJAMAN </th>
                 <th class="border-b-2 whitespace-no-wrap">PEMINJAMAN </th>
-                <th class="border-b-2 whitespace-no-wrap">STATUS </th>
+                <th class="border-b-2 whitespace-no-wrap">TGL. PEMINJAMAN </th>
+                <th class="border-b-2 whitespace-no-wrap">ALAT YANG DIPINJAM </th>
 				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
 			</tr>
 		</thead>
@@ -23,18 +23,14 @@
 			<?php  $no = 1; foreach ($pinjam as $data) {?>
 			<tr>
 				<td class="text-left border-b"><?= $no; ?></td>
-                <td class="text-left border-b"><?= mediumdate_indo($data['tanggal_peminjaman']); ?></td>
                 <td class="text-left border-b"><?= $data['peminjam']; ?></td>
-                <td class="text-left border-b"><?= $data['status']; ?></td>
+                <td class="text-left border-b"><?= mediumdate_indo($data['tanggal_pinjam']); ?></td>
+                <td class="text-left border-b"><?= $this->Aset_model->get_aset_dipinjam($data['kode_pinjam']); ?></td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
-						<a href="<?php echo site_url('admin/ruang/aset/'.$user['id_ruang']);?>" class="flex items-center text-theme-1 mr-3">
+						<a href="<?php echo site_url('admin/pinjam/detail/'.$data['kode_pinjam']);?>" class="flex items-center text-theme-1 mr-3">
 							<i data-feather="search" class="w-4 h-4 mr-1"></i>
 							Detail </a>
-						<a href="javascript:;" onclick="hapus(<?php echo $user['id_ruang'] ?>)"
-							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
-							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
-							Delete </a>
 					</div>
 				</td>
 			</tr>

@@ -22,7 +22,12 @@ class Home extends MY_Controller
             'title'                 => 'Dashboard | '.$site['nama_website'],
             'site'                  => $site,
         );
-        $this->template->load('layout/template', 'admin/dashboard', array_merge($data));
+        $this->db->select('*')->from('pinjam');
+        $this->db->order_by('kode_pinjam','DESC');
+        $this->db->limit(10);
+        $data2 = $this->db->get()->result_array();
+        $data2 = array('pinjam' => $data2);
+        $this->template->load('layout/template', 'admin/dashboard', array_merge($data,$data2));
     }
     public function pencarian($id){
         $site = $this->Konfigurasi_model->listing();

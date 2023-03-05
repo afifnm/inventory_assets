@@ -5,8 +5,8 @@
 	<h2 class="text-lg font-medium mr-auto"> BUAT PEMINJAMAN </h2>
 </div>
 <!-- BEGIN: Datatable -->
-<div class="grid grid-cols-7 md:grid-cols-7 sm:grid-cols-1 gap-2 mt-5">
-	<div class="col-span-4 intro-y datatable-wrapper box p-5">
+<div class="grid grid-cols-7 md:grid-cols-7 sm:grid-cols-7 gap-2 mt-5">
+	<div class="md:col-span-4 sm:col-span-7 intro-y datatable-wrapper box p-5">
 		<table class="table table-report table-report--bordered display datatable w-full" style="font-size: 12px;">
 			<thead>
 				<tr>
@@ -49,8 +49,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="col-span-3 intro-y box p-5">
-		<h2 class="text-lg font-small text-center"> DAFTAR ASET YANG AKAN DIPINJAM</h2>
+	<div class="ol-span-3 md:col-span-3 sm:col-span-7 intro-y box p-5">
 		<table class="table" style="font-size: 12px;">
 			<thead>
 				<tr>
@@ -60,29 +59,29 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php  $no = 1; foreach ($this->Aset_model->getTempAset() as $user) {?>
+				<?php  $no = 1; foreach ($this->Aset_model->getTempAset() as $uu) {?>
 				<tr>
-					<td class="text-left border-b"><?= $user['nama']; ?></td>
-					<td class="text-left border-b"><?= $user['nomor_inventaris']; ?></td>
+					<td class="text-left border-b"><?= $uu['nama']; ?></td>
+					<td class="text-left border-b"><?= $uu['nomor_inventaris']; ?></td>
 					<td class="border-b w-5">
 						<div class="flex sm:justify-center items-center">
-							<a href="<?php echo site_url('admin/pinjam/delete/'.$user['nomor_inventaris']);?>"
+							<a href="<?php echo site_url('admin/pinjam/delete/'.$uu['nomor_inventaris']);?>"
 								class="button bg-theme-6 text-white">
 								<i data-feather="trash" class="w-6 h-4"></i>
 							</a>
 							<a href="javascript:;" onclick="edit(
-								'<?php echo $user['id_aset'] ?>',
-								'<?php echo $user['nama'] ?>',
-								'<?php echo $user['aset'] ?>',
-								'<?php echo $user['stok'] ?>',
-								'<?php echo $user['nomor_inventaris'] ?>',
-								'<?php echo $user['merk'] ?>',
-								'<?php echo $user['jenis'] ?>',
-								'<?php echo mediumdate_indo($user['tanggal_masuk']) ?>',
-								'<?php echo $user['ruang'] ?>',
-								'<?php echo $user['status'] ?>',
-								'<?php echo $user['kondisi'] ?>',
-								<?php echo $this->Aset_model->count_foto_aset($user['nomor_inventaris']) ?>
+								'<?php echo $uu['id_aset'] ?>',
+								'<?php echo $uu['nama'] ?>',
+								'<?php echo $uu['aset'] ?>',
+								'<?php echo $uu['stok'] ?>',
+								'<?php echo $uu['nomor_inventaris'] ?>',
+								'<?php echo $uu['merk'] ?>',
+								'<?php echo $uu['jenis'] ?>',
+								'<?php echo mediumdate_indo($uu['tanggal_masuk']) ?>',
+								'<?php echo $uu['ruang'] ?>',
+								'<?php echo $uu['status'] ?>',
+								'<?php echo $uu['kondisi'] ?>',
+								<?php echo $this->Aset_model->count_foto_aset($uu['nomor_inventaris']) ?>
 								)" data-toggle="modal" data-target="#edit-data" class="button bg-theme-9 text-white ml-2">
 								<i data-feather="search" class="w-6 h-4"></i>
 							</a>
@@ -107,20 +106,6 @@
 		</form>
 	</div>
 </div>
-<!-- BEGIN: Delete Confirmation Modal -->
-<div class="modal" id="hapus-data">
-	<div class="modal__content">
-		<div class="p-5 text-center">
-			<i data-feather="plus-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
-			<div class="text-3xl mt-5">Apakah kamu yakin?</div>
-			<div class="text-gray-600 mt-2">Apakah Anda benar-benar ingin menambahkan aset ini kedaftar pinjaman?</div>
-		</div>
-		<div class="px-5 pb-8 text-center">
-			<a id="link_hapus" href="" class="button w-24 border bg-theme-1 text-white">Tambahkan kedaftar pinjaman</a>
-		</div>
-	</div>
-</div>
-<!-- END: Delete Confirmation Modal -->
 <!-- BEGIN: EDIT Confirmation Modal -->
 <div class="modal" id="edit-data">
 	<div class="modal__content modal__content--lg">
@@ -181,6 +166,7 @@
 <script>
 	function edit(id_aset, nama, aset, stok, nomor_inventaris, merk, jenis, tanggal_masuk, ruang, status, kondisi,
 		count_foto) {
+		console.log(id_aset);
 		document.getElementById('h2_nama').innerHTML = nama;
 		document.getElementById('nomor_inventaris').innerHTML = ': ' + nomor_inventaris;
 		document.getElementById('jenis').innerHTML = ': ' + jenis;
@@ -192,12 +178,9 @@
 		if (count_foto > 0) {
 			document.getElementById('ada').style.display = "block";
 			document.getElementById('belum_ada').style.display = "none";
-			document.getElementById('foto1').src = '<?php echo site_url('
-			assets / upload / aset / ');?>' + nomor_inventaris + '1.jpg';
-			document.getElementById('foto2').src = '<?php echo site_url('
-			assets / upload / aset / ');?>' + nomor_inventaris + '2.jpg';
-			document.getElementById('foto3').src = '<?php echo site_url('
-			assets / upload / aset / ');?>' + nomor_inventaris + '3.jpg';
+			document.getElementById('foto1').src = '<?php echo site_url('assets/upload/aset/');?>' + nomor_inventaris + '1.jpg';
+			document.getElementById('foto2').src = '<?php echo site_url('assets/upload/aset/');?>' + nomor_inventaris + '2.jpg';
+			document.getElementById('foto3').src = '<?php echo site_url('assets/upload/aset/');?>' + nomor_inventaris + '3.jpg';
 		} else {
 			document.getElementById('ada').style.display = "none";
 			document.getElementById('belum_ada').style.display = "block";
@@ -208,5 +191,4 @@
 		var link = document.getElementById('link_hapus');
 		link.href = "<?php echo site_url('admin/ruang/delete_data/');?>" + id;
 	};
-
 </script>

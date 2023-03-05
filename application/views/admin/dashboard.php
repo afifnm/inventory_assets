@@ -58,16 +58,22 @@
 			<div class="tab-content">
 				<div class="tab-content__pane active" id="ticket">
 					<div class="pos__ticket box p-2 mt-5">
-						<a href="javascript:;"
+						<?php  $no = 1; foreach ($pinjam as $data) {?>
+						<a href="<?php echo site_url('admin/pinjam/detail/'.$data['kode_pinjam']);?>"
 							class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
-							<div class="pos__ticket__item-name truncate mr-1">Afif </div>
-							<div class="ml-auto">Belum Dikembalikan</div>
+							<div class="pos__ticket__item-name truncate mr-1"><?= $data['peminjam']; ?></div>
+							<div class="ml-auto">
+								<?php 
+								$cek= $this->db->where('kode_pinjam', $data['kode_pinjam'])->where('status',0)->count_all_results('detail_pinjam');   
+								if($cek>0){
+										echo'<span class="button rounded-full bg-theme-6 text-white">belum dikembalikan</span>';
+									 } else { 
+										echo'<span class="button rounded-full bg-theme-9 text-white">sudah dikembalikan</span>';
+									}
+								?>	
+							</div>
 						</a>
-						<a href="javascript:;"
-							class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
-							<div class="pos__ticket__item-name truncate mr-1">Maisaroh</div>
-							<div class="ml-auto">Sudah Dikembalikan</div>
-						</a>
+						<?php $no++; } ?>
 					</div>
 				</div>
 				<div class="tab-content__pane" id="details">

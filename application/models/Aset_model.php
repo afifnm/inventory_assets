@@ -33,6 +33,11 @@ class Aset_model extends CI_Model{
         $this->db->where('nomor_inventaris',$id);
         return $this->db->get()->row()->nama;
     }
+    public function get_nama($id){ //tampilkan nama berdasarkan nomor_inventaris
+        $this->db->select('nama')->from('user');
+        $this->db->where('username',$id);
+        return $this->db->get()->row()->nama;
+    }
     public function get_aset($nomor_inventaris){ //tampilkan semua foto berdasarkan nomor_inventaris
         $this->db->select('*')->from('aset');
         $this->db->where('nomor_inventaris',$nomor_inventaris);
@@ -75,22 +80,46 @@ class Aset_model extends CI_Model{
         imagejpeg($image, $destination, $quality);
     }
     public function getPinjamAset(){
-		 $this->db->select('*')->from('aset a');
-         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
-         $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','right');
-		 $this->db->where('a.aset', 'Tetap'); 
-         $this->db->where('a.status', 'Ada'); 
-         $this->db->order_by('a.nama','ASC');
-		 return $this->db->get()->result_array();
-	}
+        $this->db->select('*')->from('aset a');
+        $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
+        $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','right');
+        $this->db->where('a.aset', 'Tetap'); 
+        $this->db->where('a.status', 'Ada'); 
+        $this->db->order_by('a.nama','ASC');
+        return $this->db->get()->result_array();
+   }
+    public function getDipinjamAset($id){
+        $this->db->select('b.*, a.nama')->from('detail_pinjam b');
+        $this->db->join('aset a', 'b.nomor_inventaris = a.nomor_inventaris','left');
+        $this->db->where('b.kode_pinjam', $id); 
+        return $this->db->get()->result_array();
+    }
 
     public function getTempAset(){
-		 $this->db->select('*')->from('temp a');
-         $this->db->join('aset b', 'b.nomor_inventaris = a.nomor_inventaris','left');
-         $this->db->join('jenis c', 'c.id_jenis = b.id_jenis','right');
-         $this->db->join('ruang d', 'd.id_ruang = b.id_ruang','left');
-		 $this->db->where('username', $this->session->userdata('username'));
-		 return $this->db->get()->result_array();
-	}
+        $this->db->select('*')->from('temp a');
+        $this->db->join('aset b', 'b.nomor_inventaris = a.nomor_inventaris','left');
+        $this->db->join('jenis c', 'c.id_jenis = b.id_jenis','right');
+        $this->db->join('ruang d', 'd.id_ruang = b.id_ruang','left');
+        $this->db->where('username', $this->session->userdata('username'));
+        return $this->db->get()->result_array();
+   }
+    public function getTempAsetKembali(){
+        $this->db->select('*')->from('temp_kembali a');
+        $this->db->join('aset b', 'b.nomor_inventaris = a.nomor_inventaris','left');
+        $this->db->join('jenis c', 'c.id_jenis = b.id_jenis','right');
+        $this->db->join('ruang d', 'd.id_ruang = b.id_ruang','left');
+        $this->db->where('username', $this->session->userdata('username'));
+        return $this->db->get()->result_array();
+    }
+
+    public function get_aset_dipinjam($id){ //tampilkan nama berdasarkan nomor_inventaris
+        $nama = '';
+        $this->db->select('b.nama')->from('detail_pinjam a');
+        $this->db->join('aset b', 'b.nomor_inventaris = a.nomor_inventaris','left');
+        $this->db->where('a.kode_pinjam',$id);
+        $rows = $this->db->get()->result_array();
+        foreach ($rows as $row){ $nama .= $row['nama'].', '; }
+        return $nama;
+    }
 
 }
