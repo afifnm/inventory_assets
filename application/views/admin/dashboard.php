@@ -204,4 +204,13 @@
 			window.location.href = '<?php echo site_url('admin/home/pencarian/') ?>' + cari.value;
 		}
 	})
+	var select = document.getElementById('select_aset');
+	select.addEventListener('change', function () {
+		if (select.value == "Tidak Tetap") {
+			document.getElementById('stok').style.display = "block";
+		} else {
+			document.getElementById('stok').style.display = "none";
+		}
+		console.log(select.value);
+	})
 </script>
