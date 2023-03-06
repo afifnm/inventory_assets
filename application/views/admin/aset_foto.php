@@ -25,7 +25,7 @@
 				<div class="mt-2">
 					<label>Stok/Jumlah</label>
 					<div class="relative mt-1">
-						<input type="number" class="input pr-4 w-full border" name="stok" value="<?= $u->stok; ?>">
+						<input type="number" class="input pr-4 w-full border" name="stok" value="<?= $u->stok; ?>" min="0">
 					</div>
 				</div>
 				<?php } ?>

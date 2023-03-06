@@ -23,11 +23,14 @@ class Home extends MY_Controller
             'site'                  => $site,
         );
         $this->db->select('*')->from('pinjam');
-        $this->db->order_by('kode_pinjam','DESC');
-        $this->db->limit(10);
-        $data2 = $this->db->get()->result_array();
-        $data2 = array('pinjam' => $data2);
-        $this->template->load('layout/template', 'admin/dashboard', array_merge($data,$data2));
+        $this->db->order_by('kode_pinjam','DESC')->limit(10);
+        $pinjam = $this->db->get()->result_array();
+        $data2 = array('pinjam' => $pinjam);
+        $this->db->select('*')->from('ambil');
+        $this->db->order_by('id_ambil','DESC')->limit(10);
+        $ambil = $this->db->get()->result_array();
+        $data3 = array('ambil' => $ambil);
+        $this->template->load('layout/template', 'admin/dashboard', array_merge($data,$data2,$data3));
     }
     public function pencarian($id){
         $site = $this->Konfigurasi_model->listing();

@@ -75,6 +75,20 @@
 							<i data-feather="search" class="w-4 h-4 mr-1"></i>
 							Detail
 						</a>
+						<?php if($user['stok']>0 AND $user['aset']=="Tidak Tetap"){ ?>
+						<a href="javascript:;" onclick="ambil(
+								'<?php echo $user['nomor_inventaris'] ?>',
+								'<?php echo $user['nama'] ?>',
+								'<?php echo $user['aset'] ?>',
+								'<?php echo $user['stok'] ?>',
+								'<?php echo $user['merk'] ?>',
+								'<?php echo $user['ruang'] ?>',
+								'<?php echo $user['status'] ?>'
+								)" class="flex items-center text-orange pr-1" data-toggle="modal" data-target="#ambil">
+							<i data-feather="rewind" class="w-4 h-4 mr-1"></i>
+							Ambil
+						</a>
+						<?php } ?>
 						<a href="<?php echo site_url('admin/aset/foto/'.$user['id_jenis'].'/'.$user['nomor_inventaris']);?>"
 							class="flex items-center text-theme-1 pr-1">
 							<i data-feather="check-square" class="w-4 h-4 mr-1"></i>
@@ -117,7 +131,7 @@
 					<label>Jumlah Stok (Qty)</label>
 					<div class="relative mt-2">
 						<input type="number" class="input pr-4 w-full border col-span-4" placeholder="jumlah stok aset"
-							name="stok">
+							name="stok" min="1">
 					</div>
 				</div>
 				<div class="mt-3">
@@ -248,7 +262,74 @@
 	</div>
 </div>
 <!-- END: EDIT Confirmation Modal -->
+<!-- BEGIN: AMBIL ASET Confirmation Modal -->
+<div class="modal" id="ambil">
+	<div class="modal__content modal__content--lg">
+		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+			<h2 class="font-medium text-base ml-3">PENGAMBILAN ASET </h2>
+		</div>
+		<div class="intro-y box p-5">
+			<table class="ml-3 mb-3">
+				<tr>
+					<td>Nama Aset </td>
+					<td id="nama">: </td>
+				</tr>
+				<tr>
+					<td>Nomor Inventaris </td>
+					<td id="nomor_inventaris2">: </td>
+				</tr>
+				<tr>
+					<td>Jenis Aset </td>
+					<td>: <?= $namajenis; ?></td>
+				</tr>
+				<tr>
+					<td>Jumlah/Stok</td>
+					<td id="qty2">: </td>
+				</tr>
+				<tr>
+					<td>Merk</td>
+					<td id="merk2">: </td>
+				</tr>
+				<tr>
+					<td>Ruang</td>
+					<td id="ruang2">: </td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td id="status2">: </td>
+				</tr>
+			</table>
+			<form action="<?php echo site_url('admin/aset/ambil');?>" method="POST">
+				<input type="hidden" name="nomor_inventaris" id="v_nomor_inventaris">
+				<input type="hidden" name="jenis" value="<?= $id_jenis; ?>">
+				<input type="hidden" name="stok_lama" id="v_stok">
+				<div class="grid grid-cols-12 gap-4 row-gap-3 ml-3 mr-5 mb-5">
+					<div class="col-span-12 sm:col-span-12"><label>Nama</label><input type="text" name="nama"
+						required class="input w-full border mt-2 flex-1" placeholder="masukan nama yang mengambil..."> </div>
+					<div class="col-span-12 sm:col-span-12"><label>Stok</label><input type="number" name="stok" min="1"
+						required class="input w-full border mt-2 flex-1" placeholder="masukan stok yang diambil..."> </div>
+					<div class="col-span-12 sm:col-span-12"><label>Keterangan</label><input type="text" name="keterangan"
+						class="input w-full border mt-2 flex-1" placeholder="keterangan keperluan pengambilan ..."> </div>
+				</div>
+				<div class="text-right mr-5">
+					<button type="submit" class="w-30 button bg-theme-1 text-white" onclick='confirm("Apakah anda yakin data isian benar?");'>Ambil Aset</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- END: AMBIL ASET Confirmation Modal -->
 <script>
+	function ambil(nomor_inventaris, nama, aset, stok, merk, ruang, status) {
+		document.getElementById('nama').innerHTML = ': ' + nama;
+		document.getElementById('nomor_inventaris2').innerHTML = ': ' + nomor_inventaris;
+		document.getElementById('qty2').innerHTML = ': ' + stok + ' (Aset ' + aset + ')';
+		document.getElementById('v_nomor_inventaris').value = nomor_inventaris;
+		document.getElementById('v_stok').value = stok;
+		document.getElementById('merk2').innerHTML = ': ' + merk;
+		document.getElementById('ruang2').innerHTML = ': ' + ruang;
+		document.getElementById('status2').innerHTML = ': ' + status;
+	};
 	function edit(id_aset, nama, aset, stok, nomor_inventaris, merk, jenis, tanggal_masuk, ruang, status, kondisi,
 		count_foto) {
 		document.getElementById('h2_nama').innerHTML = nama;

@@ -78,16 +78,29 @@
 				</div>
 				<div class="tab-content__pane" id="details">
 					<div class="pos__ticket box p-2 mt-5">
-						<a href="javascript:;"
-							class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
-							<div class="pos__ticket__item-name truncate mr-1">Afif</div>
-							<div class="ml-auto">Pending</div>
+						<?php  $no = 1; foreach ($ambil as $data) {?>
+						<a onclick="ambil(
+								'<?php echo $data['nama'] ?>',
+								'<?php echo $this->Aset_model->get_nama_aset($data['nomor_inventaris']) ?>',
+								'<?php echo $data['nomor_inventaris'] ?>',
+								'<?php echo $data['jumlah'] ?>',
+								'<?php echo mediumdate_indo($data['tanggal']) ?>',
+								'<?php echo $data['keterangan'] ?>',
+								'<?php echo $data['status'] ?>',
+								'<?php echo $this->Aset_model->get_nama($data['operator']) ?>'
+								)" data-toggle="modal" data-target="#ambil" class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
+							<div class="pos__ticket__item-name truncate mr-1"><?= $data['nama']; ?></div>
+							<div class="ml-auto">
+								<?php  
+								if($data['status']==0){
+										echo'<span class="button rounded-full bg-theme-6 text-white">dibatalkan</span>';
+									 } else { 
+										echo'<span class="button rounded-full bg-theme-9 text-white">berhasil</span>';
+									}
+								?>	
+							</div>
 						</a>
-						<a href="javascript:;"
-							class="flex items-center p-3 cursor-pointer transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
-							<div class="pos__ticket__item-name truncate mr-1">Maisa</div>
-							<div class="ml-auto">Pending</div>
-						</a>
+						<?php $no++; } ?>
 					</div>
 				</div>
 			</div>
@@ -197,7 +210,66 @@
 		</div>
 	</div>
 </div>
+<!-- BEGIN: AMBIL ASET Confirmation Modal -->
+<div class="modal" id="ambil">
+	<div class="modal__content modal__content--lg">
+		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+			<h2 class="font-medium text-base ml-3">PENGAMBILAN ASET </h2>
+		</div>
+		<div class="intro-y box p-5">
+			<table class="ml-3 mb-3">
+				<tr>
+					<td>Nama </td>
+					<td id="nama">: </td>
+				</tr>
+				<tr>
+					<td>Aset Yang Diambil </td>
+					<td id="aset">: </td>
+				</tr>
+				<tr>
+					<td>Nomor Inventaris </td>
+					<td id="nomor_inventaris">:</td>
+				</tr>
+				<tr>
+					<td>Jumlah</td>
+					<td id="jumlah">: </td>
+				</tr>
+				<tr>
+					<td>Tanggal</td>
+					<td id="tanggal">: </td>
+				</tr>
+				<tr>
+					<td>Keterangan</td>
+					<td id="keterangan">: </td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td id="status">: </td>
+				</tr>
+				<tr>
+					<td>Operator</td>
+					<td id="operator">: </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- END: AMBIL ASET Confirmation Modal -->
 <script>
+	function ambil(nama, aset, nomor_inventaris, jumlah, tanggal, keterangan, status, operator) {
+		document.getElementById('nama').innerHTML = ': ' + nama;
+		document.getElementById('aset').innerHTML = ': ' + aset;
+		document.getElementById('nomor_inventaris').innerHTML = ': ' + nomor_inventaris;
+		document.getElementById('jumlah').innerHTML = ': ' + jumlah;
+		document.getElementById('tanggal').innerHTML = ': ' + tanggal;
+		document.getElementById('keterangan').innerHTML = ': ' + keterangan;
+		if (status==1) {
+			document.getElementById('status').innerHTML = ': ' + status;
+		} else {
+			document.getElementById('status').innerHTML = ': dibatalkan';
+		}
+		document.getElementById('operator').innerHTML = ': ' + operator;
+	};
 	var cari = document.getElementById('cari');
 	cari.addEventListener("keydown", function (event) {
 		if (event.keyCode == 13) {

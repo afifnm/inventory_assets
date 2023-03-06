@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Mar 2023 pada 17.29
--- Versi server: 10.4.24-MariaDB
--- Versi PHP: 7.4.29
+-- Generation Time: Mar 06, 2023 at 04:21 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `aset`
+-- Table structure for table `ambil`
+--
+
+CREATE TABLE `ambil` (
+  `id_ambil` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `operator` varchar(50) NOT NULL,
+  `nomor_inventaris` varchar(50) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `keterangan` text NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ambil`
+--
+
+INSERT INTO `ambil` (`id_ambil`, `nama`, `operator`, `nomor_inventaris`, `jumlah`, `tanggal`, `keterangan`, `status`) VALUES
+(3, 'Teguh', 'root', '402.231.001', 40, '2023-03-06', 'Print raport', 0),
+(4, 'Windu', 'root', '402.231.001', 50, '2023-03-06', '-', 0),
+(5, 'Apip', 'root', '402.231.001', 30, '2023-03-06', '-', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aset`
 --
 
 CREATE TABLE `aset` (
@@ -44,19 +70,19 @@ CREATE TABLE `aset` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `aset`
+-- Dumping data for table `aset`
 --
 
 INSERT INTO `aset` (`id_aset`, `nama`, `aset`, `stok`, `nomor_inventaris`, `merk`, `id_jenis`, `tanggal_masuk`, `id_ruang`, `status`, `kondisi`, `active`, `updated_at`) VALUES
 (11, 'Laptop Core i3 Gen 10', 'Tetap', 1, '123.323.323.001', 'Acer Aspire', 6, '2023-02-01', '6', 'Ada', 'Baik', 1, '2023-03-05 16:14:36'),
-(12, 'Kertas A4 10gram', 'Tidak Tetap', 50, '402.231.001', 'SiDu', 2, '2023-02-01', '9', 'Ada', 'Baik', 1, '2023-02-22 12:54:35'),
+(12, 'Kertas A4 10gram', 'Tidak Tetap', 60, '402.231.001', 'SiDu', 2, '2023-02-01', '9', 'Ada', 'Baik', 1, '2023-03-06 02:55:09'),
 (13, 'Laptop Core i5', 'Tetap', 1, '000.232.122', 'Dell', 6, '2023-03-02', '9', 'Dipinjam', 'Baik', 1, '2023-03-05 16:22:07'),
-(14, 'Gamestick Rexus', 'Tetap', 1, '123.3123.111', 'Rexus', 6, '2023-03-05', '9', 'Ada', 'Rusak', 1, '2023-03-05 16:14:23');
+(14, 'Gamestick Rexus 202', 'Tetap', 1, '123.3123.111', 'Rexus', 6, '2023-03-05', '9', 'Ada', 'Rusak', 1, '2023-03-06 00:12:30');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_pinjam`
+-- Table structure for table `detail_pinjam`
 --
 
 CREATE TABLE `detail_pinjam` (
@@ -70,7 +96,7 @@ CREATE TABLE `detail_pinjam` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `detail_pinjam`
+-- Dumping data for table `detail_pinjam`
 --
 
 INSERT INTO `detail_pinjam` (`id_detail_pinjam`, `kode_pinjam`, `nomor_inventaris`, `tanggal_pinjam`, `tanggal_kembali`, `status`, `kondisi`) VALUES
@@ -83,7 +109,7 @@ INSERT INTO `detail_pinjam` (`id_detail_pinjam`, `kode_pinjam`, `nomor_inventari
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `foto`
+-- Table structure for table `foto`
 --
 
 CREATE TABLE `foto` (
@@ -93,7 +119,7 @@ CREATE TABLE `foto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `foto`
+-- Dumping data for table `foto`
 --
 
 INSERT INTO `foto` (`id_foto`, `nomor_inventaris`, `namafile`) VALUES
@@ -103,7 +129,7 @@ INSERT INTO `foto` (`id_foto`, `nomor_inventaris`, `namafile`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jenis`
+-- Table structure for table `jenis`
 --
 
 CREATE TABLE `jenis` (
@@ -112,7 +138,7 @@ CREATE TABLE `jenis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jenis`
+-- Dumping data for table `jenis`
 --
 
 INSERT INTO `jenis` (`id_jenis`, `jenis`) VALUES
@@ -127,7 +153,7 @@ INSERT INTO `jenis` (`id_jenis`, `jenis`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `konfigurasi`
+-- Table structure for table `konfigurasi`
 --
 
 CREATE TABLE `konfigurasi` (
@@ -138,7 +164,7 @@ CREATE TABLE `konfigurasi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `konfigurasi`
+-- Dumping data for table `konfigurasi`
 --
 
 INSERT INTO `konfigurasi` (`id`, `nama_website`, `favicon`, `logo`) VALUES
@@ -147,7 +173,7 @@ INSERT INTO `konfigurasi` (`id`, `nama_website`, `favicon`, `logo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `logs`
+-- Table structure for table `logs`
 --
 
 CREATE TABLE `logs` (
@@ -161,7 +187,7 @@ CREATE TABLE `logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `logs`
+-- Dumping data for table `logs`
 --
 
 INSERT INTO `logs` (`id_logs`, `tabel`, `keterangan`, `datetime`, `username`, `IP`, `nomor_inventaris`) VALUES
@@ -178,12 +204,18 @@ INSERT INTO `logs` (`id_logs`, `tabel`, `keterangan`, `datetime`, `username`, `I
 (11, 'aset', 'Afif telah meminjam Gamestick Rexus dengan nomor inventaris 123.3123.111 pada tanggal 05-Mar-2023', '2023-03-05 16:10:40', 'root', '127.0.0.1', '123.3123.111'),
 (12, 'aset', 'Afif telah mengembalikan aset dengan nomor inventaris 123.3123.111 pada tanggal 05-Mar-2023 dalam keadaan Rusak', '2023-03-05 16:14:24', 'root', '127.0.0.1', '123.3123.111'),
 (13, 'aset', 'Afif telah mengembalikan aset dengan nomor inventaris 123.323.323.001 pada tanggal 05-Mar-2023 dalam keadaan Baik', '2023-03-05 16:14:36', 'root', '127.0.0.1', '123.323.323.001'),
-(14, 'aset', 'Dwi telah meminjam Laptop Core i5 dengan nomor inventaris 000.232.122 pada tanggal 05-Mar-2023', '2023-03-05 16:22:21', 'root', '127.0.0.1', '000.232.122');
+(14, 'aset', 'Dwi telah meminjam Laptop Core i5 dengan nomor inventaris 000.232.122 pada tanggal 05-Mar-2023', '2023-03-05 16:22:21', 'root', '127.0.0.1', '000.232.122'),
+(15, 'aset', 'Arief Kurniawan telah mengubah nama Gamestick Rexus menjadi Gamestick Rexus 202, dari aset Gamestick Rexus dengan nomor inventaris 123.3123.111', '2023-03-06 00:12:30', 'root', '127.0.0.1', '123.3123.111'),
+(18, 'aset', 'Teguh telah mengambil aset dengan nomor inventaris 402.231.001 sejumlah 40', '2023-03-06 01:53:22', 'root', '127.0.0.1', '402.231.001'),
+(19, 'aset', 'Arief Kurniawan telah membatalkan pengambilan aset dengan nomor inventaris 402.231.001 sejumlah 40', '2023-03-06 02:53:24', 'root', '127.0.0.1', '402.231.001'),
+(20, 'aset', 'Windu telah mengambil aset dengan nomor inventaris 402.231.001 sejumlah 50', '2023-03-06 02:54:28', 'root', '127.0.0.1', '402.231.001'),
+(21, 'aset', 'Apip telah mengambil aset dengan nomor inventaris 402.231.001 sejumlah 30', '2023-03-06 02:54:45', 'root', '127.0.0.1', '402.231.001'),
+(22, 'aset', 'Arief Kurniawan telah membatalkan pengambilan aset dengan nomor inventaris 402.231.001 sejumlah 50', '2023-03-06 02:55:09', 'root', '127.0.0.1', '402.231.001');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pinjam`
+-- Table structure for table `pinjam`
 --
 
 CREATE TABLE `pinjam` (
@@ -196,7 +228,7 @@ CREATE TABLE `pinjam` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `pinjam`
+-- Dumping data for table `pinjam`
 --
 
 INSERT INTO `pinjam` (`kode_pinjam`, `peminjam`, `username`, `keterangan`, `status`, `tanggal_pinjam`) VALUES
@@ -207,7 +239,7 @@ INSERT INTO `pinjam` (`kode_pinjam`, `peminjam`, `username`, `keterangan`, `stat
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `ruang`
+-- Table structure for table `ruang`
 --
 
 CREATE TABLE `ruang` (
@@ -217,7 +249,7 @@ CREATE TABLE `ruang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `ruang`
+-- Dumping data for table `ruang`
 --
 
 INSERT INTO `ruang` (`id_ruang`, `ruang`, `keterangan`) VALUES
@@ -233,7 +265,7 @@ INSERT INTO `ruang` (`id_ruang`, `ruang`, `keterangan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `temp`
+-- Table structure for table `temp`
 --
 
 CREATE TABLE `temp` (
@@ -245,7 +277,7 @@ CREATE TABLE `temp` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `temp_kembali`
+-- Table structure for table `temp_kembali`
 --
 
 CREATE TABLE `temp_kembali` (
@@ -257,7 +289,7 @@ CREATE TABLE `temp_kembali` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -275,7 +307,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `level`, `nama`, `alamat`, `no_hp`, `foto`, `active`, `last_login`, `pinjam`) VALUES
@@ -288,131 +320,143 @@ INSERT INTO `user` (`id`, `username`, `password`, `level`, `nama`, `alamat`, `no
 --
 
 --
--- Indeks untuk tabel `aset`
+-- Indexes for table `ambil`
+--
+ALTER TABLE `ambil`
+  ADD PRIMARY KEY (`id_ambil`);
+
+--
+-- Indexes for table `aset`
 --
 ALTER TABLE `aset`
   ADD PRIMARY KEY (`id_aset`);
 
 --
--- Indeks untuk tabel `detail_pinjam`
+-- Indexes for table `detail_pinjam`
 --
 ALTER TABLE `detail_pinjam`
   ADD PRIMARY KEY (`id_detail_pinjam`);
 
 --
--- Indeks untuk tabel `foto`
+-- Indexes for table `foto`
 --
 ALTER TABLE `foto`
   ADD PRIMARY KEY (`id_foto`);
 
 --
--- Indeks untuk tabel `jenis`
+-- Indexes for table `jenis`
 --
 ALTER TABLE `jenis`
   ADD PRIMARY KEY (`id_jenis`);
 
 --
--- Indeks untuk tabel `konfigurasi`
+-- Indexes for table `konfigurasi`
 --
 ALTER TABLE `konfigurasi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `logs`
+-- Indexes for table `logs`
 --
 ALTER TABLE `logs`
   ADD PRIMARY KEY (`id_logs`);
 
 --
--- Indeks untuk tabel `pinjam`
+-- Indexes for table `pinjam`
 --
 ALTER TABLE `pinjam`
   ADD PRIMARY KEY (`kode_pinjam`);
 
 --
--- Indeks untuk tabel `ruang`
+-- Indexes for table `ruang`
 --
 ALTER TABLE `ruang`
   ADD PRIMARY KEY (`id_ruang`);
 
 --
--- Indeks untuk tabel `temp`
+-- Indexes for table `temp`
 --
 ALTER TABLE `temp`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `temp_kembali`
+-- Indexes for table `temp_kembali`
 --
 ALTER TABLE `temp_kembali`
   ADD PRIMARY KEY (`id_temp_kembali`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `aset`
+-- AUTO_INCREMENT for table `ambil`
+--
+ALTER TABLE `ambil`
+  MODIFY `id_ambil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `aset`
 --
 ALTER TABLE `aset`
   MODIFY `id_aset` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT untuk tabel `detail_pinjam`
+-- AUTO_INCREMENT for table `detail_pinjam`
 --
 ALTER TABLE `detail_pinjam`
   MODIFY `id_detail_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `foto`
+-- AUTO_INCREMENT for table `foto`
 --
 ALTER TABLE `foto`
   MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT untuk tabel `jenis`
+-- AUTO_INCREMENT for table `jenis`
 --
 ALTER TABLE `jenis`
   MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `konfigurasi`
+-- AUTO_INCREMENT for table `konfigurasi`
 --
 ALTER TABLE `konfigurasi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `logs`
+-- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT untuk tabel `ruang`
+-- AUTO_INCREMENT for table `ruang`
 --
 ALTER TABLE `ruang`
   MODIFY `id_ruang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `temp`
+-- AUTO_INCREMENT for table `temp`
 --
 ALTER TABLE `temp`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT untuk tabel `temp_kembali`
+-- AUTO_INCREMENT for table `temp_kembali`
 --
 ALTER TABLE `temp_kembali`
   MODIFY `id_temp_kembali` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;

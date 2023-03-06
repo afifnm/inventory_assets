@@ -230,6 +230,15 @@ class Aset extends MY_Controller{
             $stok = 1;
         } else {
             $stok = $this->input->post('stok');
+        } 
+        $cek= $this->db->where('nomor_inventaris', $nomor_inventaris)->where('status',0)->count_all_results('detail_pinjam');  
+        if($cek>0){
+            $this->session->set_flashdata('alert', '
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white mt-5">
+                <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Aset tidak bisa diubah karena masih dalam proses peminjaman. 
+            </div>
+                    ');
+            redirect('admin/aset/foto/'.$this->input->post('id_jenis').'/'.$nomor_inventaris);
         }
         $keterangan = $this->session->userdata('nama').' telah mengubah';
         foreach($this->Aset_model->get_aset($nomor_inventaris) as $aset){
@@ -283,5 +292,51 @@ class Aset extends MY_Controller{
         </div>
                 ');
         redirect('admin/aset/foto/'.$this->input->post('id_jenis').'/'.$nomor_inventaris);
+    }
+    public function ambil(){     
+        $stok_lama = $this->input->post('stok_lama');
+        $jenis = $this->input->post('jenis');
+        $stok = $this->input->post('stok');
+        $nomor_inventaris = $this->input->post('nomor_inventaris');
+        $keterangan = $this->input->post('keterangan');
+        $nama = $this->input->post('nama');
+        if ($stok > $stok_lama) {
+            $this->session->set_flashdata('alert', '
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+                <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Jumlah yang diambil melebihi stok yang ada.
+            </div>
+                    ');
+             redirect('admin/aset/jenis/'.$jenis); 
+        } 
+        $data = array(
+            'nama'              => $this->input->post('nama'),
+            'operator'          => $this->session->userdata('username'),
+            'nomor_inventaris'  => $nomor_inventaris,
+            'tanggal'           => date('Y-m-d'),
+            'jumlah'            => $stok,
+            'keterangan'        => $keterangan,
+            'status'            => 1
+            );  
+        $this->CRUD_model->Insert('ambil', $data);
+        //update bagian aset
+        $jumlah = $stok_lama-$stok;
+        $data = array('stok' => $jumlah);
+        $where = array('nomor_inventaris' => $nomor_inventaris);
+        $this->CRUD_model->Update('aset', $data, $where);
+        $label = $nama.' telah mengambil aset dengan nomor inventaris '.$this->input->post('nomor_inventaris').' sejumlah '.$stok;
+        $data = array(
+            'tabel'             => 'aset',
+            'keterangan'        => $label,
+            'nomor_inventaris'  => $nomor_inventaris,
+            'username'          => $this->session->userdata('username'),
+            'IP'                => $this->input->ip_address()
+            );  
+        $this->CRUD_model->Insert('logs', $data);
+        $this->session->set_flashdata('alert', '
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Aset telah berhasil diambil sejumlah '.$stok.'.
+        </div>
+                ');
+        redirect('admin/aset/jenis/'.$jenis);     
     }
 }
