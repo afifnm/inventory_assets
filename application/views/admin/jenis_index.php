@@ -6,8 +6,10 @@
 		JENIS ASSET
 	</h2>
 	<div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+		<?php if ($this->session->userdata('level') == "Admin") { ?>
 		<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
 			class="button inline-block bg-theme-1 text-white">Tambah Jenis Asset</a>
+		<?php } ?>
 	</div>
 </div>
 <!-- BEGIN: Datatable -->
@@ -28,6 +30,7 @@
 						<a href="<?php echo site_url('admin/aset/jenis/'.$user['id_jenis']);?>" class="flex items-center text-theme-1 mr-3">
 							<i data-feather="search" class="w-4 h-4 mr-1"></i>
 							Lihat Aset </a>
+							<?php if ($this->session->userdata('level') == "Admin") { ?>
 						<a href="javascript:;"
 							onclick="edit(<?php echo $user['id_jenis'] ?>,'<?php echo $user['jenis'] ?>')"
 							class="flex items-center mr-3" data-toggle="modal" data-target="#edit-data">
@@ -38,6 +41,7 @@
 							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
 							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
 							Delete </a>
+							<?php } ?>
 					</div>
 				</td>
 			</tr>

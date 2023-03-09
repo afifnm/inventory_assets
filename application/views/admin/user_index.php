@@ -41,7 +41,15 @@
 							<i data-feather="search" class="w-4 h-4 mr-1"></i>
 							Detail
 						</a>
-						<a href="<?php echo site_url('admin/pengguna/profil/'.$user['username']);?>"
+						<a href="javascript:;" onclick="update(
+								'<?php echo $user['username'] ?>',
+								'<?php echo $user['nama'] ?>',
+								'<?php echo $user['level'] ?>',
+                                '<?php echo $user['alamat'] ?>',
+                                '<?php echo $user['no_hp'] ?>',
+								<?= $user['id'] ?>
+								)"
+								data-toggle="modal" data-target="#update-data"
 							class="flex items-center text-theme-1 pr-1">
 							<i data-feather="check-square" class="w-4 h-4 mr-1"></i>
 							Edit </a>
@@ -163,6 +171,50 @@
 		</div>
 	</div>
 </div>
+<div class="modal" id="update-data">
+	<div class="modal__content modal__content--lg">
+		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+			<h2 class="font-medium text-base ml-3">Perbarui Data Pengguna  </h2>
+		</div>
+		<form action="<?php echo site_url('admin/pengguna/update');?>" method="POST">
+			<div class="intro-y box p-5">
+				<div class="mt-3">
+					<label>Username</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" id="v_username"
+							name="username" readonly>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Nama</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" id="v_nama"
+							name="nama" required>
+					</div>
+				</div>				
+				<div class="mt-3">
+					<label>Alamat</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" id="v_alamat"
+							name="alamat" required>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>No. HP</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" id="v_telp"
+							name="no_hp" required>
+					</div>
+				</div>
+			</div>
+			<div class="px-5 py-3 text-right border-t border-gray-200">
+				<a class="button bg-theme-1 text-white mr-3" id="link_reset"
+				onClick="return confirm('Apakah anda yakin mereset password pada siswa?')">Reset Password</a>
+				<button type="submit" class="button w-20 bg-theme-1 text-white">Simpan</button>
+			</div>
+		</form>
+	</div>
+</div>
 <!-- END: EDIT Confirmation Modal -->
 <script>
 	function edit(username, nama, level, alamat, no_hp) {
@@ -173,6 +225,14 @@
 		document.getElementById('alamat').innerHTML = ': ' + alamat;
 		document.getElementById('no_hp').innerHTML = ': ' + no_hp;
 	};
+	function update(username, nama, level, alamat, no_hp, id) {
+		document.getElementById('v_username').value = username;
+		document.getElementById('v_nama').value = nama;
+		document.getElementById('v_alamat').value = alamat;
+		document.getElementById('v_telp').value = no_hp;
+		var link = document.getElementById('link_reset');
+		link.href = "<?php echo site_url('admin/pengguna/reset_password/');?>" + id;
+	}
 	function hapus(id) {
 		var link = document.getElementById('link_hapus');
 		link.href = "<?php echo site_url('admin/pengguna/delete_data/');?>" + id;

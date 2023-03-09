@@ -76,6 +76,7 @@
 						<div class="side-menu__title"> Reset Password </div>
 					</a>
 				</li>
+				<?php if ($this->session->userdata('level') == "Admin") { ?>
 				<li>
 					<a href="<?php echo site_url('admin/pengguna');?>"
 						class="side-menu <?php if($this->uri->segment('3')==NULL){ echo "side-menu--active"; } ?>">
@@ -83,6 +84,7 @@
 						<div class="side-menu__title"> Data Pengguna </div>
 					</a>
 				</li>	
+				<?php } ?>
 			</ul>
 		</li>
 		<li>

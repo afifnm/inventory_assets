@@ -9,7 +9,7 @@ class Pengguna extends MY_Controller{
         $this->load->model('CRUD_model');
         $this->load->model('Auth_model');
         $this->check_login();
-        if ($level != "Admin") {
+        if (($this->session->userdata('level') != "Admin") AND ($this->session->userdata('level') != "Staff")) {
             redirect('', 'refresh');
         }
     }
@@ -74,5 +74,36 @@ class Pengguna extends MY_Controller{
                 ');
         redirect('admin/pengguna'); 
     }
-
+    public function update(){
+        $data = array(
+            'nama'              => $this->input->post('nama'),
+            'alamat'            => $this->input->post('alamat'),
+            'no_hp'             => $this->input->post('no_hp')
+         );  
+        $where = array(
+            'username' => $this->input->post('username'),
+        );
+        $data = $this->CRUD_model->Update('user', $data, $where);
+        $this->session->set_flashdata('alert', '
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Pengguna berhasil diperbarui. 
+        </div>
+                ');
+        redirect('admin/pengguna'); 
+    }
+        public function reset_password($id){
+        $data = array(
+            'password' => get_hash('1234')
+         ); 
+        $where = array(
+            'id' => $id,
+        );
+        $data = $this->CRUD_model->Update('user', $data, $where);
+        $this->session->set_flashdata('alert', '
+        <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+            <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Password telah direset menjadi 1234 
+        </div>
+                ');
+        redirect('admin/pengguna'); 
+    }
 }

@@ -60,7 +60,7 @@ class Auth extends MY_Controller
             redirect('admin/home');
         } 
         if ($this->session->userdata('level') == "Staff") {
-            redirect('staff/home');
+            redirect('admin/home');
         } 
         //proses login dan validasi nya
         if ($this->input->post('submit')) {
@@ -74,7 +74,7 @@ class Auth extends MY_Controller
                 if ($data->level == 'Admin') {
                     redirect('admin/home');
                 } elseif ($data->level == 'Staff') {
-                    redirect('staff/home');
+                    redirect('admin/home');
                 }
             } else {
                 $this->load->view('authentication/login', $data);

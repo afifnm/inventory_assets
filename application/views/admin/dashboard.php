@@ -13,8 +13,12 @@
 		</svg>
 	</div>
 	<div class="w-full sm:w-auto flex mt-4 ml-5 sm:mt-0">
+		<?php if ($this->session->userdata('level') == "Admin") { ?>
 		<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
 			class="button mr-1 inline-block bg-theme-1 text-white">Tambah Aset </a>
+		<?php } ?>
+		<a href="javascript:;" data-toggle="modal" data-target="#expor"
+			class="button mr-1 inline-block bg-theme-1 text-white">Export </a>
 		<a href=" javascript:;" data-toggle="modal" data-target="#superlarge-modal-size-preview"
 			class="button mr-1 inline-block bg-theme-1 text-white">Logs Aktivitas</a>
 	</div>
@@ -107,6 +111,44 @@
 		</div>
 	</div>
 </div>
+<div class="modal" id="expor">
+	<div class="modal__content modal__content--lg">
+		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+			<h2 class="font-medium text-base mr-auto">EXPORT TO EXCEL </h2>
+		</div>
+		<form action="<?php echo site_url('admin/home/excel');?>" method="GET">
+			<div class="intro-y box p-5">
+				<div class="mt-3">
+					<label>Jenis Aset</label>
+					<div class="relative mt-2">
+						<select name="id_jenis" class="input pr-4 w-full border col-span-4">
+							<option value="" selected>Tampilkan Semua</option>
+							<?php foreach ($this->Aset_model->jenis() as $jenis){ ?>
+							<option value="<?= $jenis['id_jenis']; ?>">
+								<?= $jenis['jenis']; ?>
+							</option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Ruang/Tempat</label>
+					<div class="relative mt-2">
+						<select name="id_ruang" class="input pr-4 w-full border col-span-4">
+							<option value="" selected>Tampilkan Semua</option>
+							<?php foreach ($this->Aset_model->ruang() as $ruang){ ?>
+							<option value="<?= $ruang['id_ruang']; ?>"><?= $ruang['ruang']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="px-5 py-3 text-right border-t border-gray-200">
+				<button type="submit" class="button w-20 bg-theme-1 text-white">Simpan</button>
+			</div>
+		</form>
+	</div>
+</div>
 <div class="modal" id="header-footer-modal-preview">
 	<div class="modal__content modal__content--lg">
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
@@ -140,7 +182,7 @@
 					<label>Nomor Inventaris</label>
 					<div class="relative mt-2">
 						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="nomor inventaris"
-							name="nomor_inventaris" required>
+							name="nomor_inventaris" required id="cek_nomor">
 					</div>
 				</div>
 				<div class="mt-3">
@@ -285,4 +327,14 @@
 		}
 		console.log(select.value);
 	})
+	$("#cek_nomor").on({
+    keydown: function(e) {
+		console.log(e.which);
+    if ((e.which === 191) || (e.which === 32) || (e.which === 220))
+        return false;
+    },
+    change: function() {
+        this.value = this.value.replace(/\s/g, "");
+    }
+    });
 </script>

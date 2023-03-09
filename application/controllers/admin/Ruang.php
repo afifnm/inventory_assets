@@ -11,7 +11,7 @@ class Ruang extends MY_Controller
         $this->load->helper('tgl_indo');
         $this->load->library('Pdf');
         $this->check_login();
-        if ($this->session->userdata('level') != "Admin") {
+        if (($this->session->userdata('level') != "Admin") AND ($this->session->userdata('level') != "Staff")) {
             redirect('', 'refresh');
         }
     } 

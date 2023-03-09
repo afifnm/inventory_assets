@@ -5,8 +5,10 @@
 	<h2 class="text-lg font-medium mr-auto"> <?= $namajenis; ?> </h2>
 	<?php if($this->uri->segment('2')=='aset'){ ?>
 	<div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+		<?php if ($this->session->userdata('level') == "Admin") { ?>
 		<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
 			class="button inline-block bg-theme-1 text-white">Tambah Aset </a>
+		<?php } ?>
 	</div>
 	<?php } else { ?>
 	<div class="relative text-gray-700 ml-5">
@@ -83,7 +85,8 @@
 								'<?php echo $user['stok'] ?>',
 								'<?php echo $user['merk'] ?>',
 								'<?php echo $user['ruang'] ?>',
-								'<?php echo $user['status'] ?>'
+								'<?php echo $user['status'] ?>',
+								'<?php echo $user['id_jenis'] ?>'
 								)" class="flex items-center text-orange pr-1" data-toggle="modal" data-target="#ambil">
 							<i data-feather="rewind" class="w-4 h-4 mr-1"></i>
 							Ambil
@@ -93,11 +96,13 @@
 							class="flex items-center text-theme-1 pr-1">
 							<i data-feather="check-square" class="w-4 h-4 mr-1"></i>
 							Edit </a>
+							<?php if ($this->session->userdata('level') == "Admin") { ?>
 						<a href="javascript:;"
 							onclick="hapus(<?= $user['id_jenis'] ?>,'<?= $user['nomor_inventaris'] ?>')"
 							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
 							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
 							Delete </a>
+							<?php } ?>
 					</div>
 				</td>
 			</tr>
@@ -138,7 +143,7 @@
 					<label>Nomor Inventaris</label>
 					<div class="relative mt-2">
 						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="nomor inventaris"
-							name="nomor_inventaris" required>
+							name="nomor_inventaris" required id="cek_nomor">
 					</div>
 				</div>
 				<div class="mt-3">
@@ -214,10 +219,6 @@
 					<td id="nomor_inventaris">: </td>
 				</tr>
 				<tr>
-					<td>Jenis Aset </td>
-					<td>: <?= $namajenis; ?></td>
-				</tr>
-				<tr>
 					<td>Jumlah/Stok</td>
 					<td id="qty">: </td>
 				</tr>
@@ -279,10 +280,6 @@
 					<td id="nomor_inventaris2">: </td>
 				</tr>
 				<tr>
-					<td>Jenis Aset </td>
-					<td>: <?= $namajenis; ?></td>
-				</tr>
-				<tr>
 					<td>Jumlah/Stok</td>
 					<td id="qty2">: </td>
 				</tr>
@@ -301,7 +298,7 @@
 			</table>
 			<form action="<?php echo site_url('admin/aset/ambil');?>" method="POST">
 				<input type="hidden" name="nomor_inventaris" id="v_nomor_inventaris">
-				<input type="hidden" name="jenis" value="<?= $id_jenis; ?>">
+				<input type="hidden" name="jenis" id="v_jenis">
 				<input type="hidden" name="stok_lama" id="v_stok">
 				<div class="grid grid-cols-12 gap-4 row-gap-3 ml-3 mr-5 mb-5">
 					<div class="col-span-12 sm:col-span-12"><label>Nama</label><input type="text" name="nama"
@@ -320,12 +317,13 @@
 </div>
 <!-- END: AMBIL ASET Confirmation Modal -->
 <script>
-	function ambil(nomor_inventaris, nama, aset, stok, merk, ruang, status) {
+	function ambil(nomor_inventaris, nama, aset, stok, merk, ruang, status, jenis) {
 		document.getElementById('nama').innerHTML = ': ' + nama;
 		document.getElementById('nomor_inventaris2').innerHTML = ': ' + nomor_inventaris;
 		document.getElementById('qty2').innerHTML = ': ' + stok + ' (Aset ' + aset + ')';
 		document.getElementById('v_nomor_inventaris').value = nomor_inventaris;
 		document.getElementById('v_stok').value = stok;
+		document.getElementById('v_jenis').value = jenis;
 		document.getElementById('merk2').innerHTML = ': ' + merk;
 		document.getElementById('ruang2').innerHTML = ': ' + ruang;
 		document.getElementById('status2').innerHTML = ': ' + status;
@@ -366,5 +364,14 @@
 		}
 		console.log(select.value);
 	})
-
+	$("#cek_nomor").on({
+    keydown: function(e) {
+		console.log(e.which);
+    if ((e.which === 191) || (e.which === 32) || (e.which === 220))
+        return false;
+    },
+    change: function() {
+        this.value = this.value.replace(/\s/g, "");
+    }
+    });
 </script>
