@@ -1,10 +1,13 @@
 <h3 class="text-md font-medium mr-auto mt-5">
 	Selamat Datang <?= $this->session->userdata('nama') ?> (<?= $this->session->userdata('level') ?>)
 </h3>
+<div id="myalert" style="margin-top: 10px;">
+	<?php echo $this->session->flashdata('alert', true)?>
+</div>
 <div class="intro-y flex flex-col sm:flex-row items-center mt-5">
 	<div class="relative text-gray-700 mr-auto">
 		<input type="text" class="input input--lg w-full lg:w-54 box placeholder-theme-13"
-			placeholder="Pencarian aset..." id="cari" name="cari">
+			placeholder="Pencarian aset..." id="cari" name="cari" required>
 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
 			stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
 			class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0">
@@ -19,13 +22,44 @@
 		<?php } ?>
 		<a href="javascript:;" data-toggle="modal" data-target="#expor"
 			class="button mr-1 inline-block bg-theme-1 text-white">Export </a>
+			<a href="javascript:;" data-toggle="modal" data-target="#import"
+			class="button mr-1 inline-block bg-theme-1 text-white">Import </a>
 		<a href=" javascript:;" data-toggle="modal" data-target="#superlarge-modal-size-preview"
 			class="button mr-1 inline-block bg-theme-1 text-white">Logs Aktivitas</a>
+	</div>
+</div>
+<div class="modal" id="import">
+	<div class="modal__content modal__content--lg">
+		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+			<h2 class="font-medium text-base mr-auto">IMPORT DATA </h2>
+		</div>
+		<form action="<?php echo site_url('admin/home/import_excel');?>" method="POST" enctype="multipart/form-data">
+			<div class="intro-y box p-5">
+				<div class="mt-3">
+					<label>Pilih File</label>
+					<div class="relative mt-2">
+						<input  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+						 type="file" name="file" id="file" class="input w-full border col-span-4" required>
+					</div>
+					<br>
+					<a href="<?= base_url('assets/upload/format.xlsx') ?>">Download format import</a>
+				</div>
+			</div>
+			<div class="px-5 py-3 text-right border-t border-gray-200">
+				<button type="submit" class="button w-20 bg-theme-1 text-white">Simpan</button>
+			</div>
+		</form>
 	</div>
 </div>
 <div class="grid grid-cols-3 gap-4">
 	<div class="col-span-3 md:col-span-2">
 		<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-1 gap-2 mt-5">
+			<div class="box p-5 cursor-pointer zoom-in">
+				<a href="<?php echo site_url('admin/aset/jenis/0');?>">
+					<div class="font-medium text-base">Jenis belum dipilih</div>
+					<div class="text-gray-600"><?= $this->Aset_model->count_jenis_aset(0); ?> aset</div>
+				</a>
+			</div>
 			<?php foreach ($this->Aset_model->jenis() as $key) { ?>
 			<div class="box p-5 cursor-pointer zoom-in">
 				<a href="<?php echo site_url('admin/aset/jenis/'.$key['id_jenis']);?>">
@@ -37,6 +71,12 @@
 		</div>
 		<hr class="mt-4 mb-2">
 		<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-1 gap-2 mt-5">
+			<div class="box p-5 cursor-pointer zoom-in">
+				<a href="<?php echo site_url('admin/ruang/aset/0');?>">
+					<div class="font-medium text-base">Belum ada ruang </div>
+					<div class="text-gray-600"><?= $this->Aset_model->count_ruang_aset(0); ?> aset</div>
+				</a>
+			</div>
 			<?php foreach ($this->Aset_model->ruang() as $key) { ?>
 			<div class="box p-5 cursor-pointer zoom-in">
 				<a href="<?php echo site_url('admin/ruang/aset/'.$key['id_ruang']);?>">

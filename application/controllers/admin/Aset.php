@@ -14,8 +14,12 @@ class Aset extends MY_Controller{
         }
     }
 
-    public function jenis($id){
-        $namajenis = $this->Aset_model->get_jenis($id);
+    public function jenis($id){  
+        if($id==0){
+            $namajenis = 'Jenis asset belum dipilih.';
+        } else {
+            $namajenis = $this->Aset_model->get_jenis($id);
+        }
         $site = $this->Konfigurasi_model->listing();
         $data = array(
             'title'                 => $namajenis.' | '.$site['nama_website'],

@@ -18,7 +18,7 @@ class Aset_model extends CI_Model{
         $this->db->order_by('ruang','ASC');
         return $this->db->get()->result_array();
     }
-    public function get_jenis($id){ //tampilkan nama berdasarkan id_jenis
+    public function get_jenis($id=NULL){ //tampilkan nama berdasarkan id_jenis
         $this->db->select('jenis')->from('jenis');
         $this->db->where('id_jenis',$id);
         return $this->db->get()->row()->jenis;

@@ -9,7 +9,6 @@ class Ruang extends MY_Controller
         $this->load->model('Aset_model');
         $this->load->model('CRUD_model');
         $this->load->helper('tgl_indo');
-        $this->load->library('Pdf');
         $this->check_login();
         if (($this->session->userdata('level') != "Admin") AND ($this->session->userdata('level') != "Staff")) {
             redirect('', 'refresh');
@@ -118,7 +117,11 @@ class Ruang extends MY_Controller
     }
 
     public function aset($id){
-        $namaruang = $this->Aset_model->get_ruang($id);
+        if($id==0){
+            $namaruang = 'Belum ada ruang';
+        } else {
+            $namaruang = $this->Aset_model->get_ruang($id);
+        }
         $site = $this->Konfigurasi_model->listing();
         $data = array(
             'title'                 => 'Data Aset Ruang | '.$namaruang,

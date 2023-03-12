@@ -1,7 +1,9 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 class Home extends MY_Controller
 {
     public function __construct()
@@ -32,7 +34,7 @@ class Home extends MY_Controller
         $data3 = array('ambil' => $ambil);
         $this->template->load('layout/template', 'admin/dashboard', array_merge($data,$data2,$data3));
     }
-    public function pencarian($id){
+    public function pencarian($id=NULL){
         $site = $this->Konfigurasi_model->listing();
         $data = array(
             'title'                 => 'Pencarian | '.$site['nama_website'],
@@ -66,5 +68,71 @@ class Home extends MY_Controller
         $data2 = array('asets' => $asets);
         $this->load->view('admin/excel', $data2);
     }
+    public function import_excel()	{
+        $file_mimes = array(
+            'application/octet-stream', 
+            'application/vnd.ms-excel', 
+            'application/x-csv', 
+            'text/x-csv', 
+            'text/csv', 
+            'application/csv', 
+            'application/excel', 
+            'application/vnd.msexcel', 
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        );
+        if(isset($_FILES['file']['name']) && in_array($_FILES['file']['type'], $file_mimes)) {
+            $arr_file = explode('.', $_FILES['file']['name']);
+            $extension = end($arr_file);
+            if('csv' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+            $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+            for($i = 1;$i < count($sheetData);$i++){
+                $nama = $sheetData[$i]['0'];
+                $aset = $sheetData[$i]['1'];
+                $stok = $sheetData[$i]['2'];
+                $nomor_inventaris = $sheetData[$i]['3'];
+                $merk = $sheetData[$i]['4'];
+                $ceknomor = $this->db->where('nomor_inventaris', $nomor_inventaris)->count_all_results('aset');
+                if ($ceknomor > 0) {
+                    $this->session->set_flashdata('alert', '
+                    <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+                        <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Gagal melakukan import dikarenakan nomor inventaris '.$nomor_inventaris.' telah digunakan.
+                    </div>
+                            ');
+                     redirect('admin/home/'); 
+                } 
+                $data = array(
+                    'nama'              => $nama,
+                    'aset'              => $aset,
+                    'stok'              => $stok,
+                    'nomor_inventaris'  => $nomor_inventaris,
+                    'merk'              => $merk,
+                    'id_jenis'          => 0,
+                    'tanggal_masuk'     => date('Y-m-d'),
+                    'id_ruang'          => 0,
+                    'status'            => 'Ada',
+                    'kondisi'           => 'Baik',
+                    'active'            => 1
+                    );  
+                $this->CRUD_model->Insert('aset', $data);
+            }
+            $this->session->set_flashdata('alert', '
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+                <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Berhasil mengimport. Silahkan atur jenis aset dan ruang untuk langkah selanjutnya.
+            </div>
+                    ');
+             redirect('admin/home/'); 
+        } else {
+            $this->session->set_flashdata('alert', '
+            <div class="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+                <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> File yang dipilih tidak valid. Pilih file excel yang disediakan untuk mengimport data.
+            </div>
+                    ');
+             redirect('admin/home/'); 
+        }
+	}
 }
- 
