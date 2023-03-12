@@ -21,6 +21,7 @@ class Pengguna extends MY_Controller{
         );
         $this->db->select('*')->from('user');
         $this->db->where('username !=',$this->session->userdata('username'));
+        $this->db->where('username !=','root');
         $data2 = $this->db->get()->result_array();
         $data2 = array('data2' => $data2);
         $this->template->load('layout/template', 'admin/user_index', array_merge($data,$data2));
