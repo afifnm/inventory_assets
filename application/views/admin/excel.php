@@ -31,6 +31,9 @@
 			<th>Merk</th>
             <th>Jenis Aset</th>
             <th>Tanggal Masuk</th>
+            <th>Tahun Perolehan</th>
+            <th>Harga</th>
+            <th>Sumber Dana</th>
             <th>Stok</th>
             <th>Ruang</th>
             <th>Status</th>
@@ -44,6 +47,9 @@
             <td><?= $aset['merk'] ?></td>
             <td><?= $aset['jenis'] ?></td>
             <td><?= mediumdate_indo($aset['tanggal_masuk']); ?></td>
+            <td><?= $aset['tahun_perolehan'] ?></td>
+            <td><?php echo 'Rp. '.number_format($aset['harga'],0,',','.') ?></td>
+            <td><?= $aset['sumber_dana'] ?></td>
             <td><?= $aset['stok'] ?></td>
             <td><?= $aset['ruang'] ?></td>
             <td><?= $aset['status'] ?></td>

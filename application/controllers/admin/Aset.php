@@ -27,9 +27,10 @@ class Aset extends MY_Controller{
             'namajenis'             => $namajenis,
             'id_jenis'              => $id
         );
-        $this->db->select('a.*,b.ruang,c.jenis')->from('aset a');
+        $this->db->select('a.*,b.ruang,c.jenis,d.sumber_dana')->from('aset a');
         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
         $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','left');
+        $this->db->join('sumber_dana d', 'd.id_sumber_dana = a.id_sumber_dana','left');
         $this->db->order_by('a.tanggal_masuk','DESC');
         $this->db->where('a.id_jenis',$id);
         $data2 = $this->db->get()->result_array();
@@ -62,6 +63,9 @@ class Aset extends MY_Controller{
                 'id_jenis'          => $this->input->post('id_jenis'),
                 'tanggal_masuk'     => $this->input->post('tanggal_masuk'),
                 'id_ruang'          => $this->input->post('id_ruang'),
+                'id_sumber_dana'    => $this->input->post('id_sumber_dana'),
+                'harga'             => $this->input->post('harga'),
+                'tahun_perolehan'   => $this->input->post('tahun_perolehan'),
                 'status'            => 'Ada',
                 'kondisi'           => 'Baik',
                 'active'            => 1
@@ -264,8 +268,17 @@ class Aset extends MY_Controller{
             if($aset['id_ruang'] <> $this->input->post('id_ruang')){
                 $keterangan .= " ruang ".$this->Aset_model->get_ruang($aset['id_ruang'])." menjadi ".$this->Aset_model->get_ruang($this->input->post('id_ruang')).",";
             }
+            if($aset['id_sumber_dana'] <> $this->input->post('id_sumber_dana')){
+                $keterangan .= " sumber dana ".$this->Aset_model->get_ruang($aset['id_sumber_dana'])." menjadi ".$this->Aset_model->get_sumber_dana($this->input->post('id_sumber_dana')).",";
+            }
             if($aset['kondisi'] <> $this->input->post('kondisi')){
                 $keterangan .= " kondisi ".$aset['kondisi']." menjadi ".$this->input->post('kondisi').",";
+            }
+            if($aset['harga'] <> $this->input->post('harga')){
+                $keterangan .= " harga ".$aset['harga']." menjadi ".$this->input->post('harga').",";
+            }
+            if($aset['tahun_perolehan'] <> $this->input->post('tahun_perolehan')){
+                $keterangan .= " tahun_perolehan ".$aset['tahun_perolehan']." menjadi ".$this->input->post('tahun_perolehan').",";
             }
         }
         $keterangan .= ' dari aset '.$this->Aset_model->get_nama_aset($nomor_inventaris).' dengan nomor inventaris '.$nomor_inventaris;
@@ -275,6 +288,9 @@ class Aset extends MY_Controller{
             'merk'              => $this->input->post('merk'),
             'id_jenis'          => $this->input->post('id_jenis'),
             'tanggal_masuk'     => $this->input->post('tanggal_masuk'),
+            'id_sumber_dana'    => $this->input->post('id_sumber_dana'),
+            'harga'             => $this->input->post('harga'),
+            'tahun_perolehan'   => $this->input->post('tahun_perolehan'),
             'id_ruang'          => $this->input->post('id_ruang'),
             'kondisi'           => $this->input->post('kondisi')
          );  

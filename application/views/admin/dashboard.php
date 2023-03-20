@@ -1,5 +1,5 @@
-<h3 class="text-md font-medium mr-auto mt-5">
-	Selamat Datang <?= $this->session->userdata('nama') ?> (<?= $this->session->userdata('level') ?>)
+<h3 class="text-xl font-medium mr-auto mt-5">
+	SISTEM INFORMASI INVENTARIS ASET SMKN 1 KARANGANYAR
 </h3>
 <div id="myalert" style="margin-top: 10px;">
 	<?php echo $this->session->flashdata('alert', true)?>
@@ -42,7 +42,7 @@
 						 type="file" name="file" id="file" class="input w-full border col-span-4" required>
 					</div>
 					<br>
-					<a href="<?= base_url('assets/upload/format.xlsx') ?>">Download format import</a>
+					<a href="<?= base_url('assets/upload/import.xlsx') ?>">Download format import</a>
 				</div>
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">
@@ -252,6 +252,28 @@
 							<option value="<?= $ruang['id_ruang']; ?>"><?= $ruang['ruang']; ?></option>
 							<?php } ?>
 						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Sumber Dana</label>
+					<div class="relative mt-2">
+						<select name="id_sumber_dana" class="input pr-4 w-full border col-span-4">
+							<?php foreach ($this->Aset_model->sumber_dana() as $sumber_dana){ ?>
+							<option value="<?= $sumber_dana['id_sumber_dana']; ?>"><?= $sumber_dana['sumber_dana']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Tahun Perolehan</label>
+					<div class="relative mt-2">
+						<input type="number" class="input w-full pl-4 border" name="tahun_perolehan" min="2000" required>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Harga</label>
+					<div class="relative mt-2">
+						<input type="number" class="input w-full pl-4 border" name="harga" min="0" required>
 					</div>
 				</div>
 				<div class="mt-3">
