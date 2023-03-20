@@ -54,9 +54,10 @@ class Home extends MY_Controller
     public function excel(){
         $id_jenis = $this->input->get('id_jenis');
         $id_ruang = $this->input->get('id_ruang');
-        $this->db->select('a.*,b.ruang,c.jenis')->from('aset a');
+        $this->db->select('a.*,b.ruang,c.jenis,d.sumber_dana')->from('aset a');
         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
         $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','left');
+        $this->db->join('sumber_dana d', 'd.id_sumber_dana = a.id_sumber_dana','left');
         $this->db->order_by('a.nama','DESC');
         if($id_jenis!=""){
             $this->db->where('a.id_jenis',$id_jenis);
@@ -96,6 +97,8 @@ class Home extends MY_Controller
                 $stok = $sheetData[$i]['2'];
                 $nomor_inventaris = $sheetData[$i]['3'];
                 $merk = $sheetData[$i]['4'];
+                $harga = $sheetData[$i]['5'];
+                $tahun_perolehan = $sheetData[$i]['6'];
                 $ceknomor = $this->db->where('nomor_inventaris', $nomor_inventaris)->count_all_results('aset');
                 if ($ceknomor > 0) {
                     $this->session->set_flashdata('alert', '
@@ -111,9 +114,12 @@ class Home extends MY_Controller
                     'stok'              => $stok,
                     'nomor_inventaris'  => $nomor_inventaris,
                     'merk'              => $merk,
+                    'harga'             => $harga,
+                    'tahun_perolehan'   => $tahun_perolehan,
                     'id_jenis'          => 0,
                     'tanggal_masuk'     => date('Y-m-d'),
                     'id_ruang'          => 0,
+                    'id_sumber_dana'    => 0,
                     'status'            => 'Ada',
                     'kondisi'           => 'Baik',
                     'active'            => 1

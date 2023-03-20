@@ -60,11 +60,37 @@
 						</select>
 					</div>
 				</div>
+				<div class="mt-2">
+					<label>Sumber Dana</label>
+					<div class="relative mt-1">
+						<select name="id_sumber_dana" class="input pr-4 w-full border col-span-4">
+							<?php foreach ($this->Aset_model->sumber_dana() as $sumber_dana){ ?>
+							<option value="<?= $sumber_dana['id_sumber_dana']; ?>"
+								<?php if($u->id_sumber_dana==$sumber_dana['id_sumber_dana']){ echo"selected"; } ?>><?= $sumber_dana['sumber_dana']; ?>
+							</option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
 				<div class="mt-3">
 					<label>Tanggal Masuk</label>
 					<div class="relative mt-1">
 						<input type="date" class="input w-full pl-4 border" name="tanggal_masuk"
 							value="<?= $u->tanggal_masuk; ?>">
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Tahun Perolehan</label>
+					<div class="relative mt-1">
+						<input type="number" class="input w-full pl-4 border" name="tahun_perolehan"
+							value="<?= $u->tahun_perolehan; ?>">
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Harga</label>
+					<div class="relative mt-1">
+						<input type="number" class="input w-full pl-4 border" name="harga"
+							value="<?= $u->harga; ?>">
 					</div>
 				</div>
 				<div class="mt-2">

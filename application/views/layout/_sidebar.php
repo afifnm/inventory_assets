@@ -56,6 +56,12 @@
 			</a>
 		</li>
 		<li>
+			<a href="<?php echo site_url('admin/sumber_dana');?>" class="side-menu <?php echo activate_menu('sumber_dana');  ?>">
+				<div class="side-menu__icon"> <i data-feather="dollar-sign"></i> </div>
+				<div class="side-menu__title"> Sumber Dana </div>
+			</a>
+		</li>
+		<li>
 			<a href="javascript:;" class="side-menu <?php echo activate_menu('pengguna');  ?>">
 				<div class="side-menu__icon"> <i data-feather="user"></i> </div>
 				<div class="side-menu__title"> Account <i data-feather="chevron-down" class="side-menu__sub-icon"></i>

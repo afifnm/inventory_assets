@@ -68,6 +68,9 @@
 								'<?php echo $user['nomor_inventaris'] ?>',
 								'<?php echo $user['merk'] ?>',
 								'<?php echo $user['jenis'] ?>',
+								'<?php echo $user['tahun_perolehan'] ?>',
+								'<?php echo 'Rp. '.number_format($user['harga'],0,',','.') ?>',
+								'<?php echo $user['sumber_dana'] ?>',
 								'<?php echo mediumdate_indo($user['tanggal_masuk']) ?>',
 								'<?php echo $user['ruang'] ?>',
 								'<?php echo $user['status'] ?>',
@@ -177,6 +180,28 @@
 					</div>
 				</div>
 				<div class="mt-3">
+					<label>Sumber Dana</label>
+					<div class="relative mt-2">
+						<select name="id_sumber_dana" class="input pr-4 w-full border col-span-4">
+							<?php foreach ($this->Aset_model->sumber_dana() as $sumber_dana){ ?>
+							<option value="<?= $sumber_dana['id_sumber_dana']; ?>"><?= $sumber_dana['sumber_dana']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Tahun Perolehan</label>
+					<div class="relative mt-2">
+						<input type="number" class="input w-full pl-4 border" name="tahun_perolehan" min="2000" required>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Harga</label>
+					<div class="relative mt-2">
+						<input type="number" class="input w-full pl-4 border" name="harga" min="0" required>
+					</div>
+				</div>
+				<div class="mt-3">
 					<label>Tanggal Masuk</label>
 					<div class="relative mt-2">
 						<input type="date" class="input w-full pl-4 border" name="tanggal_masuk" required>
@@ -233,6 +258,18 @@
 				<tr>
 					<td>Ruang </td>
 					<td id="ruang">: </td>
+				</tr>
+				<tr>
+					<td>Tahun Perolehan </td>
+					<td id="tahun_perolehan">: </td>
+				</tr>
+				<tr>
+					<td>Harga </td>
+					<td id="harga">: </td>
+				</tr>
+				<tr>
+					<td>Sumber Dana </td>
+					<td id="sumber_dana">: </td>
 				</tr>
 				<tr>
 					<td>Status</td>
@@ -328,7 +365,8 @@
 		document.getElementById('ruang2').innerHTML = ': ' + ruang;
 		document.getElementById('status2').innerHTML = ': ' + status;
 	};
-	function edit(id_aset, nama, aset, stok, nomor_inventaris, merk, jenis, tanggal_masuk, ruang, status, kondisi,
+	function edit(id_aset, nama, aset, stok, nomor_inventaris, merk, jenis,tahun_perolehan, harga, sumber_dana,
+	 tanggal_masuk, ruang, status, kondisi,
 		count_foto) {
 		document.getElementById('h2_nama').innerHTML = nama;
 		document.getElementById('nomor_inventaris').innerHTML = ': ' + nomor_inventaris;
@@ -336,6 +374,9 @@
 		document.getElementById('merk').innerHTML = ': ' + merk;
 		document.getElementById('tanggal_masuk').innerHTML = ': ' + tanggal_masuk;
 		document.getElementById('ruang').innerHTML = ': ' + ruang;
+		document.getElementById('tahun_perolehan').innerHTML = ': ' + tahun_perolehan;
+		document.getElementById('harga').innerHTML = ': ' + harga;
+		document.getElementById('sumber_dana').innerHTML = ': ' + sumber_dana;
 		document.getElementById('status').innerHTML = ': ' + status;
 		document.getElementById('kondisi').innerHTML = ': ' + kondisi;
 		if (count_foto > 0) {
