@@ -1,5 +1,5 @@
-<h3 class="text-md font-medium mr-auto mt-5">
-	Selamat Datang <?= $this->session->userdata('nama') ?> (<?= $this->session->userdata('level') ?>)
+<h3 class="text-xl font-medium mr-auto mt-5">
+	SISTEM INFORMASI INVENTARIS ASET SMKN 1 KARANGANYAR
 </h3>
 <div id="myalert" style="margin-top: 10px;">
 	<?php echo $this->session->flashdata('alert', true)?>
@@ -42,7 +42,7 @@
 						 type="file" name="file" id="file" class="input w-full border col-span-4" required>
 					</div>
 					<br>
-					<a href="<?= base_url('assets/upload/format.xlsx') ?>">Download format import</a>
+					<a href="<?= base_url('assets/upload/Format.xlsx') ?>">Download format import</a>
 				</div>
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">

@@ -20,7 +20,7 @@
 			<div class="hidden xl:flex flex-col min-h-screen">
 				<div class="my-auto">
 					<div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
-						INVENTARIS ASET
+					<img class="w-100" src="<?php echo base_url('assets');?>/upload/logo.png">	
 					</div>
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 			<div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
 				<div
 					class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
-					<h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">Login</h2>
+					<h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">Sistem Informasi Inventaris Aset</h2>
 					<form method="post" action="<?php echo base_url('auth/login'); ?>" role="login">
 						<div class="intro-x mt-8">
 							<input type="text" class="intro-x login__input input input--lg border border-gray-300 block"

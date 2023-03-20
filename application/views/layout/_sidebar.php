@@ -1,8 +1,8 @@
 <!-- BEGIN: Side Menu -->
 <nav class="side-nav">
 	<a href="" class="intro-x flex items-center pl-5 pt-4">
-		<img class="w-6" src="<?php echo base_url('assets');?>/midone/dist/images/logo.svg">
-		<span class="hidden xl:block text-white text-lg ml-3"> Inventory<span class="font-medium"> Asset</span> </span>
+		<img class="w-12" src="<?php echo base_url('assets');?>/upload/logo.png">
+		<span class="hidden xl:block text-white text-lg ml-3"> Inventaris<span class="font-medium"> Aset</span> </span>
 	</a>
 	<div class="side-nav__devider my-6"></div>
 	<ul>
