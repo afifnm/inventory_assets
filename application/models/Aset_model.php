@@ -28,6 +28,11 @@ class Aset_model extends CI_Model{
         $this->db->where('id_jenis',$id);
         return $this->db->get()->row()->jenis;
     }
+    public function get_sumber_dana($id=NULL){ //tampilkan nama berdasarkan id_jenis
+        $this->db->select('sumber_dana')->from('sumber_dana');
+        $this->db->where('id_sumber_dana',$id);
+        return $this->db->get()->row()->sumber_dana;
+    }
     public function get_ruang($id){ //tampilkan nama berdasarkan id_jenis
         $this->db->select('ruang')->from('ruang');
         $this->db->where('id_ruang',$id);

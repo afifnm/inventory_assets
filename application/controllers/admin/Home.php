@@ -119,7 +119,7 @@ class Home extends MY_Controller
                     'id_jenis'          => 0,
                     'tanggal_masuk'     => date('Y-m-d'),
                     'id_ruang'          => 0,
-                    'id_sumber_dana'    => 0,
+                    'id_sumber_dana'    => 1,
                     'status'            => 'Ada',
                     'kondisi'           => 'Baik',
                     'active'            => 1

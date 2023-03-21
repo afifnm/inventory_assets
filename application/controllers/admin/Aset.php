@@ -269,7 +269,7 @@ class Aset extends MY_Controller{
                 $keterangan .= " ruang ".$this->Aset_model->get_ruang($aset['id_ruang'])." menjadi ".$this->Aset_model->get_ruang($this->input->post('id_ruang')).",";
             }
             if($aset['id_sumber_dana'] <> $this->input->post('id_sumber_dana')){
-                $keterangan .= " sumber dana ".$this->Aset_model->get_ruang($aset['id_sumber_dana'])." menjadi ".$this->Aset_model->get_sumber_dana($this->input->post('id_sumber_dana')).",";
+                $keterangan .= " sumber dana ".$this->Aset_model->get_sumber_dana($aset['id_sumber_dana'])." menjadi ".$this->Aset_model->get_sumber_dana($this->input->post('id_sumber_dana')).",";
             }
             if($aset['kondisi'] <> $this->input->post('kondisi')){
                 $keterangan .= " kondisi ".$aset['kondisi']." menjadi ".$this->input->post('kondisi').",";
