@@ -42,7 +42,7 @@
 						 type="file" name="file" id="file" class="input w-full border col-span-4" required>
 					</div>
 					<br>
-					<a href="<?= base_url('assets/upload/Format.xlsx') ?>">Download format import</a>
+					<a href="<?= base_url('assets/upload/import.xlsx') ?>">Download format import</a>
 				</div>
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">
