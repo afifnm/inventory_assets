@@ -52,8 +52,8 @@
 	</div>
 </div>
 <div class="grid grid-cols-3 gap-4">
-	<div class="col-span-3 md:col-span-2">
-		<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-1 gap-2 mt-5">
+	<div class="col-span-3 md:col-span-3">
+		<div class="grid grid-cols-2 md:grid-cols-5 sm:grid-cols-1 gap-2 mt-5">
 			<div class="box p-5 cursor-pointer zoom-in">
 				<a href="<?php echo site_url('admin/aset/jenis/0');?>">
 					<div class="font-medium text-base">Jenis belum dipilih</div>
@@ -70,7 +70,7 @@
 			<?php } ?>
 		</div>
 		<hr class="mt-4 mb-2">
-		<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-1 gap-2 mt-5">
+		<div class="grid grid-cols-2 md:grid-cols-5 sm:grid-cols-1 gap-2 mt-5">
 			<div class="box p-5 cursor-pointer zoom-in">
 				<a href="<?php echo site_url('admin/ruang/aset/0');?>">
 					<div class="font-medium text-base">Belum ada ruang </div>
@@ -87,7 +87,7 @@
 			<?php } ?>
 		</div>
 	</div>
-	<div class="col-span-3 md:col-span-1">
+	<!-- <div class="col-span-3 md:col-span-1">
 		<div class="col-span-12 md:col-span-4 mt-5">
 			<div class="intro-y pr-1">
 				<div class="box p-2">
@@ -149,7 +149,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 <div class="modal" id="expor">
 	<div class="modal__content modal__content--lg">

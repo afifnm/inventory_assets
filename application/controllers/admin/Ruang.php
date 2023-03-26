@@ -128,9 +128,10 @@ class Ruang extends MY_Controller
             'site'                  => $site,
             'namajenis'             => 'Aset di dalam ruang : '.$namaruang
         );
-        $this->db->select('a.*,b.ruang,c.jenis')->from('aset a');
+        $this->db->select('a.*,b.ruang,c.jenis,d.sumber_dana')->from('aset a');
         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
         $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','left');
+        $this->db->join('sumber_dana d', 'd.id_sumber_dana = a.id_sumber_dana','left');
         $this->db->order_by('a.tanggal_masuk','DESC');
         $this->db->or_like('a.id_ruang',$id);
         $data2 = $this->db->get()->result_array();
