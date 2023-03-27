@@ -1,6 +1,6 @@
 <!-- BEGIN: Side Menu -->
 <nav class="side-nav">
-	<a href="" class="intro-x flex items-center pl-5 pt-4">
+	<a href="<?php echo site_url('home');?>" class="intro-x flex items-center pl-5 pt-4">
 		<img class="w-12" src="<?php echo base_url('assets');?>/upload/logo.png">
 		<span class="hidden xl:block text-white text-lg ml-3"> Inventaris<span class="font-medium"> Aset</span> </span>
 	</a>

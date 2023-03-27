@@ -6,14 +6,8 @@
 </div>
 <div class="intro-y flex flex-col sm:flex-row items-center mt-5">
 	<div class="relative text-gray-700 mr-auto">
-		<input type="text" class="input input--lg w-full lg:w-54 box placeholder-theme-13"
-			placeholder="Pencarian aset..." id="cari" name="cari" required>
-		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-			stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-			class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0">
-			<circle cx="11" cy="11" r="8"></circle>
-			<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-		</svg>
+		<a href="javascript:;" data-toggle="modal" data-target="#pencarian"
+			class="button mr-1 inline-block bg-theme-1 text-white">Pencarian Aset </a>
 	</div>
 	<div class="w-full sm:w-auto flex mt-4 ml-5 sm:mt-0">
 		<?php if ($this->session->userdata('level') == "Admin") { ?>
@@ -156,13 +150,32 @@
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
 			<h2 class="font-medium text-base mr-auto">EXPORT TO EXCEL </h2>
 		</div>
-		<form action="<?php echo site_url('admin/home/excel');?>" method="GET">
-			<div class="intro-y box p-5">
+		<form action="<?php echo site_url('admin/home/excel');?>" method="POST">
+						<div class="intro-y box p-5">
+				<div class="mt-3">
+					<label>Nama Aset</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="nomor inventaris" name="nama">
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Nomor Inventaris</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="nomor inventaris" name="nomor_inventaris">
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Merk</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="merk aset"
+							name="merk" >
+					</div>
+				</div>
 				<div class="mt-3">
 					<label>Jenis Aset</label>
 					<div class="relative mt-2">
 						<select name="id_jenis" class="input pr-4 w-full border col-span-4">
-							<option value="" selected>Tampilkan Semua</option>
+							<option value="0" selected>Semua Jenis Aset</option>
 							<?php foreach ($this->Aset_model->jenis() as $jenis){ ?>
 							<option value="<?= $jenis['id_jenis']; ?>">
 								<?= $jenis['jenis']; ?>
@@ -175,11 +188,28 @@
 					<label>Ruang/Tempat</label>
 					<div class="relative mt-2">
 						<select name="id_ruang" class="input pr-4 w-full border col-span-4">
-							<option value="" selected>Tampilkan Semua</option>
+							<option value="0" selected>Semua Ruang</option>
 							<?php foreach ($this->Aset_model->ruang() as $ruang){ ?>
 							<option value="<?= $ruang['id_ruang']; ?>"><?= $ruang['ruang']; ?></option>
 							<?php } ?>
 						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Sumber Dana</label>
+					<div class="relative mt-2">
+						<select name="id_sumber_dana" class="input pr-4 w-full border col-span-4">
+							<option value="0" selected>Semua Sumber Dana</option>
+							<?php foreach ($this->Aset_model->sumber_dana() as $sumber_dana){ ?>
+							<option value="<?= $sumber_dana['id_sumber_dana']; ?>"><?= $sumber_dana['sumber_dana']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Tahun Perolehan</label>
+					<div class="relative mt-2">
+						<input type="number" class="input w-full pl-4 border" name="tahun_perolehan" value="0">
 					</div>
 				</div>
 			</div>
@@ -255,6 +285,28 @@
 					</div>
 				</div>
 				<div class="mt-3">
+					<label>Sumber Dana</label>
+					<div class="relative mt-2">
+						<select name="id_sumber_dana" class="input pr-4 w-full border col-span-4">
+							<?php foreach ($this->Aset_model->sumber_dana() as $sumber_dana){ ?>
+							<option value="<?= $sumber_dana['id_sumber_dana']; ?>"><?= $sumber_dana['sumber_dana']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Tahun Perolehan</label>
+					<div class="relative mt-2">
+						<input type="number" class="input w-full pl-4 border" name="tahun_perolehan" min="2000" required>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Harga</label>
+					<div class="relative mt-2">
+						<input type="number" class="input w-full pl-4 border" name="harga" min="0" required>
+					</div>
+				</div>
+				<div class="mt-3">
 					<label>Tanggal Masuk</label>
 					<div class="relative mt-2">
 						<input type="date" class="input w-full pl-4 border" name="tanggal_masuk" required>
@@ -263,6 +315,80 @@
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">
 				<button type="submit" class="button w-20 bg-theme-1 text-white">Simpan</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="modal" id="pencarian">
+	<div class="modal__content modal__content--lg">
+		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+			<h2 class="font-medium text-base mr-auto">PENCARIAN ASET </h2>
+		</div>
+		<form action="<?php echo site_url('admin/home/pencarian');?>" method="POST">
+			<div class="intro-y box p-5">
+				<div class="mt-3">
+					<label>Nama Aset</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="nomor inventaris" name="nama">
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Nomor Inventaris</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="nomor inventaris" name="nomor_inventaris">
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Merk</label>
+					<div class="relative mt-2">
+						<input type="text" class="input pr-4 w-full border col-span-4" placeholder="merk aset"
+							name="merk" >
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Jenis Aset</label>
+					<div class="relative mt-2">
+						<select name="id_jenis" class="input pr-4 w-full border col-span-4">
+							<option value="0" selected>Semua Jenis Aset</option>
+							<?php foreach ($this->Aset_model->jenis() as $jenis){ ?>
+							<option value="<?= $jenis['id_jenis']; ?>">
+								<?= $jenis['jenis']; ?>
+							</option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Ruang/Tempat</label>
+					<div class="relative mt-2">
+						<select name="id_ruang" class="input pr-4 w-full border col-span-4">
+							<option value="0" selected>Semua Ruang</option>
+							<?php foreach ($this->Aset_model->ruang() as $ruang){ ?>
+							<option value="<?= $ruang['id_ruang']; ?>"><?= $ruang['ruang']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Sumber Dana</label>
+					<div class="relative mt-2">
+						<select name="id_sumber_dana" class="input pr-4 w-full border col-span-4">
+							<option value="0" selected>Semua Sumber Dana</option>
+							<?php foreach ($this->Aset_model->sumber_dana() as $sumber_dana){ ?>
+							<option value="<?= $sumber_dana['id_sumber_dana']; ?>"><?= $sumber_dana['sumber_dana']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="mt-3">
+					<label>Tahun Perolehan</label>
+					<div class="relative mt-2">
+						<input type="number" class="input w-full pl-4 border" name="tahun_perolehan" value="0">
+					</div>
+				</div>
+			</div>
+			<div class="px-5 py-3 text-right border-t border-gray-200">
+				<button type="submit" class="button w-30 bg-theme-1 text-white">Cari Aset</button>
 			</div>
 		</form>
 	</div>
@@ -352,12 +478,6 @@
 		}
 		document.getElementById('operator').innerHTML = ': ' + operator;
 	};
-	var cari = document.getElementById('cari');
-	cari.addEventListener("keydown", function (event) {
-		if (event.keyCode == 13) {
-			window.location.href = '<?php echo site_url('admin/home/pencarian/') ?>' + cari.value;
-		}
-	})
 	var select = document.getElementById('select_aset');
 	select.addEventListener('change', function () {
 		if (select.value == "Tidak Tetap") {

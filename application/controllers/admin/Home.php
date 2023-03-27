@@ -34,36 +34,69 @@ class Home extends MY_Controller
         $data3 = array('ambil' => $ambil);
         $this->template->load('layout/template', 'admin/dashboard', array_merge($data,$data2,$data3));
     }
-    public function pencarian($id=NULL){
+    public function pencarian(){
         $site = $this->Konfigurasi_model->listing();
         $data = array(
             'title'                 => 'Pencarian | '.$site['nama_website'],
             'site'                  => $site,
-            'namajenis'             => 'Pencarian Aset: '.$id
+            'namajenis'             => 'Pencarian Aset '
         );
-        $this->db->select('a.*,b.ruang,c.jenis')->from('aset a');
+        $this->db->select('a.*,b.ruang,c.jenis,d.sumber_dana')->from('aset a');
         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
         $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','left');
+        $this->db->join('sumber_dana d', 'd.id_sumber_dana = a.id_sumber_dana','left');
         $this->db->order_by('a.tanggal_masuk','DESC');
-        $this->db->or_like('a.nomor_inventaris',$id);
-        $this->db->or_like('a.nama',$id);
+        if($this->input->post('nama')!==""){
+            $this->db->or_like('a.nama',$this->input->post('nama'));
+        }
+        if($this->input->post('nomor_inventaris')!==""){
+            $this->db->or_like('a.nomor_inventaris',$this->input->post('nomor_inventaris'));
+        }
+        if($this->input->post('merk')!==""){
+            $this->db->or_like('a.merk',$this->input->post('merk'));
+        }
+        if($this->input->post('id_jenis')>0){
+            $this->db->or_like('a.id_jenis',$this->input->post('id_jenis'));
+        }
+        if($this->input->post('id_ruang')>0){
+            $this->db->or_like('a.id_ruang',$this->input->post('id_ruang'));
+        }
+        if($this->input->post('id_sumber_dana')>0){
+            $this->db->or_like('a.id_sumber_dana',$this->input->post('id_sumber_dana'));
+        }
+        if($this->input->post('tahun_perolehan')>0){
+            $this->db->or_like('a.tahun_perolehan',$this->input->post('tahun_perolehan'));
+        }
         $data2 = $this->db->get()->result_array();
         $data2 = array('data2' => $data2);
         $this->template->load('layout/template', 'admin/aset_index', array_merge($data,$data2));
     }
     public function excel(){
-        $id_jenis = $this->input->get('id_jenis');
-        $id_ruang = $this->input->get('id_ruang');
         $this->db->select('a.*,b.ruang,c.jenis,d.sumber_dana')->from('aset a');
         $this->db->join('ruang b', 'b.id_ruang = a.id_ruang','left');
         $this->db->join('jenis c', 'c.id_jenis = a.id_jenis','left');
         $this->db->join('sumber_dana d', 'd.id_sumber_dana = a.id_sumber_dana','left');
-        $this->db->order_by('a.nama','DESC');
-        if($id_jenis!=""){
-            $this->db->where('a.id_jenis',$id_jenis);
+        $this->db->order_by('a.tanggal_masuk','DESC');
+        if($this->input->post('nama')!==""){
+            $this->db->or_like('a.nama',$this->input->post('nama'));
         }
-        if($id_ruang!=""){
-            $this->db->where('a.id_ruang',$id_ruang);
+        if($this->input->post('nomor_inventaris')!==""){
+            $this->db->or_like('a.nomor_inventaris',$this->input->post('nomor_inventaris'));
+        }
+        if($this->input->post('merk')!==""){
+            $this->db->or_like('a.merk',$this->input->post('merk'));
+        }
+        if($this->input->post('id_jenis')>0){
+            $this->db->or_like('a.id_jenis',$this->input->post('id_jenis'));
+        }
+        if($this->input->post('id_ruang')>0){
+            $this->db->or_like('a.id_ruang',$this->input->post('id_ruang'));
+        }
+        if($this->input->post('id_sumber_dana')>0){
+            $this->db->or_like('a.id_sumber_dana',$this->input->post('id_sumber_dana'));
+        }
+        if($this->input->post('tahun_perolehan')>0){
+            $this->db->or_like('a.tahun_perolehan',$this->input->post('tahun_perolehan'));
         }
         $asets = $this->db->get()->result_array();
         $data2 = array('asets' => $asets);

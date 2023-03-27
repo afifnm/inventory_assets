@@ -15,7 +15,7 @@ class Aset_model extends CI_Model{
     }
     public function ruang(){ //tampilkan semua ruang
         $this->db->select('*')->from('ruang');
-        $this->db->oeskrder_by('ruang','ASC');
+        $this->db->order_by('ruang','ASC');
         return $this->db->get()->result_array();
     }
     public function sumber_dana(){ //tampilkan semua ruang

@@ -302,7 +302,7 @@
 <!-- END: EDIT Confirmation Modal -->
 <!-- BEGIN: AMBIL ASET Confirmation Modal -->
 <div class="modal" id="ambil">
-	<div class="modal__content modal__content--lg">
+	<div class="modal__content modal__content--xl">
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
 			<h2 class="font-medium text-base ml-3">PENGAMBILAN ASET </h2>
 		</div>
