@@ -13,7 +13,7 @@ class Aset extends MY_Controller{
             redirect('', 'refresh');
         }
     }
-
+ 
     public function jenis($id){  
         if($id==0){
             $namajenis = 'Jenis asset belum dipilih.';
