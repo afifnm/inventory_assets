@@ -16,7 +16,7 @@
 		<?php } ?>
 		<a href="javascript:;" data-toggle="modal" data-target="#expor"
 			class="button mr-1 inline-block bg-theme-1 text-white">Export </a>
-			<a href="javascript:;" data-toggle="modal" data-target="#import"
+		<a href="javascript:;" data-toggle="modal" data-target="#import"
 			class="button mr-1 inline-block bg-theme-1 text-white">Import </a>
 		<a href=" javascript:;" data-toggle="modal" data-target="#superlarge-modal-size-preview"
 			class="button mr-1 inline-block bg-theme-1 text-white">Logs Aktivitas</a>
